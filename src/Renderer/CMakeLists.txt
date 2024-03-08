@@ -1,0 +1,25 @@
+add_library(Renderer STATIC
+        ${PROJECT_SOURCE_DIR}/src/glad.c
+        Window.cpp
+        OpenGLRenderer.cpp
+        DirectXRenderer.cpp
+        include/Window.h
+        include/Renderer.h
+        include/OpenGLRenderer.h
+        include/DirectXRenderer.h
+)
+
+include_directories(${SDL2_INCLUDE_DIRS})
+include_directories(${PROJECT_SOURCE_DIR}/include)
+
+target_include_directories(Renderer PUBLIC
+        "include/"
+        "${PROJECT_SOURCE_DIR}/include"
+)
+target_link_libraries(Renderer
+        SDL2::SDL2
+        SDL2::SDL2main
+        d3d12
+        dxgi
+        d3dcompiler
+)
