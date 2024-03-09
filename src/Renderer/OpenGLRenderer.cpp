@@ -2,14 +2,15 @@
 #include <iostream>
 #include <glad/glad.h>
 #include <SDL2/SDL.h>
+#include <fmt/core.h>
 
 void OpenGLRenderer::initialize() {
     if (!gladLoadGLLoader(static_cast<GLADloadproc>(SDL_GL_GetProcAddress))) {
         std::cerr << "Failed to initialize GLAD" << std::endl;
     }
 
-    std::cout << "OpenGL Renderer initialized. OpenGL Version: "
-        << glGetString(GL_VERSION) << std::endl;
+    fmt::print("OpenGL Renderer initialized. OpenGL Version: {}\n",
+        reinterpret_cast<const char*>(glGetString(GL_VERSION)));
 }
 
 void OpenGLRenderer::render() {

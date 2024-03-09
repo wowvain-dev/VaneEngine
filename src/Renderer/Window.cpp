@@ -1,16 +1,15 @@
-//
-// Created by wowva on 3/8/2024.
-//
-
 #include "include/Window.h"
 #include <iostream>
 
 #include <Renderer.h>
+#include <fmt/core.h>
 #include "OpenGLRenderer.h"
 
 Window::Window() {
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-        std::cerr << "SDL could not be initialized! SDL_Error: " << SDL_GetError() << std::endl;
+        std::cerr
+            << fmt::format("SDL could not be initialized! SDL_error: {}", SDL_GetError())
+            << std::endl;
     }
 }
 
@@ -25,12 +24,17 @@ bool Window::createWindow(const char *title, int width, int height) {
         SDL_WINDOWPOS_UNDEFINED,
         width,
         height,
+#ifdef USE_OPENGL
         SDL_WINDOW_OPENGL
+#elif USE_VULKAN
+        SDL_WINDOW_VULKAN
+#else
+        SDL_WINDOW_SHOWN
+#endif
         );
 
     if (!window) {
-        std::cerr << "Window could not be created! SDL_Error: "
-            << SDL_GetError()
+        std::cerr << fmt::format("Window could not be created! SDL_Error: ", SDL_GetError())
             << std::endl;
         return false;
     }
@@ -40,6 +44,13 @@ bool Window::createWindow(const char *title, int width, int height) {
     initializeRenderer();
 
     return true;
+}
+
+void Window::getWindowSize(int &w, int &h) {
+    if (window == nullptr) {
+        fmt::print("getWindowSize called before window has been initialized.");
+    }
+    SDL_GetWindowSize(this->window, &w, &h);
 }
 
 void Window::initializeRenderer() {

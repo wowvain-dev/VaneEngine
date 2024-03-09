@@ -19,6 +19,7 @@ target_include_directories(Renderer PUBLIC
 target_link_libraries(Renderer
         SDL2::SDL2
         SDL2::SDL2main
+        fmt::fmt
         d3d12
         dxgi
         d3dcompiler

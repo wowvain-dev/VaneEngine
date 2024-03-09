@@ -6,13 +6,20 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "bin/")
 
+# CHOOSING THE RENDERER
+add_definitions(-DUSE_OPENGL)
+#add_definitions(-DUSE_DIRECTX)
+
 add_subdirectory(extern/SDL2)
+add_subdirectory(extern/fmt)
+
 add_subdirectory(src/Renderer)
 
 add_executable(VaneEngine
         src/main.cpp
         src/glad.c
 )
+
 
 target_include_directories(VaneEngine PUBLIC
         "include/"
@@ -23,6 +30,7 @@ target_include_directories(VaneEngine PUBLIC
 target_link_libraries(VaneEngine
         SDL2::SDL2
         SDL2::SDL2main
+        fmt::fmt
         Renderer
         d3d12
         dxgi

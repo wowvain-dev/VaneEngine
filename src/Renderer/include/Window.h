@@ -9,6 +9,7 @@ public:
     ~Window();
 
     bool createWindow(const char* title, int width, int height);
+    void getWindowSize(int &w, int &h);
     void mainLoop();
 
 private:
