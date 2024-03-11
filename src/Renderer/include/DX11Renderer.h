@@ -12,6 +12,7 @@
 
 const int frameBufferCount = 3;
 
+namespace Vane {
 class DX11Renderer : public Renderer {
 public:
     DX11Renderer(SDL_Window* window) : sdlWindow(window) {};
@@ -39,3 +40,4 @@ private:
     int rtvDescriptorSize;
 
 };
+}

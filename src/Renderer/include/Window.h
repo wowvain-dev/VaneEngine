@@ -3,6 +3,7 @@
 #include <SDL2/SDL.h>
 #include "Renderer.h"
 
+namespace Vane {
 class Window {
 public:
     Window();
@@ -20,3 +21,4 @@ private:
     void cleanup() const;
 };
 
+}

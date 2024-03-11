@@ -6,6 +6,8 @@
 #include "GLRenderer.h"
 #include "DX11Renderer.h"
 
+using namespace Vane;
+
 Window::Window() {
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
         std::cerr

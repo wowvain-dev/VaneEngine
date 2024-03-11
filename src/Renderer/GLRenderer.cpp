@@ -4,6 +4,8 @@
 #include <SDL2/SDL.h>
 #include <fmt/core.h>
 
+using namespace Vane;
+
 void GLRenderer::initialize() {
     glContext = SDL_GL_CreateContext(window);
 

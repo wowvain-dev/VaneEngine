@@ -1,6 +1,7 @@
 #pragma once
 #include "Renderer.h"
 
+namespace Vane {
 class GLRenderer : public Renderer {
 public:
     SDL_GLContext glContext = nullptr;
@@ -12,3 +13,4 @@ public:
 private:
     SDL_Window* window;
 };
+}

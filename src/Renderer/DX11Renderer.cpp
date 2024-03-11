@@ -3,6 +3,8 @@
 #include <fmt/core.h>
 #include <iostream>
 
+using namespace Vane;
+
 DX11Renderer::~DX11Renderer() {
     this->shutdown();
 }

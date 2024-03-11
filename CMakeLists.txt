@@ -15,8 +15,10 @@ add_definitions(-DUSE_OPENGL)
 
 add_subdirectory(extern/SDL2)
 add_subdirectory(extern/fmt)
+add_subdirectory(extern/toml++)
 
 add_subdirectory(src/Renderer)
+add_subdirectory(src/Engine)
 
 add_executable(VaneEngine
         src/main.cpp
@@ -27,14 +29,20 @@ add_executable(VaneEngine
 target_include_directories(VaneEngine PUBLIC
         "include/"
         "src/Renderer/include/"
+        "src/Engine/include/"
 )
 
 
 target_link_libraries(VaneEngine
+        # Core Components
+        Renderer
+        Engine
+
+        # Libraries - ideally these shouldn't be here
         SDL2::SDL2
         SDL2::SDL2main
+        tomlplusplus::tomlplusplus
         fmt::fmt
-        Renderer
         d3d11
         dxguid
         d3dcompiler

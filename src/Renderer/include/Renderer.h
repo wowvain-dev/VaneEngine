@@ -2,6 +2,8 @@
 
 #include <SDL2/SDL.h>
 
+namespace Vane {
+
 class Renderer {
 public:
     virtual ~Renderer() = default;
@@ -9,3 +11,5 @@ public:
     virtual void render() = 0;
     virtual void shutdown() = 0;
 };
+
+}
