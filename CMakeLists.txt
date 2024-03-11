@@ -1,5 +1,8 @@
 cmake_minimum_required(VERSION 3.28)
-project(VaneEngine)
+
+project(VaneEngine VERSION 0.0.1)
+
+message("START OF CMAKELIST...")
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
@@ -32,7 +35,10 @@ target_link_libraries(VaneEngine
         SDL2::SDL2main
         fmt::fmt
         Renderer
-        d3d12
-        dxgi
+        d3d11
+        dxguid
         d3dcompiler
+        dxgi
 )
+
+message("END OF CMAKELIST...")

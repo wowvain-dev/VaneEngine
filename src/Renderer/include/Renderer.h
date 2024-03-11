@@ -1,5 +1,7 @@
 #pragma once
 
+#include <SDL2/SDL.h>
+
 class Renderer {
 public:
     virtual ~Renderer() = default;

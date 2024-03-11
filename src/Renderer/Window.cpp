@@ -3,7 +3,8 @@
 
 #include <Renderer.h>
 #include <fmt/core.h>
-#include "OpenGLRenderer.h"
+#include "GLRenderer.h"
+#include "DX11Renderer.h"
 
 Window::Window() {
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
@@ -39,27 +40,33 @@ bool Window::createWindow(const char *title, int width, int height) {
         return false;
     }
 
-    glContext = SDL_GL_CreateContext(window);
-
-    initializeRenderer();
+    initializeRenderer(window);
 
     return true;
 }
 
-void Window::getWindowSize(int &w, int &h) {
+void Window::getWindowSize(int &w, int &h) const {
     if (window == nullptr) {
         fmt::print("getWindowSize called before window has been initialized.");
     }
     SDL_GetWindowSize(this->window, &w, &h);
 }
 
-void Window::initializeRenderer() {
-    renderer = new OpenGLRenderer();
+void Window::initializeRenderer(SDL_Window* window) {
+#ifdef USE_OPENGL
+    renderer = new GLRenderer(window);
+#elif USE_DIRECTX
+    renderer = new DirectXRenderer(window);
+#else
+    // TODO(wowvain-dev): add Vulkan renderer;
+#endif
+
+
     renderer->initialize();
 }
 
 
-void Window::mainLoop() {
+void Window::mainLoop() const {
     bool running = true;
     SDL_Event e;
 
@@ -71,23 +78,17 @@ void Window::mainLoop() {
 
             /// HANDLE OTHER EVENTS
         }
+        renderer->render();
     }
 
-    renderer->render();
-
-    // For OpenGL
-    SDL_GL_SwapWindow(window);
 }
 
-void Window::cleanup() {
+void Window::cleanup() const {
     if (renderer) {
         renderer -> shutdown();
         delete renderer;
     }
 
-    if (glContext) {
-        SDL_GL_DeleteContext(glContext);
-    }
     if (window) {
         SDL_DestroyWindow(window);
     }

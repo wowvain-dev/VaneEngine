@@ -1,12 +1,12 @@
 add_library(Renderer STATIC
         ${PROJECT_SOURCE_DIR}/src/glad.c
         Window.cpp
-        OpenGLRenderer.cpp
-        DirectXRenderer.cpp
+        GLRenderer.cpp
+        DX11Renderer.cpp
         include/Window.h
         include/Renderer.h
-        include/OpenGLRenderer.h
-        include/DirectXRenderer.h
+        include/GLRenderer.h
+        include/DX11Renderer.h
 )
 
 include_directories(${SDL2_INCLUDE_DIRS})

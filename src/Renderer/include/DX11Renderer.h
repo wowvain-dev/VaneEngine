@@ -12,10 +12,10 @@
 
 const int frameBufferCount = 3;
 
-class DirectXRenderer : public Renderer {
+class DX11Renderer : public Renderer {
 public:
-    DirectXRenderer(SDL_Window* window) : sdlWindow(window) {};
-    ~DirectXRenderer();
+    DX11Renderer(SDL_Window* window) : sdlWindow(window) {};
+    ~DX11Renderer();
 
     void initialize() override;
     void render() override;
