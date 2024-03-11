@@ -23,6 +23,7 @@ add_subdirectory(src/Engine)
 add_executable(VaneEngine
         src/main.cpp
         src/glad.c
+        include/types.h
 )
 
 

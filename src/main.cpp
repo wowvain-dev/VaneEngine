@@ -25,18 +25,13 @@ int main(int argv, char** args) {
 
     Vane::Engine engine;
 
-    std::cout << engine.config.tbl << std::endl;
+    auto activeBackend = engine.config.getBackend();
+
 
     Vane::Window window;
 
 
-#ifdef USE_OPENGL
-    fmt::print("Using OpenGL\n");
-#elif USE_DIRECTX
-    fmt::print("Using DirectX\n");
-#endif
-
-    if (window.createWindow("My game engine", 1350, 900)) {
+    if (window.createWindow("My game engine", 1350, 900, activeBackend)) {
         window.mainLoop();
     }
 

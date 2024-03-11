@@ -20,21 +20,51 @@ Window::~Window() {
     cleanup();
 }
 
-bool Window::createWindow(const char *title, int width, int height) {
-    window = SDL_CreateWindow(
-        title,
-        SDL_WINDOWPOS_UNDEFINED,
-        SDL_WINDOWPOS_UNDEFINED,
-        width,
-        height,
-#ifdef USE_OPENGL
-        SDL_WINDOW_OPENGL
-#elif USE_VULKAN
-        SDL_WINDOW_VULKAN
-#else
-        SDL_WINDOW_SHOWN
+bool Window::createWindow(const char *title, int width, int height, Vane::BACKEND backend) {
+    if (backend == AUTO) {
+#ifdef _WIN32
+
+        window = SDL_CreateWindow(
+            title,
+            SDL_WINDOWPOS_UNDEFINED,
+            SDL_WINDOWPOS_UNDEFINED,
+            width,
+            height,
+        SDL_WINDOW_SHOWN);
+#elif
+        window = SDL_CreateWindow(
+            title,
+            SDL_WINDOWPOS_UNDEFINED,
+            SDL_WINDOWPOS_UNDEFINED,
+            width,
+            height,
+            SDL_WINDOW_VULKAN);
 #endif
-        );
+    } else if (backend == OPENGL) {
+        window = SDL_CreateWindow(
+            title,
+            SDL_WINDOWPOS_UNDEFINED,
+            SDL_WINDOWPOS_UNDEFINED,
+            width,
+            height,
+            SDL_WINDOW_OPENGL);
+    } else if (backend == VULKAN) {
+        window = SDL_CreateWindow(
+            title,
+            SDL_WINDOWPOS_UNDEFINED,
+            SDL_WINDOWPOS_UNDEFINED,
+            width,
+            height,
+            SDL_WINDOW_VULKAN);
+    } else {
+        window = SDL_CreateWindow(
+            title,
+            SDL_WINDOWPOS_UNDEFINED,
+            SDL_WINDOWPOS_UNDEFINED,
+            width,
+            height,
+        SDL_WINDOW_SHOWN);
+    }
 
     if (!window) {
         std::cerr << fmt::format("Window could not be created! SDL_Error: ", SDL_GetError())
@@ -42,7 +72,7 @@ bool Window::createWindow(const char *title, int width, int height) {
         return false;
     }
 
-    initializeRenderer(window);
+    initializeRenderer(window, backend);
 
     return true;
 }
@@ -54,16 +84,22 @@ void Window::getWindowSize(int &w, int &h) const {
     SDL_GetWindowSize(this->window, &w, &h);
 }
 
-void Window::initializeRenderer(SDL_Window* window) {
-#ifdef USE_OPENGL
-    renderer = new GLRenderer(window);
-#elif USE_DIRECTX
-    renderer = new DirectXRenderer(window);
+void Window::initializeRenderer(SDL_Window* window, BACKEND backend) {
+    if (backend == AUTO) {
+#ifdef _WIN32
+        renderer = new DX11Renderer(window);
 #else
-    // TODO(wowvain-dev): add Vulkan renderer;
+    // VULKAN IMPLEMENTATION
 #endif
-
-
+    } else if (backend == DX12) {
+    // DX12 IMPLEMENTATION
+    } else if (backend == DX11) {
+        renderer = new DX11Renderer(window);
+    } else if (backend == VULKAN) {
+    // VULKAN IMPLEMENTATION
+    } else if (backend == OPENGL) {
+        renderer = new GLRenderer(window);
+    }
     renderer->initialize();
 }
 

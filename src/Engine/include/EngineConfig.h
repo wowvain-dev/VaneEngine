@@ -1,8 +1,11 @@
 #pragma once
 
 #include <toml++/toml.hpp>
+#include <filesystem>
 #include <fstream>
 #include <iostream>
+
+#include "types.h"
 
 #ifdef _WIN32
 
@@ -17,14 +20,16 @@
 namespace Vane {
 
 class EngineConfig {
-public:
-    toml::table tbl;
+    toml::table _table;
 
 public:
     void initialize();
-    bool readConfig();
+    bool parseConfigFile();
+
+    BACKEND getBackend() const;
 
 private:
+    void saveChanges() const;
     static toml::table defaultConfiguration();
     static std::string configPath();
 };

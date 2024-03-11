@@ -4,11 +4,12 @@
 
 #include "EngineConfig.h"
 
-#include <filesystem>
 
 namespace Vane {
 
-bool EngineConfig::readConfig() {
+
+
+bool EngineConfig::parseConfigFile() {
     auto configPath = EngineConfig::configPath();
 
     if (!std::filesystem::exists(configPath)) {
@@ -16,7 +17,7 @@ bool EngineConfig::readConfig() {
     }
 
     try {
-        tbl = toml::parse_file(configPath);
+        _table = toml::parse_file(configPath);
         // std::cout << tbl << "\n";
     } catch (const toml::parse_error& err) {
         std::cerr << "Toml parsing error: \n" << err << "\n";
@@ -25,6 +26,38 @@ bool EngineConfig::readConfig() {
 
     return true;
 }
+
+BACKEND EngineConfig::getBackend() const {
+    std::optional<std::string_view> opt_backend =
+        _table["engine"]["backend"].value<std::string_view>();
+
+    if (!opt_backend.has_value()) {
+        std::cerr << "Invalid `engine.backend` config value." << std::endl;
+        std::cerr << "Returning default value..." << std::endl;
+
+        return AUTO;
+    }
+
+    auto backend = opt_backend.value();
+
+    if (backend == "DX11") {
+        return DX11;
+    }
+    if (backend == "OPENGL") {
+        return OPENGL;
+    }
+    if (backend == "VULKAN") {
+        return VULKAN;
+    }
+    if (backend == "DX12") {
+        return DX12;
+    }
+
+    std::cerr << "Invalid `engine.backend` config value." << std::endl;
+    std::cerr << "Returning default value..." << std::endl;
+    return AUTO;
+}
+
 
 toml::table EngineConfig::defaultConfiguration() {
     auto defaults = toml::table {
@@ -68,13 +101,13 @@ std::string EngineConfig::configPath() {
 }
 
 void EngineConfig::initialize() {
-    if (!readConfig()) {
-        tbl = defaultConfiguration();
+    if (!parseConfigFile()) {
+        _table = defaultConfiguration();
         auto configPath = EngineConfig::configPath();
 
         std::ofstream config(configPath.c_str());
 
-        config << tbl;
+        config << _table;
 
         config.close();
     }
@@ -82,5 +115,13 @@ void EngineConfig::initialize() {
     // CHECKING SYNTAX AND VALUES
 }
 
+void EngineConfig::saveChanges() const {
+    auto path = configPath();
+    std::ofstream config(path);
+
+    config << _table;
+
+    config.close();
+}
 
 } // Vane
