@@ -3,13 +3,35 @@
 #include <Renderer.h>
 #include <Window.h>
 #include <glad/glad.h>
+#include <fmt/core.h>
+#include <toml++/toml.hpp>
+#include <string>
+
+#include "Engine.h"
+
+// OS SPECIFIC IMPORTS
+#ifdef _WIN32
+
+#elif unix
+#include <unistd.h>
+#include <sys/types.h>
+#include <pwd.h>
+#elif __MACH__
+#include <unistd.h>
+#include <sys/types.h>
+#include <pwd.h>
+#endif
 
 int main(int argv, char** args) {
-    Window window;
+    try {
+        std::cout << "Starting engine...\n";
 
-    if (window.createWindow("My game engine", 800, 600)) {
-        window.mainLoop();
+        Vane::Engine engine;
+
+        engine.run();
     }
-
+    catch (std::exception& ex) {
+        std::cout << "Caught exception: " << ex.what() << '\n';
+    }
     return 0;
 }
