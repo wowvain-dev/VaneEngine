@@ -4,7 +4,11 @@
 #include <SDL2/SDL.h>
 #include <fmt/core.h>
 
-using namespace Vane;
+using namespace Vane::Albita;
+
+GLRenderer::~GLRenderer() {
+    shutdown();
+}
 
 void GLRenderer::initialize() {
     glContext = SDL_GL_CreateContext(window);
@@ -13,16 +17,18 @@ void GLRenderer::initialize() {
         std::cerr << "Failed to initialize GLAD" << std::endl;
     }
 
-    fmt::print("OpenGL Renderer initialized. OpenGL Version: {}\n",
-        reinterpret_cast<const char*>(glGetString(GL_VERSION)));
+    std::cout << "OpenGL Renderer initialized. OpenGL Version: " <<
+            reinterpret_cast<const char*>(glGetString(GL_VERSION)) << '\n';
 }
 
 void GLRenderer::render() {
-    glClearColor(1.f, 0.2f, 0.3f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT);
-
     SDL_GL_SwapWindow(window);
     glGetError();
+}
+
+void GLRenderer::clearBuffer(float r, float g, float b) {
+    glClearColor(r, g, b, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
 }
 
 void GLRenderer::shutdown() {
@@ -30,5 +36,3 @@ void GLRenderer::shutdown() {
         SDL_GL_DeleteContext(glContext);
     }
 }
-
-

@@ -17,23 +17,21 @@
 #include <sys/types.h>
 #include <pwd.h>
 #elif __MACH__
-
+#include <unistd.h>
+#include <sys/types.h>
+#include <pwd.h>
 #endif
 
 int main(int argv, char** args) {
-    std::string configPath;
+    try {
+        std::cout << "Starting engine...\n";
 
-    Vane::Engine engine;
+        Vane::Engine engine;
 
-    auto activeBackend = engine.config.getBackend();
-
-
-    Vane::Window window;
-
-
-    if (window.createWindow("My game engine", 1350, 900, activeBackend)) {
-        window.mainLoop();
+        engine.run();
     }
-
+    catch (std::exception& ex) {
+        std::cout << "Caught exception: " << ex.what() << '\n';
+    }
     return 0;
 }

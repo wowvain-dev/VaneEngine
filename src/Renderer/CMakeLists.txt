@@ -7,7 +7,7 @@ add_library(Renderer STATIC
         include/Renderer.h
         include/GLRenderer.h
         include/DX11Renderer.h
-)
+ "DX12Renderer.cpp" "include/DX12Renderer.h" "include/VKRenderer.h")
 
 include_directories(${SDL2_INCLUDE_DIRS})
 include_directories(${PROJECT_SOURCE_DIR}/include)

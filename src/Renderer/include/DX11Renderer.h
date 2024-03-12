@@ -1,43 +1,39 @@
 #pragma once
 
-#include "Renderer.h"
-
-#include <cstdint>
 #include <SDL2/SDL.h>
+#include <d3d11.h>
 #include <d3d12.h>
 #include <dxgi1_6.h>
 #include <wrl.h>
 
-#define COMPTR(x) Microsoft::WRL::ComPtr<x>
+#include <cstdint>
 
-const int frameBufferCount = 3;
+#include "Renderer.h"
 
-namespace Vane {
+
+constexpr int frameBufferCount = 3;
+
+namespace Vane::Albita {
 class DX11Renderer : public Renderer {
 public:
-    DX11Renderer(SDL_Window* window) : sdlWindow(window) {};
-    ~DX11Renderer();
+    DX11Renderer(SDL_Window* window);
+    ~DX11Renderer() override;
 
     void initialize() override;
     void render() override;
     void shutdown() override;
 
+    inline void clearBuffer(float red, float green, float blue) noexcept override {
+        const float color[] = {red, green, blue, 1.0f};
+        pContext->ClearRenderTargetView(pTarget, color);
+    }
+
 private:
     SDL_Window* sdlWindow;
-    COMPTR(ID3D12Device) device;
-    COMPTR(IDXGISwapChain3) swapChain;
-    COMPTR(ID3D12CommandQueue) commandQueue;
-    COMPTR(ID3D12DescriptorHeap) rtvDescriptorHeap;
-    COMPTR(ID3D12Device) renderTargets[frameBufferCount];
-    COMPTR(ID3D12CommandAllocator) commandAllocator[frameBufferCount];
-    COMPTR(ID3D12GraphicsCommandList) commandList;
-    COMPTR(ID3D12Fence) fence[frameBufferCount];
 
-    HANDLE fenceEvent;
-    UINT64 fenceValue[frameBufferCount];
-
-    int frameIndex;
-    int rtvDescriptorSize;
-
+    ID3D11Device* pDevice = nullptr;
+    IDXGISwapChain* pSwap = nullptr;
+    ID3D11DeviceContext* pContext = nullptr;
+    ID3D11RenderTargetView* pTarget = nullptr;
 };
-}
+} // namespace Vane

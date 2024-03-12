@@ -18,7 +18,6 @@
 #endif
 
 namespace Vane {
-
 class EngineConfig {
     toml::table _table;
 
@@ -26,12 +25,11 @@ public:
     void initialize();
     bool parseConfigFile();
 
-    BACKEND getBackend() const;
+    Albita::BACKEND getBackend();
 
 private:
     void saveChanges() const;
     static toml::table defaultConfiguration();
     static std::string configPath();
 };
-
 } // Vane

@@ -1,16 +1,9 @@
-//
-// Created by wowva on 3/11/2024.
-//
-
 #include "EngineConfig.h"
 
 
 namespace Vane {
-
-
-
 bool EngineConfig::parseConfigFile() {
-    auto configPath = EngineConfig::configPath();
+    const std::string configPath = EngineConfig::configPath();
 
     if (!std::filesystem::exists(configPath)) {
         return false;
@@ -19,7 +12,8 @@ bool EngineConfig::parseConfigFile() {
     try {
         _table = toml::parse_file(configPath);
         // std::cout << tbl << "\n";
-    } catch (const toml::parse_error& err) {
+    }
+    catch (const toml::parse_error& err) {
         std::cerr << "Toml parsing error: \n" << err << "\n";
         std::throw_with_nested(err);
     }
@@ -27,18 +21,30 @@ bool EngineConfig::parseConfigFile() {
     return true;
 }
 
-BACKEND EngineConfig::getBackend() const {
+Albita::BACKEND EngineConfig::getBackend() {
     std::optional<std::string_view> opt_backend =
-        _table["engine"]["backend"].value<std::string_view>();
+            _table["engine"]["backend"].value<std::string_view>();
 
     if (!opt_backend.has_value()) {
-        std::cerr << "Invalid `engine.backend` config value." << std::endl;
-        std::cerr << "Returning default value..." << std::endl;
+        std::cerr << "\nInvalid `engine.backend` config value.\n";
+        std::cerr << "Setting the file back to defaults.\n";
 
-        return AUTO;
+        std::ofstream config(configPath().c_str());
+
+        _table = defaultConfiguration();
+        config << _table;
+
+        config.close();
+
+        opt_backend = _table["engine"]["backend"].value<std::string_view>();
     }
 
-    auto backend = opt_backend.value();
+    /// Even if we use `.value_or("VULKAN")`, it is impossible to get the `_or` value
+    /// since in the case that no value initially existed, we replaced the config with
+    /// the defaul valid one.
+    const std::string_view backend = opt_backend.value_or("VULKAN");
+
+    using namespace Albita;
 
     if (backend == "DX11") {
         return DX11;
@@ -53,17 +59,35 @@ BACKEND EngineConfig::getBackend() const {
         return DX12;
     }
 
-    std::cerr << "Invalid `engine.backend` config value." << std::endl;
-    std::cerr << "Returning default value..." << std::endl;
-    return AUTO;
+    std::cerr << "Invalid `engine.backend` config value.\n";
+    std::cerr << "Returning default value...\n";
+
+    std::ofstream config(configPath().c_str());
+
+    _table = defaultConfiguration();
+    config << _table;
+
+    config.close();
+
+#ifdef _WIN32
+    return DX11;
+#else
+    returne VULKAN;
+#endif
 }
 
 
 toml::table EngineConfig::defaultConfiguration() {
-    auto defaults = toml::table {
-        {"engine", toml::table {
-                {"backend", "auto"}
-        }}
+    auto defaults = toml::table{
+        {
+            "engine", toml::table{
+#ifdef _WIN32
+                {"backend", "DX11"}
+#else
+            {"backend", "VULKAN"}
+#endif
+            }
+        }
     };
 
     return defaults;
@@ -80,7 +104,8 @@ std::string EngineConfig::configPath() {
     if (_dupenv_s(&buffer, &sz, "USERPROFILE") == 0 && buffer != nullptr) {
         configPath.append(buffer);
         free(buffer);
-    } else {
+    }
+    else {
         throw std::runtime_error("Could not find %USERPROFILE% environment variable.");
     }
 #elif unix
@@ -116,12 +141,12 @@ void EngineConfig::initialize() {
 }
 
 void EngineConfig::saveChanges() const {
-    auto path = configPath();
+    const auto configPathStr = configPath();
+    const auto path = configPathStr.c_str();
     std::ofstream config(path);
 
     config << _table;
 
     config.close();
 }
-
 } // Vane

@@ -6,41 +6,21 @@
 #include "GLRenderer.h"
 #include "DX11Renderer.h"
 
-using namespace Vane;
+using namespace Vane::Albita;
 
 Window::Window() {
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-        std::cerr
-            << fmt::format("SDL could not be initialized! SDL_error: {}", SDL_GetError())
-            << std::endl;
+        std::cerr << "SDL could not be initialized! SDL_error: " << SDL_GetError()
+                << '\n';
     }
 }
 
 Window::~Window() {
-    cleanup();
+    shutdown();
 }
 
-bool Window::createWindow(const char *title, int width, int height, Vane::BACKEND backend) {
-    if (backend == AUTO) {
-#ifdef _WIN32
-
-        window = SDL_CreateWindow(
-            title,
-            SDL_WINDOWPOS_UNDEFINED,
-            SDL_WINDOWPOS_UNDEFINED,
-            width,
-            height,
-        SDL_WINDOW_SHOWN);
-#elif
-        window = SDL_CreateWindow(
-            title,
-            SDL_WINDOWPOS_UNDEFINED,
-            SDL_WINDOWPOS_UNDEFINED,
-            width,
-            height,
-            SDL_WINDOW_VULKAN);
-#endif
-    } else if (backend == OPENGL) {
+bool Window::createWindow(const char* title, int width, int height, BACKEND backend) {
+    if (backend == OPENGL) {
         window = SDL_CreateWindow(
             title,
             SDL_WINDOWPOS_UNDEFINED,
@@ -48,7 +28,8 @@ bool Window::createWindow(const char *title, int width, int height, Vane::BACKEN
             width,
             height,
             SDL_WINDOW_OPENGL);
-    } else if (backend == VULKAN) {
+    }
+    else if (backend == VULKAN) {
         window = SDL_CreateWindow(
             title,
             SDL_WINDOWPOS_UNDEFINED,
@@ -56,78 +37,70 @@ bool Window::createWindow(const char *title, int width, int height, Vane::BACKEN
             width,
             height,
             SDL_WINDOW_VULKAN);
-    } else {
+    }
+    else {
         window = SDL_CreateWindow(
             title,
             SDL_WINDOWPOS_UNDEFINED,
             SDL_WINDOWPOS_UNDEFINED,
             width,
             height,
-        SDL_WINDOW_SHOWN);
+            SDL_WINDOW_SHOWN);
     }
 
     if (!window) {
-        std::cerr << fmt::format("Window could not be created! SDL_Error: ", SDL_GetError())
-            << std::endl;
+        std::cerr << "Window could not be created! SDL_Error: " << SDL_GetError()
+                << '\n';
         return false;
     }
 
-    initializeRenderer(window, backend);
+    initializeRenderer(backend);
 
     return true;
 }
 
-void Window::getWindowSize(int &w, int &h) const {
+void Window::getWindowSize(int& w, int& h) const {
     if (window == nullptr) {
-        fmt::print("getWindowSize called before window has been initialized.");
+        std::cout << "\ngetWindowSize called before window has been initialized.";
     }
     SDL_GetWindowSize(this->window, &w, &h);
 }
 
-void Window::initializeRenderer(SDL_Window* window, BACKEND backend) {
-    if (backend == AUTO) {
-#ifdef _WIN32
-        renderer = new DX11Renderer(window);
-#else
-    // VULKAN IMPLEMENTATION
-#endif
-    } else if (backend == DX12) {
-    // DX12 IMPLEMENTATION
-    } else if (backend == DX11) {
-        renderer = new DX11Renderer(window);
-    } else if (backend == VULKAN) {
-    // VULKAN IMPLEMENTATION
-    } else if (backend == OPENGL) {
-        renderer = new GLRenderer(window);
+void Window::initializeRenderer(BACKEND backend) {
+    if (backend == DX12) {
+        // DX12 IMPLEMENTATION
+    }
+    else if (backend == DX11) {
+        renderer = std::make_shared<DX11Renderer>(window);
+    }
+    else if (backend == VULKAN) {
+        // VULKAN IMPLEMENTATION
+    }
+    else if (backend == OPENGL) {
+        renderer = std::make_shared<GLRenderer>(window);
     }
     renderer->initialize();
 }
 
 
-void Window::mainLoop() const {
-    bool running = true;
+void Window::inputLoop(bool& running) const {
     SDL_Event e;
 
-    while(running) {
-        while(SDL_PollEvent(&e) != 0) {
-            if (e.type == SDL_QUIT) {
-                running = false;
-            }
-
-            /// HANDLE OTHER EVENTS
+    while (SDL_PollEvent(&e) != 0) {
+        if (e.type == SDL_QUIT) {
+            running = false;
         }
-        renderer->render();
+        /// HANDLE OTHER EVENTS
     }
-
 }
 
-void Window::cleanup() const {
-    if (renderer) {
-        renderer -> shutdown();
-        delete renderer;
+void Window::shutdown() {
+    std::cout << "\nShutting down window";
+    if (renderer != nullptr) {
+        renderer.reset();
     }
 
-    if (window) {
+    if (window != nullptr) {
         SDL_DestroyWindow(window);
     }
 
