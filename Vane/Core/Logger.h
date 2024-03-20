@@ -8,4 +8,36 @@
 //
 // THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //////////////////////////////////////////////////////////////////////////////////////////
+#pragma once
 
+
+namespace Vane {
+#define LOG_WARN_ENABLED 1
+#define LOG_INFO_ENABLED 1
+#define LOG_DEBUG_ENABLED 1
+#define LOG_TRACE_ENABLED 1
+
+#ifdef RELEASE
+#define LOG_DEBUG_ENABLED 0
+#define LOG_TRACE_ENABLED 0
+#endif
+
+    enum LOG_LEVEL {
+        LOG_LEVEL_FATAL = 0,
+        LOG_LEVEL_ERROR = 1,
+        LOG_LEVEL_WARN = 2,
+        LOG_LEVEL_INFO = 3,
+        LOG_LEVEL_DEBUG = 4,
+        LOG_LEVEL_TRACE = 5
+    };
+
+    class Logger {
+    public:
+    private:
+    public:
+        Logger();
+        ~Logger();
+        void initializeLogging();
+        void shutdownLogging();
+    };
+} // Vane

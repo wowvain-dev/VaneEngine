@@ -16,6 +16,9 @@ find_package(glad CONFIG REQUIRED)
 add_library(Vane STATIC
         entry.cpp
         entry.h
+        Core/Logger.cpp
+        Core/Logger.h
+        Core/Defines.h
 )
 
 set_target_properties(Vane PROPERTIES LINKER_LANGUAGE CXX)

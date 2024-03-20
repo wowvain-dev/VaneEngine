@@ -8,7 +8,8 @@
       "cacheVariables": {
         "CMAKE_TOOLCHAIN_FILE": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake",
         "VCPKG_DEFAULT_TRIPLET": "x64-windows-mingw",
-        "VCPKG_INSTALL_OPTIONS": "--x-buildtrees-root=I:/btree"
+        "VCPKG_INSTALL_OPTIONS": "--x-buildtrees-root=I:/btree",
+        "CMAKE_BUILD_TYPE": "Debug"
       }
     },
     {
@@ -18,7 +19,8 @@
       "cacheVariables": {
         "CMAKE_TOOLCHAIN_FILE": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake",
         "VCPKG_DEFAULT_TRIPLET": "x64-windows",
-        "VCPKG_INSTALL_OPTIONS": "--x-buildtrees-root=I:/btree"
+        "VCPKG_INSTALL_OPTIONS": "--x-buildtrees-root=I:/btree",
+        "CMAKE_BUILD_TYPE": "Debug"
       }
     }
   ]
