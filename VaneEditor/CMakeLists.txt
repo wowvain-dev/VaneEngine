@@ -30,6 +30,8 @@ target_link_libraries(
     Qt6::Widgets
 )
 
+if (WIN32)
+
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
     find_program(TOOL_WINDEPLOYQT NAMES windeployqt.debug.bat)
 else()
@@ -42,6 +44,8 @@ add_custom_command(TARGET VaneEditor POST_BUILD
         $<TARGET_FILE:VaneEditor>
         COMMENT "Running windeployqt..."
 )
+endif()
+
 
 #set_target_properties(VaneEditor PROPERTIES
 #    WIN32_EXECUTABLE ON

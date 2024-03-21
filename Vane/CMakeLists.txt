@@ -13,13 +13,19 @@ find_package(glfw3 CONFIG REQUIRED)
 find_package(glm CONFIG REQUIRED)
 find_package(glad CONFIG REQUIRED)
 
-add_library(Vane STATIC
+add_library(Vane SHARED
         entry.cpp
         entry.h
         Core/Logger.cpp
         Core/Logger.h
         Core/Defines.h
+        Core/Asserts.h
 )
+
+target_compile_definitions(
+        Vane PRIVATE "VEXPORT"
+)
+
 
 set_target_properties(Vane PROPERTIES LINKER_LANGUAGE CXX)
 

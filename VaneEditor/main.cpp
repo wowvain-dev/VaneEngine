@@ -12,6 +12,7 @@
 #define SDL_MAIN_HANDLED
 
 #include <QtWidgets>
+#include <Core/Logger.h>
 
 int main(int argc, char *argv[])
 {
@@ -21,5 +22,13 @@ int main(int argc, char *argv[])
     window.show();
     window.setWindowTitle(
         QApplication::translate("toplevel", "Vane Editor"));
+
+
+    VINFO("A TEST MESSAGE");
+    VFATAL("A test message: %f", 3.2f);
+    VERROR("A test message: %f", 3.2f);
+    VDEBUG("A test message: %f", 3.2f);
+
+
     return app.exec();
 }
