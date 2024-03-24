@@ -19,28 +19,25 @@
 #define LOG_DEBUG_ENABLED 1
 #define LOG_TRACE_ENABLED 1
 
-#define RESET_COLOR "\x1B[0m"
-#define INFO_COLOR "\x1B[1;34m"
-#define DEBUG_COLOR "\x1B[1;30m"
-#define WARNING_COLOR "\x1B[1;33m"
-#define ERROR_COLOR "\x1B[31m"
 
 #ifdef RELEASE
 #define LOG_DEBUG_ENABLED 0
 #define LOG_TRACE_ENABLED 0
 #endif
 
+
 namespace Vane {
+    enum LOG_LEVEL {
+        V_FATAL = 0,
+        V_ERROR = 1,
+        V_WARN = 2,
+        V_INFO = 3,
+        V_DEBUG = 4,
+        V_TRACE = 5
+    };
+
     class VAPI Logger {
     public:
-        enum LOG_LEVEL {
-            LOG_LEVEL_FATAL = 0,
-            LOG_LEVEL_ERROR = 1,
-            LOG_LEVEL_WARN = 2,
-            LOG_LEVEL_INFO = 3,
-            LOG_LEVEL_DEBUG = 4,
-            LOG_LEVEL_TRACE = 5
-        };
 
     private:
     public:
@@ -51,50 +48,50 @@ namespace Vane {
         template<typename... Args>
         static void log_output(LOG_LEVEL level, const char *message, Args... args) {
             std::tuple<const char *, const char *> level_strings[6] = {
-                std::make_tuple("[FATAL]: ", ERROR_COLOR),
-                std::make_tuple("[ERROR]: ", ERROR_COLOR),
-                std::make_tuple("[WARN]: ", WARNING_COLOR),
-                std::make_tuple("[INFO]: ", INFO_COLOR),
-                std::make_tuple("[DEBUG]: ", DEBUG_COLOR),
-                std::make_tuple("[TRACE]: ", DEBUG_COLOR)
+                std::make_tuple("[FATAL]: ", "0;41"),
+                std::make_tuple("[ERROR]: ", "1;31"),
+                std::make_tuple("[WARN]: ", "1;33"),
+                std::make_tuple("[INFO]: ", "1;32"),
+                std::make_tuple("[DEBUG]: ", "1;34"),
+                std::make_tuple("[TRACE]: ", "1:30")
             };
             bool is_error = level < 2;
-            printf("%s%s - ",
+            printf("\033[%sm%s - ",
                    std::get<1>(level_strings[level]),
                    std::get<0>(level_strings[level]));
             printf(message, args...);
-            printf("%s\n", RESET_COLOR);
+            printf("\033[0m\n");
         }
     };
 
 #ifndef VFATAL
-#define VFATAL(message, ...) Vane::Logger::log_output(Vane::Logger::LOG_LEVEL::LOG_LEVEL_FATAL, message, ##__VA_ARGS__);
+#define VFATAL(message, ...) Vane::Logger::log_output(Vane::LOG_LEVEL::V_FATAL, message, ##__VA_ARGS__);
 #endif
 
 #ifndef VERROR
-#define VERROR(message, ...) Vane::Logger::log_output(Vane::Logger::LOG_LEVEL::LOG_LEVEL_ERROR, message, ##__VA_ARGS__);
+#define VERROR(message, ...) Vane::Logger::log_output(Vane::LOG_LEVEL::V_ERROR, message, ##__VA_ARGS__);
 #endif
 
 #if LOG_WARN_ENABLED == 1
-#define VWARN(message, ...) Vane::Logger::log_output(Vane::Logger::LOG_LEVEL::LOG_LEVEL_WARN, message, ##__VA_ARGS__);
+#define VWARN(message, ...) Vane::Logger::log_output(Vane::LOG_LEVEL::V_WARN, message, ##__VA_ARGS__);
 #else
 #define VWARN(message, ...)
 #endif
 
 #if LOG_INFO_ENABLED == 1
-#define VINFO(message, ...) Vane::Logger::log_output(Vane::Logger::LOG_LEVEL::LOG_LEVEL_INFO, message, ##__VA_ARGS__);
+#define VINFO(message, ...) Vane::Logger::log_output(Vane::LOG_LEVEL::V_INFO, message, ##__VA_ARGS__);
 #else
 #define VINFO(message, ...)
 #endif
 
 #if LOG_DEBUG_ENABLED == 1
-#define VDEBUG(message, ...) Vane::Logger::log_output(Vane::Logger::LOG_LEVEL::LOG_LEVEL_DEBUG, message, ##__VA_ARGS__);
+#define VDEBUG(message, ...) Vane::Logger::log_output(Vane::LOG_LEVEL::V_DEBUG, message, ##__VA_ARGS__);
 #else
 #define VDEBUG(message, ...)
 #endif
 
 #if LOG_TRACE_ENABLED == 1
-#define VTRACE(message, ...) Vane::Logger::log_output(Vane::Logger::LOG_LEVEL::LOG_LEVEL_TRACE, message, ##__VA_ARGS__);
+#define VTRACE(message, ...) Vane::Logger::log_output(Vane::LOG_LEVEL::V_TRACE, message, ##__VA_ARGS__);
 #else
 #define VTRACE(message, ...)
 #endif

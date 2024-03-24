@@ -11,6 +11,19 @@
 
 #include <iostream>
 #include <entry.h>
+#include <Core/Logger.h>
+#include <Platform/Platform_Linux.h>
 
 int main(int argc, char** argv) {
+    Vane::LinuxPlatform platform;
+    if (platform.startup("Vane Engine Sandbox", 100, 100, 1280, 720)) {
+        while (true) {
+            platform.consoleWrite("test\n", Vane::LOG_LEVEL::V_FATAL);
+            platform.pumpMessages(); 
+        }
+    }
+
+    platform.shutdown();
+
+    return 0;
 }

@@ -22,7 +22,7 @@ ifeq ($(config),dbg)
   ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -m64 -fPIC -g
   ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -m64 -fPIC -g -std=c++20
   ALL_RESFLAGS += $(RESFLAGS) $(DEFINES) $(INCLUDES)
-  LIBS += -Wl,-Bstatic -lSDL2 -lSDL2main -Wl,-Bdynamic -lvulkan -lfmt
+  LIBS += -Wl,-Bstatic -lSDL2 -lSDL2main -Wl,-Bdynamic -lvulkan -lfmt -lX11 -lxcb -lX11-xcb
   LDDEPS +=
   ALL_LDFLAGS += $(LDFLAGS) -L../vendor/x64-linux/lib -L../../../../vulkan/1.3.280.0/x86_64/lib -L/usr/lib64 -m64 -shared -Wl,-soname=libVane.so
   LINKCMD = $(CXX) -o "$@" $(OBJECTS) $(RESOURCES) $(ALL_LDFLAGS) $(LIBS)
@@ -49,7 +49,7 @@ ifeq ($(config),rel)
   ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -m64 -O2 -fPIC
   ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -m64 -O2 -fPIC -std=c++20
   ALL_RESFLAGS += $(RESFLAGS) $(DEFINES) $(INCLUDES)
-  LIBS += -Wl,-Bstatic -lSDL2 -lSDL2main -Wl,-Bdynamic -lvulkan -lfmt
+  LIBS += -Wl,-Bstatic -lSDL2 -lSDL2main -Wl,-Bdynamic -lvulkan -lfmt -lX11 -lxcb -lX11-xcb
   LDDEPS +=
   ALL_LDFLAGS += $(LDFLAGS) -L../vendor/x64-linux/lib -L../../../../vulkan/1.3.280.0/x86_64/lib -L/usr/lib64 -m64 -shared -Wl,-soname=libVane.so -s
   LINKCMD = $(CXX) -o "$@" $(OBJECTS) $(RESOURCES) $(ALL_LDFLAGS) $(LIBS)
@@ -67,7 +67,6 @@ endif
 OBJECTS := \
 	$(OBJDIR)/Logger.o \
 	$(OBJDIR)/Platform_Linux.o \
-	$(OBJDIR)/Platform_Win32.o \
 	$(OBJDIR)/entry.o \
 
 RESOURCES := \
@@ -131,9 +130,6 @@ $(OBJDIR)/Logger.o: Core/Logger.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/Platform_Linux.o: Platform/Platform_Linux.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-$(OBJDIR)/Platform_Win32.o: Platform/Platform_Win32.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/entry.o: entry.cpp

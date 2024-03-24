@@ -131,7 +131,20 @@
  /usr/include/c++/13/bits/locale_facets.tcc \
  /usr/include/c++/13/bits/basic_ios.tcc \
  /usr/include/c++/13/bits/ostream.tcc /usr/include/c++/13/istream \
- /usr/include/c++/13/bits/istream.tcc ../Vane/entry.h
+ /usr/include/c++/13/bits/istream.tcc ../Vane/entry.h \
+ ../Vane/Core/Logger.h ../Vane/Core/Defines.h /usr/include/c++/13/cstdint \
+ /usr/lib/gcc/x86_64-redhat-linux/13/include/stdint.h \
+ /usr/include/stdint.h /usr/include/bits/stdint-uintn.h \
+ ../Vane/Platform/Platform_Linux.h ../Vane/Platform/Platform.h \
+ /usr/include/xcb/xcb.h /usr/include/sys/uio.h \
+ /usr/include/bits/types/struct_iovec.h /usr/include/bits/uio_lim.h \
+ /usr/include/bits/uio-ext.h /usr/include/xcb/xproto.h \
+ /usr/include/xcb/xcb.h /usr/include/X11/XKBlib.h /usr/include/X11/Xlib.h \
+ /usr/include/X11/X.h /usr/include/X11/Xfuncproto.h \
+ /usr/include/X11/Xosdefs.h /usr/include/X11/extensions/XKBstr.h \
+ /usr/include/X11/extensions/XKB.h /usr/include/X11/Xlib-xcb.h \
+ /usr/include/sys/time.h /usr/include/c++/13/cstring \
+ /usr/include/string.h /usr/include/strings.h
 /usr/include/stdc-predef.h:
 /usr/include/c++/13/iostream:
 /usr/include/c++/13/bits/requires_hosted.h:
@@ -326,3 +339,30 @@
 /usr/include/c++/13/istream:
 /usr/include/c++/13/bits/istream.tcc:
 ../Vane/entry.h:
+../Vane/Core/Logger.h:
+../Vane/Core/Defines.h:
+/usr/include/c++/13/cstdint:
+/usr/lib/gcc/x86_64-redhat-linux/13/include/stdint.h:
+/usr/include/stdint.h:
+/usr/include/bits/stdint-uintn.h:
+../Vane/Platform/Platform_Linux.h:
+../Vane/Platform/Platform.h:
+/usr/include/xcb/xcb.h:
+/usr/include/sys/uio.h:
+/usr/include/bits/types/struct_iovec.h:
+/usr/include/bits/uio_lim.h:
+/usr/include/bits/uio-ext.h:
+/usr/include/xcb/xproto.h:
+/usr/include/xcb/xcb.h:
+/usr/include/X11/XKBlib.h:
+/usr/include/X11/Xlib.h:
+/usr/include/X11/X.h:
+/usr/include/X11/Xfuncproto.h:
+/usr/include/X11/Xosdefs.h:
+/usr/include/X11/extensions/XKBstr.h:
+/usr/include/X11/extensions/XKB.h:
+/usr/include/X11/Xlib-xcb.h:
+/usr/include/sys/time.h:
+/usr/include/c++/13/cstring:
+/usr/include/string.h:
+/usr/include/strings.h:
