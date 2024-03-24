@@ -1,4 +1,4 @@
-﻿cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 3.16)
 
 set(PREMAKE_BUILD_TYPES "dbg" "rel")
 get_property(multi_config GLOBAL PROPERTY GENERATOR_IS_MULTI_CONFIG)
