@@ -11,24 +11,28 @@
 
 #define SDL_MAIN_HANDLED
 
-#include <QtWidgets>
+#include <SDL2/SDL.h>
 #include <Core/Logger.h>
+#include <Core/Asserts.h>
+#include <imgui.h>
+#include <imgui_impl_sdl2.h>
+#include <imgui_impl_vulkan.h>
 
 int main(int argc, char *argv[])
 {
-    QApplication app(argc, argv);
-    QWidget window;
-    window.resize(320, 240);
-    window.show();
-    window.setWindowTitle(
-        QApplication::translate("toplevel", "Vane Editor"));
+    if (SDL_Init(SDL_INIT_VIDEO) != 0) {
+        VFATAL("Error initialising SDL for the editor interface.");
+        return 1;
+    }
+    SDL_Window* window = SDL_CreateWindow("Vane Engine - Editor",
+        SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1000, 1000, 0
+    );
 
+    VDEBUG("Started window...");
 
-    VINFO("A TEST MESSAGE");
-    VFATAL("A test message: %f", 3.2f);
-    VERROR("A test message: %f", 3.2f);
-    VDEBUG("A test message: %f", 3.2f);
+    VASSERT_DEBUG(1 == 0);
 
+    getchar();
 
-    return app.exec();
+    return 0;
 }

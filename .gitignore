@@ -1,2 +1,4 @@
 .vs/
 build/
+vcpkg_installed/
+vendor/

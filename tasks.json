@@ -1,0 +1,11 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Generate makefiles",
+            "type": "shell",
+            "command": "premake5 gmake",
+            "group": "configure"
+        }
+    ]
+}

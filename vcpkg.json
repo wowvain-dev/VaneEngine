@@ -1,12 +1,12 @@
 {
   "dependencies": [
+    "libb2",
     "fmt",
     "glad",
     "glfw3",
     "glm",
     "sdl2",
-    "qtbase",
-    "qtdeclarative",
+    "imgui",
     "vulkan",
     "vulkan-loader",
     "vulkan-memory-allocator",

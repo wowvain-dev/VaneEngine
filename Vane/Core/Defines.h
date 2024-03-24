@@ -36,6 +36,9 @@ typedef int_least16_t  i_l16;
 typedef int_least32_t  i_l32;
 typedef int_least64_t  i_l64;
 
+typedef float f32;
+typedef double f64;
+
 #if defined(__clang__) || defined(__gcc__)
 #define STATIC_ASSERT _Static_assert
 #else
@@ -67,7 +70,7 @@ typedef int_least64_t  i_l64;
 
 #elif __APPLE__
 
-#define KPLATFORM_APPLE 1
+#define VPLATFORM_APPLE 1
 #include <TargetConditionals.h>
 #if TARGET_IPHONE_SIMULATOR
 // iOS simulator

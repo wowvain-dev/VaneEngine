@@ -10,8 +10,32 @@
 //////////////////////////////////////////////////////////////////////////////////////////
 
 #include "Logger.h"
+#include "Asserts.h"
 
 namespace Vane {
+    void reportAssertionFailure(const char* expression, const char* message, const char* file, i32 line) {
+        Logger::log_output(Logger::LOG_LEVEL_FATAL, "Assertion Failure: %s, message: '%s', in file: %s, line: %d\n",
+            expression,
+            message,
+            file,
+            line
+        );
+    }
+
+    void reportAssertionFailure(
+        std::string expression, 
+        std::string message, 
+        std::string file, 
+        i32 line
+    ) {
+        Logger::log_output(Logger::LOG_LEVEL_FATAL, "Assertion Failure: %s, message: '%s', in file: %s, line: %d\n",
+            expression,
+            message,
+            file,
+            line
+        );
+    }
+
     bool Logger::initializeLogging() {
         return true;
     }
