@@ -14,7 +14,7 @@
 
 namespace Vane {
     void reportAssertionFailure(const char* expression, const char* message, const char* file, i32 line) {
-        Logger::log_output(Logger::LOG_LEVEL_FATAL, "Assertion Failure: %s, message: '%s', in file: %s, line: %d\n",
+        Logger::log_output(LOG_LEVEL::V_FATAL, "Assertion Failure: %s, message: '%s', in file: %s, line: %d\n",
             expression,
             message,
             file,
@@ -28,7 +28,7 @@ namespace Vane {
         std::string file, 
         i32 line
     ) {
-        Logger::log_output(Logger::LOG_LEVEL_FATAL, "Assertion Failure: %s, message: '%s', in file: %s, line: %d\n",
+        Logger::log_output(LOG_LEVEL::V_FATAL, "Assertion Failure: %s, message: '%s', in file: %s, line: %d\n",
             expression,
             message,
             file,

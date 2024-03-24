@@ -34,6 +34,13 @@ project "Vane"
         "SDL2main:static",
     }
 
+    filter "system:Linux"
+        links {
+            "X11",
+            "xcb",
+            "X11-xcb"
+        }
+
     filter "configurations:dbg"
         defines { "DEBUG", "_DEBUG" }
         symbols "On"
