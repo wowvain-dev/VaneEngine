@@ -16,15 +16,12 @@ Mostly educational but planning to be serious about it. I would like it to be my
 
 ## Components
 - **Vane**: The main engine, should compile to a DLL and be used as a library.
-- **VaneEditor**: The editor of the engine, will link with Vane. Uses Qt.
+- **VaneEditor**: The editor of the engine, will link with Vane. Uses ~~Qt~~ ImGui.
 - **Sandbox**: A testbed for the engine.
 
 ## Installation
 
-#### INSTALLATION INSTRUCTIONS AREN'T UP-TO-DATE. I AM NOW USING PREMAKE INSTEAD OF CMAKE.
-#### Will update soon.
-
-The installation / build process is highly unstable at the moment as I am still figuring some stuff out with CMake and vcpkg. If it doesn't work, create an issue and I might be able to help.
+The installation / build process is highly unstable at the moment as I am still figuring some stuff out with Premake5 and vcpkg. If it doesn't work, create an issue and I might be able to help.
 
 ### Pre-build binaries
 
@@ -35,19 +32,19 @@ The installation / build process is highly unstable at the moment as I am still 
 #### Windows
 
 1. Clone the repository: `git clone https://github.com/wowvain-dev/VaneEngine`
-2. Install `vcpkg` from: `https://github.com/microsoft/vcpkg`
+2. Install `vcpkg` from: https://github.com/microsoft/vcpkg
 3. Set the `VCPKG_ROOT` environment variable to where you cloned the `vcpkg` repo.
-4. Make sure CMake is properly installed. Required version >= 3.24
-5. Set up the `CMakePresets.json` according to where you want your buildtree to be (where `vcpkg` installs packages, it must be a really short path, max depth maybe 3-4)
-6. Run `cmake --preset=MSVC` in the root directory of VaneEngine (you need Visual Studio 2022 properly installed with the appropriate C++ development build tools)
-7. Run `cmake --build build/` in the root directory of VaneEngine.
-8. You can now find the binaries in:
-    - `build/<platform>-<compiler>-<arch>-<rel|dbg>/Vane/`
-    - `build/<platform>-<compiler>-<arch>-<rel|dbg>/VaneEditor/`
-    - `build/<platform>-<compiler>-<arch>-<rel|dbg>/VaneSandbox/`
+4. Make sure to download `Premake5` from https://premake.github.io/download and Lua from https://www.lua.org/download.html (also make sure to put them somewhere on the %PATH% env variable)
+5. Make sure you have the `gcc/g++` compiler installed.
+6. Run `premake5 gmake` (haven't tested VS2017 build config yet, will do)
+7. Run `make`
+8. The binaries will be found in `build/[triplet]/{Sandbox | VaneEngine | Vane}` 
 
 #### Linux
 
-Most of the steps are the same as on Windows. Make sure to have `build-essentials` installed before trying to compile the project.
+Most of the steps are the same as on Windows. 
 
+Extra dependencies: [***WORK IN PROGRESS***]
+
+For now you can just run `premake5 gmake` and see what build fails, find the lib missing which caused the failure, install it, and repeat until it fully builds.
 

@@ -11,19 +11,24 @@
 
 #include <iostream>
 #include <entry.h>
-#include <Core/Logger.h>
-#include <Platform/Platform_Linux.h>
 
-int main(int argc, char** argv) {
-    Vane::LinuxPlatform platform;
-    if (platform.startup("Vane Engine Sandbox", 100, 100, 1280, 720)) {
-        while (true) {
-            platform.consoleWrite("test\n", Vane::LOG_LEVEL::V_FATAL);
-            platform.pumpMessages(); 
-        }
-    }
+#include <Core/Application.h>
 
-    platform.shutdown();
+using namespace Vane;
+
+int main(int argc, char **argv)
+{
+    ApplicationConfig config = {
+        .startPosX = 100,
+        .startPosY = 100,
+        .startWidth = 500,
+        .startHeight = 500,
+        .name = "Sandbox"};
+
+    auto app = new Application;
+
+    app->create(&config);
+    app->run();
 
     return 0;
 }

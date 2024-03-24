@@ -9,27 +9,6 @@
 // THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //////////////////////////////////////////////////////////////////////////////////////////
 
-#define SDL_MAIN_HANDLED
-
-#include <SDL2/SDL.h>
-#include <Core/Logger.h>
-#include <Core/Asserts.h>
-
 int main(int argc, char *argv[])
 {
-    if (SDL_Init(SDL_INIT_VIDEO) != 0) {
-        VFATAL("Error initialising SDL for the editor interface.");
-        return 1;
-    }
-    SDL_Window* window = SDL_CreateWindow("Vane Engine - Editor",
-        SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1000, 1000, 0
-    );
-
-    VDEBUG("Started window...");
-
-    VASSERT_DEBUG(1 == 0);
-
-    getchar();
-
-    return 0;
 }

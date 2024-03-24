@@ -36,7 +36,7 @@ namespace Vane {
         V_TRACE = 5
     };
 
-    class VAPI Logger {
+    class Logger {
     public:
 
     private:
