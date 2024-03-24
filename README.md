@@ -21,6 +21,9 @@ Mostly educational but planning to be serious about it. I would like it to be my
 
 ## Installation
 
+#### INSTALLATION INSTRUCTIONS AREN'T UP-TO-DATE. I AM NOW USING PREMAKE INSTEAD OF CMAKE.
+#### Will update soon.
+
 The installation / build process is highly unstable at the moment as I am still figuring some stuff out with CMake and vcpkg. If it doesn't work, create an issue and I might be able to help.
 
 ### Pre-build binaries
