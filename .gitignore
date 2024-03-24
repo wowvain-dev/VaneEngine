@@ -1,4 +1,15 @@
 .vs/
 build/
+build-objs/
 vcpkg_installed/
 vendor/
+
+CMakeLists.txt
+Vane/CMakeLists.txt
+Sandbox/CMakeLists.txt
+VaneEditor/CMakeLists.txt
+
+Makefile
+Vane/Makefile
+Sandbox/Makefile
+VaneEditor/Makefile
