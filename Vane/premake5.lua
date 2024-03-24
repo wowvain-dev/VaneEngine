@@ -38,7 +38,7 @@ project "Vane"
         links {
             "X11",
             "xcb",
-            "X11-xcb"
+            ""
         }
 
     filter "configurations:dbg"
