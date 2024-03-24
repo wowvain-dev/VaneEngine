@@ -132,10 +132,11 @@
  /usr/include/c++/13/bits/basic_ios.tcc \
  /usr/include/c++/13/bits/ostream.tcc /usr/include/c++/13/istream \
  /usr/include/c++/13/bits/istream.tcc ../Vane/entry.h \
- ../Vane/Core/Logger.h ../Vane/Core/Defines.h /usr/include/c++/13/cstdint \
+ ../Vane/Core/Application.h ../Vane/Core/../Platform/Platform.h \
+ ../Vane/Core/../Platform/../Core/Defines.h /usr/include/c++/13/cstdint \
  /usr/lib/gcc/x86_64-redhat-linux/13/include/stdint.h \
  /usr/include/stdint.h /usr/include/bits/stdint-uintn.h \
- ../Vane/Platform/Platform_Linux.h ../Vane/Platform/Platform.h \
+ ../Vane/Core/Logger.h ../Vane/Core/../Platform/Platform_Linux.h \
  /usr/include/xcb/xcb.h /usr/include/sys/uio.h \
  /usr/include/bits/types/struct_iovec.h /usr/include/bits/uio_lim.h \
  /usr/include/bits/uio-ext.h /usr/include/xcb/xproto.h \
@@ -339,14 +340,15 @@
 /usr/include/c++/13/istream:
 /usr/include/c++/13/bits/istream.tcc:
 ../Vane/entry.h:
-../Vane/Core/Logger.h:
-../Vane/Core/Defines.h:
+../Vane/Core/Application.h:
+../Vane/Core/../Platform/Platform.h:
+../Vane/Core/../Platform/../Core/Defines.h:
 /usr/include/c++/13/cstdint:
 /usr/lib/gcc/x86_64-redhat-linux/13/include/stdint.h:
 /usr/include/stdint.h:
 /usr/include/bits/stdint-uintn.h:
-../Vane/Platform/Platform_Linux.h:
-../Vane/Platform/Platform.h:
+../Vane/Core/Logger.h:
+../Vane/Core/../Platform/Platform_Linux.h:
 /usr/include/xcb/xcb.h:
 /usr/include/sys/uio.h:
 /usr/include/bits/types/struct_iovec.h:
