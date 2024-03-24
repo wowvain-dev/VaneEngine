@@ -1,0 +1,16 @@
+<component name="CopyrightManager">
+  <settings default="VaneEngine">
+    <module2copyright>
+      <element module="Project Files" copyright="VaneEngine" />
+    </module2copyright>
+    <LanguageOptions name="C++">
+      <option name="fileTypeOverride" value="3" />
+      <option name="block" value="false" />
+      <option name="separateBefore" value="true" />
+      <option name="separateAfter" value="true" />
+      <option name="prefixLines" value="false" />
+      <option name="lenBefore" value="90" />
+      <option name="lenAfter" value="90" />
+    </LanguageOptions>
+  </settings>
+</component>

@@ -1,0 +1,15 @@
+{
+  "dependencies": [
+    "libb2",
+    "fmt",
+    "glad",
+    "glfw3",
+    "glm",
+    "sdl2",
+    "imgui",
+    "vulkan",
+    "vulkan-loader",
+    "vulkan-memory-allocator",
+    "vulkan-memory-allocator-hpp"
+  ]
+}
