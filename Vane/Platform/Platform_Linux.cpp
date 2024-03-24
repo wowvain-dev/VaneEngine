@@ -1,5 +1,5 @@
-#include <Defines.h>
-#include <Platform.h>
+#include "../Core/Defines.h"
+#include "Platform.h"
 
 #ifdef VPLATFORM_LINUX 
 

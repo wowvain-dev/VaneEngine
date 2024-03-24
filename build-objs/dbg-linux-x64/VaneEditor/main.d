@@ -264,23 +264,7 @@
  /usr/include/bits/types/error_t.h /usr/include/c++/13/bits/charconv.h \
  /usr/include/c++/13/bits/basic_string.tcc \
  /usr/include/c++/13/bits/memory_resource.h /usr/include/c++/13/cstddef \
- /usr/include/c++/13/bits/uses_allocator_args.h \
- ../vendor/x64-linux/include/imgui.h \
- ../vendor/x64-linux/include/imconfig.h /usr/include/assert.h \
- ../vendor/x64-linux/include/imgui_impl_sdl2.h \
- ../vendor/x64-linux/include/imgui_impl_vulkan.h \
- ../vendor/x64-linux/include/vulkan/vulkan.h \
- ../vendor/x64-linux/include/vulkan/vk_platform.h \
- ../vendor/x64-linux/include/vulkan/vulkan_core.h \
- ../vendor/x64-linux/include/vk_video/vulkan_video_codec_h264std.h \
- ../vendor/x64-linux/include/vk_video/vulkan_video_codecs_common.h \
- ../vendor/x64-linux/include/vk_video/vulkan_video_codec_h264std_encode.h \
- ../vendor/x64-linux/include/vk_video/vulkan_video_codec_h264std.h \
- ../vendor/x64-linux/include/vk_video/vulkan_video_codec_h265std.h \
- ../vendor/x64-linux/include/vk_video/vulkan_video_codec_h265std_encode.h \
- ../vendor/x64-linux/include/vk_video/vulkan_video_codec_h265std.h \
- ../vendor/x64-linux/include/vk_video/vulkan_video_codec_h264std_decode.h \
- ../vendor/x64-linux/include/vk_video/vulkan_video_codec_h265std_decode.h
+ /usr/include/c++/13/bits/uses_allocator_args.h
 /usr/include/stdc-predef.h:
 ../vendor/x64-linux/include/SDL2/SDL.h:
 ../vendor/x64-linux/include/SDL2/SDL_main.h:
@@ -609,20 +593,3 @@
 /usr/include/c++/13/bits/memory_resource.h:
 /usr/include/c++/13/cstddef:
 /usr/include/c++/13/bits/uses_allocator_args.h:
-../vendor/x64-linux/include/imgui.h:
-../vendor/x64-linux/include/imconfig.h:
-/usr/include/assert.h:
-../vendor/x64-linux/include/imgui_impl_sdl2.h:
-../vendor/x64-linux/include/imgui_impl_vulkan.h:
-../vendor/x64-linux/include/vulkan/vulkan.h:
-../vendor/x64-linux/include/vulkan/vk_platform.h:
-../vendor/x64-linux/include/vulkan/vulkan_core.h:
-../vendor/x64-linux/include/vk_video/vulkan_video_codec_h264std.h:
-../vendor/x64-linux/include/vk_video/vulkan_video_codecs_common.h:
-../vendor/x64-linux/include/vk_video/vulkan_video_codec_h264std_encode.h:
-../vendor/x64-linux/include/vk_video/vulkan_video_codec_h264std.h:
-../vendor/x64-linux/include/vk_video/vulkan_video_codec_h265std.h:
-../vendor/x64-linux/include/vk_video/vulkan_video_codec_h265std_encode.h:
-../vendor/x64-linux/include/vk_video/vulkan_video_codec_h265std.h:
-../vendor/x64-linux/include/vk_video/vulkan_video_codec_h264std_decode.h:
-../vendor/x64-linux/include/vk_video/vulkan_video_codec_h265std_decode.h:

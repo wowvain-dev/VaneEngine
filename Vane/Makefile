@@ -24,7 +24,7 @@ ifeq ($(config),dbg)
   ALL_RESFLAGS += $(RESFLAGS) $(DEFINES) $(INCLUDES)
   LIBS += -Wl,-Bstatic -lSDL2 -lSDL2main -Wl,-Bdynamic -lvulkan -lfmt
   LDDEPS +=
-  ALL_LDFLAGS += $(LDFLAGS) -L../vendor/x64-linux/lib -L../../../vulkan/1.3.280.0/x86_64/lib -L/usr/lib64 -m64 -shared -Wl,-soname=libVane.so
+  ALL_LDFLAGS += $(LDFLAGS) -L../vendor/x64-linux/lib -L../../../../vulkan/1.3.280.0/x86_64/lib -L/usr/lib64 -m64 -shared -Wl,-soname=libVane.so
   LINKCMD = $(CXX) -o "$@" $(OBJECTS) $(RESOURCES) $(ALL_LDFLAGS) $(LIBS)
   define PREBUILDCMDS
   endef
@@ -51,7 +51,7 @@ ifeq ($(config),rel)
   ALL_RESFLAGS += $(RESFLAGS) $(DEFINES) $(INCLUDES)
   LIBS += -Wl,-Bstatic -lSDL2 -lSDL2main -Wl,-Bdynamic -lvulkan -lfmt
   LDDEPS +=
-  ALL_LDFLAGS += $(LDFLAGS) -L../vendor/x64-linux/lib -L../../../vulkan/1.3.280.0/x86_64/lib -L/usr/lib64 -m64 -shared -Wl,-soname=libVane.so -s
+  ALL_LDFLAGS += $(LDFLAGS) -L../vendor/x64-linux/lib -L../../../../vulkan/1.3.280.0/x86_64/lib -L/usr/lib64 -m64 -shared -Wl,-soname=libVane.so -s
   LINKCMD = $(CXX) -o "$@" $(OBJECTS) $(RESOURCES) $(ALL_LDFLAGS) $(LIBS)
   define PREBUILDCMDS
   endef
@@ -66,6 +66,8 @@ endif
 
 OBJECTS := \
 	$(OBJDIR)/Logger.o \
+	$(OBJDIR)/Platform_Linux.o \
+	$(OBJDIR)/Platform_Win32.o \
 	$(OBJDIR)/entry.o \
 
 RESOURCES := \
@@ -126,6 +128,12 @@ $(OBJECTS): | $(OBJDIR)
 endif
 
 $(OBJDIR)/Logger.o: Core/Logger.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/Platform_Linux.o: Platform/Platform_Linux.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/Platform_Win32.o: Platform/Platform_Win32.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/entry.o: entry.cpp
