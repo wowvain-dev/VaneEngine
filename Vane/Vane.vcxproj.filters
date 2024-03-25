@@ -24,12 +24,6 @@
     <ClInclude Include="Platform\Platform.h">
       <Filter>Platform</Filter>
     </ClInclude>
-    <ClInclude Include="Platform\Platform_Linux.h">
-      <Filter>Platform</Filter>
-    </ClInclude>
-    <ClInclude Include="Platform\Platform_Win32.h">
-      <Filter>Platform</Filter>
-    </ClInclude>
     <ClInclude Include="entry.h" />
   </ItemGroup>
   <ItemGroup>

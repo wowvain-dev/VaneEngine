@@ -13,21 +13,17 @@ bool Application::create(ApplicationConfig* config) {
     Logger::initializeLogging();
 
     // TODO(wowvain-dev): Remove later, used for testing
-    VFATAL("A test message: %f", 3.14f);
-    VERROR("A test message: %f", 3.14f);
-    VWARN("A test message: %f", 3.14f);
-    VINFO("A test message: %f", 3.14f);
-    VDEBUG("A test message: %f", 3.14f);
-    VTRACE("A test message: %f", 3.14f);
+    VFATAL("A test message: {}", 3.14f);
+    VERROR("A test message: {}", 3.14f);
+    VWARN("A test message: {}", 3.14f);
+    VINFO("A test message: {}", 3.14f);
+    VDEBUG("A test message: {}", 3.14f);
+    VTRACE("A test message: {}", 3.14f);
 
     isRunning = true;
     isSuspended = false;
 
-#ifdef VPLATFORM_WINDOWS
-    platform = new Platform_Win32();
-#elif VPLATFORM_LINUX
-    platform = new Platform_Linux();
-#endif
+    platform = new Platform();
 
     if (!platform->startup(
         config->name.c_str(),
