@@ -18,7 +18,7 @@ using namespace Vane;
 
 int main(int argc, char **argv)
 {
-    Logger::log_output(LOG_LEVEL::V_ERROR, "This is a test %f", 3.12f);
+    Logger::log_output(LOG_LEVEL::V_ERROR, "This is a test {}", 3.12f);
     ApplicationConfig config = {
         .startPosX = 100,
         .startPosY = 100,

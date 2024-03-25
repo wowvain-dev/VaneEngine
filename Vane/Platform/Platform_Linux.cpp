@@ -1,10 +1,10 @@
-#include "Platform_Linux.h"
+#include "Platform.h"
 
 #ifdef VPLATFORM_LINUX
 
 using namespace Vane;
 
-bool Platform_Linux::startup(
+bool Platform::startup(
     const char *application_name,
     i32 x,
     i32 y,
@@ -113,21 +113,21 @@ bool Platform_Linux::startup(
 
     if (stream_result <= 0)
     {
-        VFATAL("An error occured when flushing the stream: %d", stream_result);
+        VFATAL("An error occured when flushing the stream: {}", stream_result);
         return false;
     }
 
     return true;
 }
 
-void Platform_Linux::shutdown()
+void Platform::shutdown()
 {
     XAutoRepeatOn(display);
 
     xcb_destroy_window(connection, window);
 }
 
-bool Platform_Linux::pumpMessages()
+bool Platform::pumpMessages()
 {
     xcb_generic_event_t *event;
     xcb_client_message_event_t *cm;
@@ -188,53 +188,53 @@ bool Platform_Linux::pumpMessages()
     return !quitFlagged;
 }
 
-void *Platform_Linux::allocate(size_t size, bool aligned)
+void *Platform::allocate(size_t size, bool aligned)
 {
     return ::operator new(size);
 }
 
-void Platform_Linux::free(void *block, bool aligned)
+void Platform::free(void *block, bool aligned)
 {
     ::operator delete(block);
 }
 
-void *Platform_Linux::zeroMemory(void *block, size_t size)
+void *Platform::zeroMemory(void *block, size_t size)
 {
     return std::memset(block, 0, size);
 }
 
-void *Platform_Linux::copyMemory(void *dest, const void *source, size_t size)
+void *Platform::copyMemory(void *dest, const void *source, size_t size)
 {
     return std::memcpy(dest, source, size);
 }
 
-void *Platform_Linux::setMemory(void *dest, i32 value, size_t size)
+void *Platform::setMemory(void *dest, i32 value, size_t size)
 {
     return std::memset(dest, value, size);
 }
 
-void Platform_Linux::consoleWrite(const char *message, u8 color)
+void Platform::consoleWrite(const char *message, u8 color)
 {
     // FATAL, ERROR, WARN, INFO, DEBUG, TRACE
     const char *color_strings[] = {"0;41", "1;31", "1;33", "1;32", "1;34", "1;30"};
     printf("\033[%sm%s\033[0m", color_strings[color], message);
 }
 
-void Platform_Linux::consoleWriteError(const char *message, u8 color)
+void Platform::consoleWriteError(const char *message, u8 color)
 {
     // FATAL, ERROR, WARN, INFO, DEBUG, TRACE
     const char *color_strings[] = {"0;41", "1;31", "1;33", "1;32", "1;34", "1;30"};
     printf("\033[%sm%s\033[0m", color_strings[color], message);
 }
 
-f64 Platform_Linux::getAbsoluteTime()
+f64 Platform::getAbsoluteTime()
 {
     timespec now;
     clock_gettime(CLOCK_MONOTONIC, &now);
     return now.tv_sec + now.tv_nsec * 0.000000001;
 }
 
-void Platform_Linux::sleep(u64 ms)
+void Platform::sleep(u64 ms)
 {
 #if _POSIX_C_SOURCE >= 199309L
     timespec ts;

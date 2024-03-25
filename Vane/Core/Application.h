@@ -15,11 +15,11 @@
 #include "Defines.h"
 #include <string>
 
-#ifdef VPLATFORM_WINDOWS
-#include "../Platform/Platform_Win32.h"
-#elif VPLATFORM_LINUX
-#include "../Platform/Platform_Linux.h"
-#endif
+// #ifdef VPLATFORM_WINDOWS
+// #include "../Platform/Platform_Win32.h"
+// #elif VPLATFORM_LINUX
+// #include "../Platform/Platform_Linux.h"
+// #endif
 
 using std::string;
 

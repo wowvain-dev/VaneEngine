@@ -12,7 +12,10 @@
 
 #include "Defines.h"
 #include <tuple>
+#include "../Platform/Platform.h"
 #include <cstdio>
+#include <string>
+#include <format>
 
 #define LOG_WARN_ENABLED 1
 #define LOG_INFO_ENABLED 1
@@ -25,46 +28,70 @@
 #define LOG_TRACE_ENABLED 0
 #endif
 
-
 namespace Vane {
-    enum LOG_LEVEL {
-        V_FATAL = 0,
-        V_ERROR = 1,
-        V_WARN = 2,
-        V_INFO = 3,
-        V_DEBUG = 4,
-        V_TRACE = 5
-    };
+enum LOG_LEVEL {
+    V_FATAL = 0,
+    V_ERROR = 1,
+    V_WARN = 2,
+    V_INFO = 3,
+    V_DEBUG = 4,
+    V_TRACE = 5
+};
 
-    class Logger {
-    public:
 
-    private:
-    public:
-        static bool initializeLogging();
+class Logger {
+public:
 
-        static void shutdownLogging();
+private:
+public:
+    static bool initializeLogging();
 
-        template<typename... Args>
-        static void log_output(LOG_LEVEL level, const char *message, Args... args) {
-            std::tuple<const char *, const char *> level_strings[6] = {
-                std::make_tuple("[FATAL]: ", "0;41"),
-                std::make_tuple("[ERROR]: ", "1;31"),
-                std::make_tuple("[WARN]: ", "1;33"),
-                std::make_tuple("[INFO]: ", "1;32"),
-                std::make_tuple("[DEBUG]: ", "1;34"),
-                std::make_tuple("[TRACE]: ", "1:30")
-            };
-            bool is_error = level < 2;
-        
+    static void shutdownLogging();
 
-            printf("\033[%sm%s - ",
-                   std::get<1>(level_strings[level]),
-                   std::get<0>(level_strings[level]));
-            printf(message, args...);
-            printf("\033[0m\n");
+    template <typename... Args>
+    static void log_output(LOG_LEVEL level, std::format_string<Args...> message, Args&&... args) {
+        std::tuple<const char*, const char*> level_strings[6] = {
+            std::make_tuple("[FATAL]: ", "0;41"),
+            std::make_tuple("[ERROR]: ", "1;31"),
+            std::make_tuple("[WARN]: ", "1;33"),
+            std::make_tuple("[INFO]: ", "1;32"),
+            std::make_tuple("[DEBUG]: ", "1;34"),
+            std::make_tuple("[TRACE]: ", "1:30")
+        };
+        const bool is_error = level < LOG_LEVEL::V_WARN;
+
+        std::string label = std::format("\033[{}m{} - ", 
+               std::get<1>(level_strings[level]),
+               std::get<0>(level_strings[level])
+        );
+
+        std::string out_message;
+        std::string s;
+
+        try {
+            out_message = std::format(message, std::forward<Args>(args)...);
+            s = std::format("{}{}\n", label, out_message);
         }
-    };
+        catch (...) {
+            Platform::consoleWriteError("Bad string formatting", 1);
+            return;
+        }
+
+        if (is_error) {
+            Platform::consoleWriteError(s.c_str(), level);
+        }
+        else {
+            Platform::consoleWrite(s.c_str(), level);
+        }
+
+
+        // printf("\033[%sm%s - ",
+        //        std::get<1>(level_strings[level]),
+        //        std::get<0>(level_strings[level]));
+        // printf(message, args...);
+        // printf("\033[0m\n");
+    }
+};
 
 #ifndef VFATAL
 #define VFATAL(message, ...) Vane::Logger::log_output(Vane::LOG_LEVEL::V_FATAL, message, ##__VA_ARGS__);

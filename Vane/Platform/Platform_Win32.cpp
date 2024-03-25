@@ -1,4 +1,4 @@
-#include "Platform_Win32.h"
+#include "Platform.h"
 
 #ifdef VPLATFORM_WINDOWS
 
@@ -6,13 +6,13 @@
 
 using namespace Vane;
 
-f64 Platform_Win32::clock_frequency = 0.;
-LARGE_INTEGER Platform_Win32::start_time = {0};
+f64 Platform::clock_frequency = 0.;
+LARGE_INTEGER Platform::start_time = {0};
 
 LRESULT CALLBACK win32_process_message(HWND hwnd, u32 msg, WPARAM w_param,
                                        LPARAM l_param);
 
-bool Platform_Win32::startup(const char* application_name, i32 x, i32 y,
+bool Platform::startup(const char* application_name, i32 x, i32 y,
                              i32 width, i32 height) {
     h_instance = GetModuleHandleA(nullptr);
 
@@ -92,14 +92,14 @@ bool Platform_Win32::startup(const char* application_name, i32 x, i32 y,
     return true;
 }
 
-void Platform_Win32::shutdown() {
+void Platform::shutdown() {
     if (hwnd) {
         DestroyWindow(hwnd);
         hwnd = 0;
     }
 }
 
-bool Platform_Win32::pumpMessages() {
+bool Platform::pumpMessages() {
     MSG message;
     while (PeekMessageA(&message, nullptr, 0, 0, PM_REMOVE)) {
         TranslateMessage(&message);
@@ -109,27 +109,27 @@ bool Platform_Win32::pumpMessages() {
     return true;
 }
 
-void* Platform_Win32::allocate(size_t size, bool aligned) {
+void* Platform::allocate(size_t size, bool aligned) {
     return ::operator new(size);
 }
 
-void Platform_Win32::free(void* block, bool aligned) {
+void Platform::free(void* block, bool aligned) {
     ::operator delete(block);
 }
 
-void* Platform_Win32::zeroMemory(void* block, size_t size) {
+void* Platform::zeroMemory(void* block, size_t size) {
     return memset(block, 0, size);
 }
 
-void* Platform_Win32::copyMemory(void* dest, const void* source, size_t size) {
+void* Platform::copyMemory(void* dest, const void* source, size_t size) {
     return memcpy(dest, source, size);
 }
 
-void* Platform_Win32::setMemory(void* dest, i32 value, size_t size) {
+void* Platform::setMemory(void* dest, i32 value, size_t size) {
     return memset(dest, value, size);
 }
 
-void Platform_Win32::consoleWrite(const char* message, u8 color) {
+void Platform::consoleWrite(const char* message, u8 color) {
     HANDLE console_handle = GetStdHandle(STD_OUTPUT_HANDLE);
     // FATAL, ERROR, WARN, INFO, DEBUG, TRACE
     static u8 levels[6] = {64, 4, 6, 2, 1, 8};
@@ -142,7 +142,7 @@ void Platform_Win32::consoleWrite(const char* message, u8 color) {
                   number_written, nullptr);
 }
 
-void Platform_Win32::consoleWriteError(const char* message, u8 color) {
+void Platform::consoleWriteError(const char* message, u8 color) {
     HANDLE console_handle = GetStdHandle(STD_OUTPUT_HANDLE);
     // FATAL, ERROR, WARN, INFO, DEBUG, TRACE
     static u8 levels[6] = {64, 4, 6, 2, 1, 8};
@@ -155,13 +155,13 @@ void Platform_Win32::consoleWriteError(const char* message, u8 color) {
                   number_written, nullptr);
 }
 
-f64 Platform_Win32::getAbsoluteTime() {
+f64 Platform::getAbsoluteTime() {
     LARGE_INTEGER now_time;
     QueryPerformanceCounter(&now_time);
     return static_cast<f64>(now_time.QuadPart) * clock_frequency;
 }
 
-void Platform_Win32::sleep(u64 ms) { Sleep(ms); }
+void Platform::sleep(u64 ms) { Sleep(ms); }
 
 LRESULT win32_process_message(HWND hwnd, u32 msg, WPARAM w_param, LPARAM l_param) {
     switch (msg) {
@@ -180,8 +180,6 @@ LRESULT win32_process_message(HWND hwnd, u32 msg, WPARAM w_param, LPARAM l_param
         GetClientRect(hwnd, &r);
         u32 width = r.right - r.left;
         u32 height = r.bottom - r.top;
-
-        VINFO("WM_SIZE: %d %d %d %d", r.left, r.top, r.right, r.bottom);
 
         // Fire an event for resize;
     }

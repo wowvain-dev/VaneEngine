@@ -101,8 +101,6 @@
     <ClInclude Include="Core\Defines.h" />
     <ClInclude Include="Core\Logger.h" />
     <ClInclude Include="Platform\Platform.h" />
-    <ClInclude Include="Platform\Platform_Linux.h" />
-    <ClInclude Include="Platform\Platform_Win32.h" />
     <ClInclude Include="entry.h" />
   </ItemGroup>
   <ItemGroup>
