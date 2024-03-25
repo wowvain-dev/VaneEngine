@@ -1,6 +1,6 @@
 #include "Platform.h"
 
-#ifdef VPLATFORM_LINUX 
+#ifdef VPLATFORM_LINUX
 
 #include "../Core/Defines.h"
 #include "../Core/Logger.h"
@@ -14,7 +14,7 @@
 
 #if _POSIX_C_SOURCE >= 199309L
 #include <time.h>
-#else 
+#else
 #include <unistd.h>
 #endif
 
@@ -24,37 +24,38 @@
 #include <iostream>
 #include <string>
 
-namespace Vane {
-    class LinuxPlatform : public Platform {
+namespace Vane
+{
+    class Platform_Linux : public Platform
+    {
         Display *display;
         xcb_connection_t *connection;
         xcb_window_t window;
         xcb_screen_t *screen;
         xcb_atom_t wm_protocols;
         xcb_atom_t wm_delete_win;
-    
-        public:
+
+    public:
         bool startup(
-            const char*,
+            const char *,
             i32,
             i32,
             i32,
-            i32
-        );
+            i32) override;
 
-        void shutdown();
+        void shutdown() override;
 
-        bool pumpMessages();
+        bool pumpMessages() override;
 
-        void* allocate(std::size_t, bool);
-        void free(void*, std::size_t);
-        void* zeroMemory(void*, std::size_t);
-        void* copyMemory(void*, const void*, std::size_t);
-        void* setMemory(void*, i32, std::size_t);
-        void consoleWrite(const char*, u8);
-        void consoleWriteError(const char*, u8);
-        f64 getAbsoluteTime();
-        void sleep(u64);
+        void *allocate(size_t, bool) override;
+        void free(void *, bool) override;
+        void *zeroMemory(void *, size_t) override;
+        void *copyMemory(void *, const void *, size_t) override;
+        void *setMemory(void *, i32, size_t) override;
+        void consoleWrite(const char *, u8) override;
+        void consoleWriteError(const char *, u8) override;
+        f64 getAbsoluteTime() override;
+        void sleep(u64) override;
     };
 };
 

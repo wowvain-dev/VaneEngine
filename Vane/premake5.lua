@@ -28,17 +28,22 @@ project "Vane"
     }
 
     links {
-        "vulkan",
         "fmt",
-        "SDL2:static",
-        "SDL2main:static",
+        "SDL2",
     }
 
     filter "system:Linux"
         links {
             "X11",
             "xcb",
-            ""
+            "X11-xcb",
+            "vulkan",
+            "SDL2main"
+        }
+
+    filter "system:Windows"
+        links {
+            "vulkan-1"
         }
 
     filter "configurations:dbg"

@@ -24,35 +24,30 @@
 using std::string;
 
 namespace Vane {
+struct VAPI ApplicationConfig {
+    i16 startPosX;
+    i16 startPosY;
+    i16 startWidth;
+    i16 startHeight;
 
-    struct VAPI ApplicationConfig {
-        i16 startPosX;
-        i16 startPosY;
-        i16 startWidth;
-        i16 startHeight;
-        
-        string name;
-    };
+    string name;
+};
 
-    class VAPI Application {
-    private:
-        VAPI static bool initialised;
-        ApplicationConfig startConfig;
+class VAPI Application {
+private:
+    static bool initialised;
+    ApplicationConfig startConfig;
 
-        bool isRunning;
-        bool isSuspended;
-        Platform* platform;
-        i16 width;
-        i16 height;
-        f64 lastTime;
-        
+    bool isRunning;
+    bool isSuspended;
+    Platform* platform;
+    i16 width;
+    i16 height;
+    f64 lastTime;
 
-    public:
-        bool create(ApplicationConfig* config);
-        bool run();
-
-    };
-
-    bool Application::initialised = false;
+public:
+    bool create(ApplicationConfig* config);
+    bool run();
+};
 
 };

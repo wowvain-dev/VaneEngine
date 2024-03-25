@@ -2,6 +2,8 @@
 
 using namespace Vane;
 
+bool Application::initialised = false;
+
 bool Application::create(ApplicationConfig* config) {
     if (Application::initialised) {
         VFATAL("Application::create called more than once.");
@@ -18,22 +20,22 @@ bool Application::create(ApplicationConfig* config) {
     VDEBUG("A test message: %f", 3.14f);
     VTRACE("A test message: %f", 3.14f);
 
-    isRunning = true; 
+    isRunning = true;
     isSuspended = false;
 
 #ifdef VPLATFORM_WINDOWS
-    platform = new WindowsPlatform();
+    platform = new Platform_Win32();
 #elif VPLATFORM_LINUX
-    platform = new LinuxPlatform();
+    platform = new Platform_Linux();
 #endif
 
-    if(!platform->startup(
-        config->name.c_str(), 
-        config->startPosX, 
-        config->startPosY, 
+    if (!platform->startup(
+        config->name.c_str(),
+        config->startPosX,
+        config->startPosY,
         config->startWidth,
         config->startHeight)) {
-            VFATAL("Couldn't startup platform properly!");
+        VFATAL("Couldn't startup platform properly!");
         return false;
     }
 
@@ -43,8 +45,8 @@ bool Application::create(ApplicationConfig* config) {
 }
 
 bool Application::run() {
-    while(isRunning) {
-        if(!platform->pumpMessages()) {
+    while (isRunning) {
+        if (!platform->pumpMessages()) {
             isRunning = false;
         }
     }

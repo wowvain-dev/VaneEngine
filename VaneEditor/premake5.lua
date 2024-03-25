@@ -35,9 +35,18 @@ project "VaneEditor"
     links {
         "vane",
         "imgui",
-        "SDL2:static",
-        "SDL2main:static"
+        "SDL2"
     }
+
+    filter "system:Linux"
+        links {
+            "SDL2main"
+        }
+
+    filter "system:Windows"
+        postbuildcommands {
+            '{COPY} %{wks.location}build\\' .. outputdir .. '\\Vane\\Vane.dll %{wks.location}build\\' .. outputdir .. '\\%{prj.name}' 
+        }
 
     filter "configurations:dbg"
         defines { "DEBUG", "_DEBUG" }

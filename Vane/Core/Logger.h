@@ -56,6 +56,8 @@ namespace Vane {
                 std::make_tuple("[TRACE]: ", "1:30")
             };
             bool is_error = level < 2;
+        
+
             printf("\033[%sm%s - ",
                    std::get<1>(level_strings[level]),
                    std::get<0>(level_strings[level]));
