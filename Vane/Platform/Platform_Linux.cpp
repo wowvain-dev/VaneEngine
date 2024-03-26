@@ -1,4 +1,4 @@
-#include "Platform.h"
+#include "Platform.hpp"
 
 #ifdef VPLATFORM_LINUX
 
@@ -20,7 +20,10 @@ bool Platform::startup(
 
     if (xcb_connection_has_error(connection))
     {
-        VFATAL("Failed to form connection via XCB.");
+        
+        Platform::consoleWriteError("Failed to create XCB connection.",
+            Vane::LOG_LEVEL::V_FATAL
+        );
         return false;
     }
 
@@ -113,7 +116,9 @@ bool Platform::startup(
 
     if (stream_result <= 0)
     {
-        VFATAL("An error occured when flushing the stream: {}", stream_result);
+        Platform::consoleWriteError("An error occured when flushing the stream.",
+            Vane::LOG_LEVEL::V_FATAL
+        );
         return false;
     }
 
@@ -123,7 +128,12 @@ bool Platform::startup(
 void Platform::shutdown()
 {
     XAutoRepeatOn(display);
+    xcb_destroy_window(connection, window);
+}
 
+Platform::~Platform() 
+{
+    XAutoRepeatOn(display);
     xcb_destroy_window(connection, window);
 }
 

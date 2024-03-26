@@ -1,5 +1,6 @@
 project "Vane"
     kind "SharedLib"
+    cppdialect "C++20"
     language "C++"
 
     targetdir ("../build/" .. outputdir .. "/%{prj.name}")

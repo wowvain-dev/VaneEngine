@@ -1,55 +1,62 @@
-#include "Application.h"
+#include "Application.hpp"
+#include "../GameTypes.hpp"
 
-using namespace Vane;
+namespace Vane
+{
 
-bool Application::initialised = false;
+    Application *Application::s_Instance = nullptr;
 
-bool Application::create(ApplicationConfig* config) {
-    if (Application::initialised) {
-        VFATAL("Application::create called more than once.");
-        return false;
-    }
-
-    Logger::initializeLogging();
-
-    // TODO(wowvain-dev): Remove later, used for testing
-    VFATAL("A test message: {}", 3.14f);
-    VERROR("A test message: {}", 3.14f);
-    VWARN("A test message: {}", 3.14f);
-    VINFO("A test message: {}", 3.14f);
-    VDEBUG("A test message: {}", 3.14f);
-    VTRACE("A test message: {}", 3.14f);
-
-    isRunning = true;
-    isSuspended = false;
-
-    platform = new Platform();
-
-    if (!platform->startup(
-        config->name.c_str(),
-        config->startPosX,
-        config->startPosY,
-        config->startWidth,
-        config->startHeight)) {
-        VFATAL("Couldn't startup platform properly!");
-        return false;
-    }
-
-    Application::initialised = true;
-
-    return true;
-}
-
-bool Application::run() {
-    while (isRunning) {
-        if (!platform->pumpMessages()) {
-            isRunning = false;
+    Application::Application(const ApplicationConfig &config)
+        : m_Config(config)
+    {
+        if (s_Instance != nullptr) {
+            VFATAL("Instance already created.");
+            return;
         }
+        s_Instance = this;
+
+        Logger::initializeLogging();
+
+        VFATAL("A test message: {}", 3.f);
+        VERROR("A test message: {}", 3.f);
+        VWARN("A test message: {}", 3.f);
+        VINFO("A test message: {}", 3.f);
+        VDEBUG("A test message: {}", 3.f);
+        VTRACE("A test message: {}", 3.f);
+
+        m_Running = true;
+        m_Suspended = false;
+        m_Platform = std::unique_ptr<Platform>(new Platform);
+        m_Platform -> startup(
+            config.name.c_str(),
+            config.startPosX,
+            config.startPosY,
+            config.windowWidth,
+            config.windowHeight
+        );
     }
 
-    isRunning = false;
+    Application::~Application() {
+        VDEBUG("Shutting down APPLICATION");
 
-    platform->shutdown();
+        m_Platform.reset();
 
-    return true;
-}
+        VDEBUG("Shat down APPLICATION");
+    }
+
+    void Application::run()
+    {
+        // onInit();
+
+        while (m_Running)
+        {
+            m_Running = false;
+        }
+
+        // onShutdown();
+    }
+
+    void Application::shutdown() {
+        m_Running = false;
+    }
+};

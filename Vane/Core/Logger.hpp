@@ -10,9 +10,9 @@
 //////////////////////////////////////////////////////////////////////////////////////////
 #pragma once
 
-#include "Defines.h"
+#include "Defines.hpp"
 #include <tuple>
-#include "../Platform/Platform.h"
+#include "../Platform/Platform.hpp"
 #include <cstdio>
 #include <string>
 #include <format>
@@ -29,16 +29,6 @@
 #endif
 
 namespace Vane {
-enum LOG_LEVEL {
-    V_FATAL = 0,
-    V_ERROR = 1,
-    V_WARN = 2,
-    V_INFO = 3,
-    V_DEBUG = 4,
-    V_TRACE = 5
-};
-
-
 class Logger {
 public:
 
@@ -73,7 +63,7 @@ public:
             s = std::format("{}{}\n", label, out_message);
         }
         catch (...) {
-            Platform::consoleWriteError("Bad string formatting", 1);
+            Platform::consoleWriteError("Bad string formatting", Vane::LOG_LEVEL::V_FATAL);
             return;
         }
 

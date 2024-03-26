@@ -10,26 +10,20 @@
 //////////////////////////////////////////////////////////////////////////////////////////
 
 #include <iostream>
-#include <entry.h>
+#include <memory>
 
-#include <Core/Application.h>
+#include <Core/Application.hpp>
+#include <EntryPoint.hpp>
 
-using namespace Vane;
+Vane::Application* Vane::CreateApplication(int argc, char** argv) {
+    ApplicationConfig config;
+    config.name = "Vane Sandbox";
+    config.windowHeight = 500;
+    config.windowWidth = 500;
+    config.startPosX = 100;
+    config.startPosY = 100;
 
-int main(int argc, char **argv)
-{
-    Logger::log_output(LOG_LEVEL::V_ERROR, "This is a test {}", 3.12f);
-    ApplicationConfig config = {
-        .startPosX = 100,
-        .startPosY = 100,
-        .startWidth = 500,
-        .startHeight = 500,
-        .name = "Sandbox"};
+    auto app = new Vane::Application(config);
 
-    auto app = new Application;
-
-    app->create(&config);
-    app->run();
-
-    return 0;
+    return app;
 }

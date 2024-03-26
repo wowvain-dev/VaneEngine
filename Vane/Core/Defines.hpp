@@ -12,6 +12,17 @@
 #pragma once
 #include <cstdint>
 
+namespace Vane{
+enum LOG_LEVEL {
+    V_FATAL = 0,
+    V_ERROR = 1,
+    V_WARN = 2,
+    V_INFO = 3,
+    V_DEBUG = 4,
+    V_TRACE = 5
+};
+};
+
 // UNSIGNED INT TYPES
 typedef uint_fast8_t    u8;
 typedef uint_fast16_t   u16;
@@ -110,3 +121,9 @@ typedef double f64;
 #define VAPI
 #endif
 #endif
+
+
+// Utils
+
+// used for bit masking
+#define BIT(x) (1u << x)

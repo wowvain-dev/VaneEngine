@@ -1,17 +1,23 @@
+# IDE Configs
 .idea/
 .vs/
 .vscode/
+
+# Build files
 build/
 build-objs/
 vcpkg_installed/
 vendor/
 
+# CLion / CMake generator
 CMakeLists.txt
-Vane/CMakeLists.txt
-Sandbox/CMakeLists.txt
-VaneEditor/CMakeLists.txt
+**/CMakeLists.txt
 
+# gmake generator
 Makefile
-Vane/Makefile
-Sandbox/Makefile
-VaneEditor/Makefile
+**/Makefile
+
+# Visual Studio generator
+*.sln
+*.vcxproj 
+*.vxproj.user

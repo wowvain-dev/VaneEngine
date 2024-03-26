@@ -1,5 +1,6 @@
 project "Sandbox" 
     kind "ConsoleApp"
+    cppdialect "C++20"
 
     targetdir ("../build/" .. outputdir .. "/%{prj.name}")
     objdir ("../build-objs/" .. outputdir .. "/%{prj.name}")

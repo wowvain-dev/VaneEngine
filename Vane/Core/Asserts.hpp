@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "Defines.h"
+#include "Defines.hpp"
 #include <string>
 
 #define VASSERTIONS_ENABLED

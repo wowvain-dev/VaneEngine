@@ -1,8 +1,8 @@
-#include "Platform.h"
+#include "Platform.hpp"
 
 #ifdef VPLATFORM_WINDOWS
 
-#include "../Core/Logger.h"
+#include "../Core/Logger.hpp"
 
 using namespace Vane;
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../Core/Defines.h"
+#include "../Core/Defines.hpp"
 
 #include <cstdlib>
 #include <cstring>
@@ -54,6 +54,7 @@ private:
 #endif
 
 public:
+    ~Platform();
     bool startup(
         const char* applicationName,
         i32 x,

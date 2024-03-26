@@ -10,44 +10,64 @@
 //////////////////////////////////////////////////////////////////////////////////////////
 #pragma once
 
-#include "../Platform/Platform.h"
-#include "Logger.h"
-#include "Defines.h"
+#include "../Platform/Platform.hpp"
+#include "Logger.hpp"
+#include "Defines.hpp"
+#include <memory>
 #include <string>
 
-// #ifdef VPLATFORM_WINDOWS
-// #include "../Platform/Platform_Win32.h"
-// #elif VPLATFORM_LINUX
-// #include "../Platform/Platform_Linux.h"
-// #endif
-
 using std::string;
+
+class Game;
 
 namespace Vane {
 struct VAPI ApplicationConfig {
     i16 startPosX;
     i16 startPosY;
-    i16 startWidth;
-    i16 startHeight;
-
-    string name;
+    i16 windowWidth;
+    i16 windowHeight;
+    string name = "Vane";
+    bool VSync = true;
+    bool startMaximized = false;
+    bool resizable = true;
+};
 };
 
+namespace Vane {
 class VAPI Application {
-private:
-    static bool initialised;
-    ApplicationConfig startConfig;
+    
+public:
+    Application(const ApplicationConfig& config);
+    virtual ~Application();
 
-    bool isRunning;
-    bool isSuspended;
-    Platform* platform;
+    void run();
+    void shutdown();
+
+    virtual void onInit() {}
+    virtual void onShutdown() {}
+    virtual void onUpdate(f32 delta) {}
+
+    inline Platform& platform() { return *m_Platform; }
+    static inline Application& get() { return *s_Instance; }
+
+    Game* gameInstance;
     i16 width;
     i16 height;
     f64 lastTime;
 
 public:
-    bool create(ApplicationConfig* config);
-    bool run();
+    bool create(Game* gameInstance);
+
+private:
+    static Application* s_Instance;
+    ApplicationConfig m_Config;
+    std::unique_ptr<Platform> m_Platform;
+    int test;
+    bool m_Running;
+    bool m_Suspended;
+
 };
+
+Application* CreateApplication(int argc, char** argv);
 
 };
