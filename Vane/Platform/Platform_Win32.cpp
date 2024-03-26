@@ -99,6 +99,13 @@ void Platform::shutdown() {
     }
 }
 
+Platform::~Platform() {
+    if (hwnd) {
+        DestroyWindow(hwnd);
+        hwnd = 0;
+    }
+}
+
 bool Platform::pumpMessages() {
     MSG message;
     while (PeekMessageA(&message, nullptr, 0, 0, PM_REMOVE)) {

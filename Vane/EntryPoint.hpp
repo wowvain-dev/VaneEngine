@@ -26,7 +26,7 @@ namespace Vane
     }
 }
 
-int VAPI main(int argc, char **argv)
+int main(int argc, char **argv)
 {
     return Vane::Main(argc, argv);
 }
