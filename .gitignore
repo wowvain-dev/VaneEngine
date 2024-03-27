@@ -20,4 +20,5 @@ Makefile
 # Visual Studio generator
 *.sln
 *.vcxproj 
-*.vxproj.user
+*.vcxproj.user
+*.vcxproj.filters
