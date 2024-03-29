@@ -102,6 +102,7 @@ namespace Vane
         void deallocateArray(Allocator &allocator, T *array)
         {
             VASSERT(array != nullptr);
+
             u32 length = *(((u32 *)array) - 1);
 
             for (u32 i = 0; i < length; i++)
