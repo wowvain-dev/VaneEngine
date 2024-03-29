@@ -1,5 +1,4 @@
 #include "Application.hpp"
-#include "../GameTypes.hpp"
 
 namespace Vane
 {
@@ -9,13 +8,16 @@ namespace Vane
     Application::Application(const ApplicationConfig &config)
         : m_Config(config)
     {
+        // VASSERT_MSG(s_Instance != nullptr, "Instance already created.");
         if (s_Instance != nullptr) {
-            VFATAL("Instance already created.");
+            VFATAL("Application instance already created.");
             return;
         }
         s_Instance = this;
 
         Logger::initializeLogging();
+
+        // TODO: initialize memory manager 
 
         VFATAL("A test message: {}", 3.f);
         VERROR("A test message: {}", 3.f);
@@ -46,14 +48,12 @@ namespace Vane
 
     void Application::run()
     {
-        // onInit();
-
+        onInit();
         while (m_Running)
         {
-            m_Running = false;
+            onUpdate(1);
         }
-
-        // onShutdown();
+        onShutdown();
     }
 
     void Application::shutdown() {
