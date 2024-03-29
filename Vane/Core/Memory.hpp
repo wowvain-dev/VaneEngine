@@ -17,34 +17,40 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-#include "Core/Application.hpp"
-#include "Core/Logger.hpp"
-#include "Core/Asserts.hpp"
+#pragma once
 
-extern Vane::Application *Vane::CreateApplication(int argc, char **argv);
-bool g_ApplicationRunning = true;
+#include <new>
+#include <string>
+#include <memory>
+#include <algorithm>
 
-namespace Vane
-{
-    int Main(int argc, char **argv)
-    {
-        // Initializing systems;
-        Application *app = CreateApplication(argc, argv);
+using std::string;
 
-        VASSERT_MSG(app, "Client application is null!");
+#include "Logger.hpp"
+#include "Asserts.hpp"
+#include "Defines.hpp"
+#include "Allocator.hpp"
 
-        app->run();
+#include <cstdlib>
 
-        app->shutdown();
+namespace Vane {
+class VAPI Align {
+public: 
+    explicit Align(int value) : m_value(value) {}
 
-        delete app;
-        // Shutting systems down;
-        VERROR("SHAT SYSTEMS DOWN");
-        return 0;
-    }
+    inline u32 getValue() const { return m_value; }
+
+private:
+    int m_value;
+};
 }
 
-int main(int argc, char **argv)
-{
-    return Vane::Main(argc, argv);
-}
+void* operator new(u32 size);
+void* operator new[](u32 size);
+void  operator delete(void* mem) noexcept;
+void  operator delete[](void* mem) noexcept;
+
+void* operator new(u32 size, Vane::Align alignment);
+void* operator new[](u32 size, Vane::Align alignment);
+void  operator delete(void* mem, Vane::Align alignment) noexcept;
+void  operator delete[](void* mem, Vane::Align alignment) noexcept;

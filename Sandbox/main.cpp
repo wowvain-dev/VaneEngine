@@ -1,21 +1,34 @@
-//////////////////////////////////////////////////////////////////////////////////////////
-// Copyright wowvain-dev | Bogdan Stanciu (c) 2024.
-//
-// MIT License
-// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-//
-// The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-//////////////////////////////////////////////////////////////////////////////////////////
-
 #include <iostream>
-#include <memory>
 
 #include <Core/Application.hpp>
+#include <Core/Logger.hpp>
+#include <Core/Memory.hpp>
+#include <Platform/Platform.hpp>
 #include <EntryPoint.hpp>
 
-Vane::Application* Vane::CreateApplication(int argc, char** argv) {
+class Game : public Vane::Application
+{
+public:
+    Game(Vane::ApplicationConfig config) : Vane::Application(config) {}
+    void onInit()
+    {
+        VDEBUG("game Initialized");
+    }
+
+    void onShutdown()
+    {
+        VDEBUG("onShutdown called...");
+    }
+
+    void onUpdate(f32 ms)
+    {
+        // VDEBUG("onUpdate called...");
+        Vane::Platform::sleep(2000);        
+    }
+};
+
+Vane::Application* Vane::CreateApplication(int argc, char **argv)
+{
     ApplicationConfig config;
     config.name = "Vane Sandbox";
     config.windowHeight = 500;
@@ -23,7 +36,7 @@ Vane::Application* Vane::CreateApplication(int argc, char** argv) {
     config.startPosX = 100;
     config.startPosY = 100;
 
-    auto app = new Vane::Application(config);
+    auto app = new Game(config);
 
     return app;
 }
