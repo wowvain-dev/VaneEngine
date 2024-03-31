@@ -29,8 +29,7 @@ project "Vane"
     }
 
     links {
-        "fmt",
-        "SDL2",
+        "SDL2"
     }
 
     filter "system:Linux"

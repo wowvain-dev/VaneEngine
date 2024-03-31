@@ -22,6 +22,7 @@
 #include <new>
 #include <string>
 #include <memory>
+#include <cstdlib>
 #include <algorithm>
 
 using std::string;
@@ -36,21 +37,27 @@ using std::string;
 namespace Vane {
 class VAPI Align {
 public: 
-    explicit Align(int value) : m_value(value) {}
+    explicit Align(v_size value) : m_value(value) {}
 
-    inline u32 getValue() const { return m_value; }
+    inline v_size getValue() const { return m_value; }
 
 private:
-    int m_value;
+    v_size m_value;
 };
 }
 
-void* operator new(u32 size);
-void* operator new[](u32 size);
+void* operator new(v_size size);
+void* operator new[](v_size size);
 void  operator delete(void* mem) noexcept;
 void  operator delete[](void* mem) noexcept;
 
-void* operator new(u32 size, Vane::Align alignment);
-void* operator new[](u32 size, Vane::Align alignment);
+void* operator new(v_size size, Vane::Align alignment);
+void* operator new[](v_size size, Vane::Align alignment);
 void  operator delete(void* mem, Vane::Align alignment) noexcept;
 void  operator delete[](void* mem, Vane::Align alignment) noexcept;
+
+#ifdef _MSC_VER
+#define V_ALIGNED_ALLOC(x, y) _aligned_malloc(x, y)
+#else
+#define V_ALIGNED_ALLOC(x, y) std::aligned_alloc(x, y) 
+#endif

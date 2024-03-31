@@ -18,7 +18,10 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #pragma once
+#include <algorithm>
 #include <cstdint>
+#include <cstdlib>
+#include <memory>
 
 namespace Vane{
 enum LOG_LEVEL {
@@ -31,32 +34,36 @@ enum LOG_LEVEL {
 };
 };
 
+// BUFFER SIZE TYPE
+using v_size    = std::size_t;
+
 // UNSIGNED INT TYPES
-typedef uint_fast8_t    u8;
-typedef uint_fast16_t   u16;
-typedef uint_fast32_t   u32;
-typedef uint_fast64_t   u64;
+using u8        = uint_fast8_t;
+using u16       = uint_fast16_t;
+using u32       = uint_fast32_t;
+using u64       = uint_fast64_t;
 
 // LEAST UNSIGNED INT TYPES
-typedef uint_least8_t   u_l8;
-typedef uint_least16_t  u_l16;
-typedef uint_least32_t  u_l32;
-typedef uint_least64_t  u_l64;
+using u_l8      = uint_least8_t;
+using u_l16     = uint_least16_t;
+using u_l32     = uint_least32_t;
+using u_l64     = uint_least64_t;
 
 // SIGNED INT TYPES
-typedef int_fast8_t    i8;
-typedef int_fast16_t   i16;
-typedef int_fast32_t   i32;
-typedef int_fast64_t   i64;
+using i8        = int_fast8_t;
+using i16       = int_fast16_t;
+using i32       = int_fast32_t;
+using i64       = int_fast64_t;
 
 // LEAST INT TYPES
-typedef int_least8_t   i_l8;
-typedef int_least16_t  i_l16;
-typedef int_least32_t  i_l32;
-typedef int_least64_t  i_l64;
+using i_l8      = int_least8_t;
+using i_l16     = int_least16_t;
+using i_l32     = int_least32_t;
+using i_l64     = int_least64_t;
 
-typedef float f32;
-typedef double f64;
+// FLOATING POINT TYPES
+using f32       = float;
+using f64       = double;
 
 #if defined(__clang__) || defined(__gcc__)
 #define STATIC_ASSERT _Static_assert
@@ -135,3 +142,6 @@ typedef double f64;
 
 // used for bit masking
 #define BIT(x) (1u << x)
+
+// remove potential definition of `max` macro
+#undef max

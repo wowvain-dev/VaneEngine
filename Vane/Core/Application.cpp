@@ -51,6 +51,7 @@ namespace Vane
         onInit();
         while (m_Running)
         {
+            m_Platform->pumpMessages();
             onUpdate(1);
         }
         onShutdown();

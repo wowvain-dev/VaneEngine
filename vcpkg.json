@@ -1,6 +1,5 @@
 {
   "dependencies": [
-    "fmt",
     "glad",
     "glfw3",
     "glm",

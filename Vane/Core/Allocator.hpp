@@ -29,7 +29,7 @@ namespace Vane
     class Allocator
     {
     public:
-        Allocator(u32 size, void *start)
+        Allocator(v_size size, void *start)
         {
             _start = start;
             _size = size;
@@ -44,18 +44,18 @@ namespace Vane
             _size = 0;
         }
 
-        virtual void *allocate(u32 size, u8 alignment = 4) = 0;
+        virtual void *allocate(v_size size, v_size alignment = 4) = 0;
         virtual void deallocate(void *p) = 0;
         void *getStart() const { return _start; }
-        u32 getSize() const { return _size; }
-        u32 getUsedMemory() const { return _used_memory; }
+        v_size getSize() const { return _size; }
+        v_size getUsedMemory() const { return _used_memory; }
         u32 getNumAllocations() const { return _num_allocations; }
 
     protected:
         void *_start;
-        u32 _size;
-        u32 _used_memory;
-        u32 _num_allocations;
+        v_size _size;
+        v_size _used_memory;
+        v_size _num_allocations;
     };
 
     namespace allocator
@@ -80,19 +80,19 @@ namespace Vane
         }
 
         template <class T>
-        T *allocateArray(Allocator &allocator, u32 length)
+        T *allocateArray(Allocator &allocator, v_size length)
         {
             VASSERT(length != 0);
-            u8 headerSize = sizeof(u32) / sizeof(T);
+            u8 headerSize = sizeof(v_size) / sizeof(T);
 
-            if (sizeof(u32) % sizeof(T) > 0)
+            if (sizeof(v_size) % sizeof(T) > 0)
                 headerSize += 1;
 
             // Allocate extra space to store array length in the bytes before the array
             T *p = ((T *)allocator.allocate(sizeof(T) * (length + headerSize), __alignof(T))) + headerSize;
-            *(((u32 *)p) - 1) = length;
+            *(((v_size *)p) - 1) = length;
 
-            for (u32 i = 0; i < length; i++)
+            for (v_size i = 0; i < length; i++)
                 new (&p) T;
 
             return p;
@@ -103,14 +103,14 @@ namespace Vane
         {
             VASSERT(array != nullptr);
 
-            u32 length = *(((u32 *)array) - 1);
+            v_size length = *(((v_size *)array) - 1);
 
-            for (u32 i = 0; i < length; i++)
+            for (v_size i = 0; i < length; i++)
                 array.~T();
 
             // Calculate how much extra memory was allocated to store the length before the array
-            u8 headerSize = sizeof(u32) / sizeof(T);
-            if (sizeof(u32) % sizeof(T) > 0)
+            v_size headerSize = sizeof(v_size) / sizeof(T);
+            if (sizeof(v_size) % sizeof(T) > 0)
                 headerSize += 1;
             allocator.deallocate(array - headerSize);
         }

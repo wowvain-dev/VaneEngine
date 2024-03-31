@@ -23,7 +23,6 @@ public:
     void onUpdate(f32 ms)
     {
         // VDEBUG("onUpdate called...");
-        Vane::Platform::sleep(2000);        
     }
 };
 
