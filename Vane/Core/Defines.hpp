@@ -17,6 +17,8 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+// ReSharper disable CppClangTidyBugproneImplicitWideningOfMultiplicationResult
+
 #pragma once
 #include <algorithm>
 #include <cstdint>
@@ -36,6 +38,12 @@ enum LOG_LEVEL {
 
 // BUFFER SIZE TYPE
 using v_size    = std::size_t;
+
+// Custom annotations
+inline auto operator""_KB(v_size const x) { return 1024 * x; }
+inline auto operator""_MB(v_size const x) { return 1024 * 1024 * x; }
+inline auto operator""_GB(v_size const x) { return 1024 * 1024 * 1024 * x; }
+
 
 // UNSIGNED INT TYPES
 using u8        = uint_fast8_t;

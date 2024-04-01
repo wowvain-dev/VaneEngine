@@ -1,6 +1,8 @@
 project "Sandbox" 
     kind "ConsoleApp"
     cppdialect "C++20"
+    
+    dependson { "Vane" }
 
     targetdir ("../build/" .. outputdir .. "/%{prj.name}")
     objdir ("../build-objs/" .. outputdir .. "/%{prj.name}")
@@ -32,7 +34,7 @@ project "Sandbox"
 
     filter "system:Windows"
         -- Copy the DLL to the binary directory of the Sandbox
-        postbuildcommands {
+        prebuildcommands {
             '{COPY} %{wks.location}build\\' .. outputdir .. '\\Vane\\Vane.dll %{wks.location}build\\' .. outputdir .. '\\%{prj.name}' 
         }
 
