@@ -33,10 +33,10 @@ project "Sandbox"
     }
 
     filter "system:Windows"
-        -- Copy the DLL to the binary directory of the Sandbox
-        prebuildcommands {
-            '{COPY} %{wks.location}build\\' .. outputdir .. '\\Vane\\Vane.dll %{wks.location}build\\' .. outputdir .. '\\%{prj.name}' 
-        }
+        -- -- Copy the DLL to the binary directory of the Sandbox
+        -- prebuildcommands {
+        --     '{COPY} %{wks.location}build\\' .. outputdir .. '\\Vane\\Vane.dll %{wks.location}build\\' .. outputdir .. '\\%{prj.name}' 
+        -- }
 
     filter "configurations:dbg" 
         defines { "DEBUG", "_DEBUG" }

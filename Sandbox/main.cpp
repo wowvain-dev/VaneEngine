@@ -2,7 +2,6 @@
 
 #include <Core/Application.hpp>
 #include <Core/Logger.hpp>
-#include <Core/Memory.hpp>
 #include <Platform/Platform.hpp>
 #include <EntryPoint.hpp>
 
@@ -12,8 +11,6 @@ public:
     Game(const Vane::ApplicationConfig& config) : Vane::Application(config) {}
     void onInit() override {
         VDEBUG("game Initialized 2");
-        3;
-
     }
 
     void onShutdown() override {

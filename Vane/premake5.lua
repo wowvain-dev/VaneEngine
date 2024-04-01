@@ -1,5 +1,5 @@
 project "Vane"
-    kind "SharedLib"
+    kind "StaticLib"
     cppdialect "C++20"
     language "C++"
 
@@ -46,9 +46,6 @@ project "Vane"
         links {
             "vulkan-1"
         }
-        -- postbuildcommands {
-        --    '{COPY} %{wks.location}build\\' .. outputdir .. '\\Vane\\Vane.dll %{wks.location}build\\' .. outputdir ..'\\Sandbox'
-        -- }
 
     filter "configurations:dbg"
         defines { "DEBUG", "_DEBUG" }

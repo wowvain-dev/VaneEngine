@@ -23,7 +23,6 @@
 #include "Asserts.hpp"
 #include "Logger.hpp"
 #include "Defines.hpp"
-#include "Memory.hpp"
 #include <memory>
 #include <string>
 
@@ -32,7 +31,7 @@ using std::string;
 class Game;
 
 namespace Vane {
-struct VAPI ApplicationConfig {
+struct  ApplicationConfig {
     i16 startPosX;
     i16 startPosY;
     i16 windowWidth;
@@ -45,7 +44,7 @@ struct VAPI ApplicationConfig {
 };
 
 namespace Vane {
-class VAPI Application {
+class  Application {
     
 public:
     Application(const ApplicationConfig& config);

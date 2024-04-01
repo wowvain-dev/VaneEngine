@@ -34,9 +34,9 @@
 #endif
 
 namespace Vane {
-    VAPI void reportAssertionFailure(const char *expression, const char *message, const char *file, i32 line);
+     void reportAssertionFailure(const char *expression, const char *message, const char *file, i32 line);
 
-    VAPI void reportAssertionFailure(std::string expression, std::string *message, std::string *file, i32 line);
+     void reportAssertionFailure(std::string expression, std::string *message, std::string *file, i32 line);
 }
 
 #define VASSERT(expr) {if (expr) {} else { Vane::reportAssertionFailure(#expr, "", __FILE__, __LINE__); debugBreak();}}

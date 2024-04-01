@@ -51,7 +51,7 @@
 #endif
 
 namespace Vane {
-class VAPI Platform {
+class  Platform {
 #ifdef VPLATFORM_WINDOWS
     HINSTANCE h_instance;
     HWND hwnd;

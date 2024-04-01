@@ -21,10 +21,10 @@ public:
     /// @param alignment Alignment requirement . Must be power of 2
     /// and less than 128 and greater than or equal to 8.
     /// @return A raw pointer to the newly allocated memory address
-    static void* alloc(v_size size, u8 alignment = ALIGNMENT);
+    static void* alloc(u_size size, u8 alignment = ALIGNMENT);
 
     /// @brief Free the properly aligned memory address
-    static void* free(void*);
+    static void free(void*);
 
     /// @brief Util function to get name for type. 
     template <typename T>
