@@ -17,8 +17,14 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+// ReSharper disable CppClangTidyBugproneImplicitWideningOfMultiplicationResult
+
 #pragma once
+#include <algorithm>
+#include <cstddef>
 #include <cstdint>
+#include <cstdlib>
+#include <memory>
 
 namespace Vane{
 enum LOG_LEVEL {
@@ -31,32 +37,52 @@ enum LOG_LEVEL {
 };
 };
 
+// BUFFER SIZE TYPE
+using u_size    = std::size_t;
+
+// Custom annotations
+inline auto operator""_KB(u_size const x) { return 1024 * x; }
+inline auto operator""_MB(u_size const x) { return 1024 * 1024 * x; }
+inline auto operator""_GB(u_size const x) { return 1024 * 1024 * 1024 * x; }
+
+// UNSIGNED PTR SIZE TYPE
+using u_ptr      = uintptr_t;
+
+// PTR DIFF TYPE
+using u_ptr_diff = std::ptrdiff_t;
+
 // UNSIGNED INT TYPES
-typedef uint_fast8_t    u8;
-typedef uint_fast16_t   u16;
-typedef uint_fast32_t   u32;
-typedef uint_fast64_t   u64;
+using u8        = uint_fast8_t;
+using u16       = uint_fast16_t;
+using u32       = uint_fast32_t;
+using u64       = uint_fast64_t;
+
+constexpr u8    u8_MAX     = 0xff;
+constexpr u16   u16_MAX   = 0xffff;
+constexpr u32   u32_MAX   = 0xffffffff;
+constexpr u64   u64_MAX   = 0xffffffffffffffff;
 
 // LEAST UNSIGNED INT TYPES
-typedef uint_least8_t   u_l8;
-typedef uint_least16_t  u_l16;
-typedef uint_least32_t  u_l32;
-typedef uint_least64_t  u_l64;
+using u_l8      = uint_least8_t;
+using u_l16     = uint_least16_t;
+using u_l32     = uint_least32_t;
+using u_l64     = uint_least64_t;
 
 // SIGNED INT TYPES
-typedef int_fast8_t    i8;
-typedef int_fast16_t   i16;
-typedef int_fast32_t   i32;
-typedef int_fast64_t   i64;
+using i8        = int_fast8_t;
+using i16       = int_fast16_t;
+using i32       = int_fast32_t;
+using i64       = int_fast64_t;
 
 // LEAST INT TYPES
-typedef int_least8_t   i_l8;
-typedef int_least16_t  i_l16;
-typedef int_least32_t  i_l32;
-typedef int_least64_t  i_l64;
+using i_l8      = int_least8_t;
+using i_l16     = int_least16_t;
+using i_l32     = int_least32_t;
+using i_l64     = int_least64_t;
 
-typedef float f32;
-typedef double f64;
+// FLOATING POINT TYPES
+using f32       = float;
+using f64       = double;
 
 #if defined(__clang__) || defined(__gcc__)
 #define STATIC_ASSERT _Static_assert
@@ -109,29 +135,10 @@ typedef double f64;
 #error "Unknown platform!"
 #endif
 
-#ifdef VEXPORT
-
-#ifdef _MSC_VER
-#define VAPI __declspec(dllexport)
-
-#else
-
-#define VAPI __attribute__((visibility("default")))
-#endif
-
-#else
-
-// Imports
-
-#ifdef _MSC_VER
-#define VAPI __declspec(dllimport)
-#else
-#define VAPI
-#endif
-#endif
-
-
 // Utils
 
 // used for bit masking
 #define BIT(x) (1u << x)
+
+// remove potential definition of `max` macro
+#undef max

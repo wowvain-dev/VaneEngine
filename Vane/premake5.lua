@@ -1,5 +1,5 @@
 project "Vane"
-    kind "SharedLib"
+    kind "StaticLib"
     cppdialect "C++20"
     language "C++"
 
@@ -14,7 +14,8 @@ project "Vane"
         "**.cc",
         "**.cpp",
         "**.cxx",
-        "**.ixx"
+        "**.ixx",
+        "**.inl"
      }
 
     defines { "VEXPORT" }
@@ -29,8 +30,7 @@ project "Vane"
     }
 
     links {
-        "fmt",
-        "SDL2",
+        "SDL2"
     }
 
     filter "system:Linux"

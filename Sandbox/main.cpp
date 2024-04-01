@@ -2,28 +2,23 @@
 
 #include <Core/Application.hpp>
 #include <Core/Logger.hpp>
-#include <Core/Memory.hpp>
 #include <Platform/Platform.hpp>
 #include <EntryPoint.hpp>
 
 class Game : public Vane::Application
 {
 public:
-    Game(Vane::ApplicationConfig config) : Vane::Application(config) {}
-    void onInit()
-    {
-        VDEBUG("game Initialized");
+    Game(const Vane::ApplicationConfig& config) : Vane::Application(config) {}
+    void onInit() override {
+        VDEBUG("game Initialized 2");
     }
 
-    void onShutdown()
-    {
+    void onShutdown() override {
         VDEBUG("onShutdown called...");
     }
 
-    void onUpdate(f32 ms)
-    {
+    void onUpdate(f32 ms) override {
         // VDEBUG("onUpdate called...");
-        Vane::Platform::sleep(2000);        
     }
 };
 
