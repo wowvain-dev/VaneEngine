@@ -7,6 +7,7 @@
 #include "MemUtil.hpp"
 #include "MemoryArena.hpp"
 #include "ObjectHandle.hpp"
+#include "StackAllocator.hpp"
 
 namespace Vane::Memory {
 
@@ -76,13 +77,61 @@ public:
     template <typename T>
     static void deleteArrOnFreeList(u_size length, T* ptrToDelete);
 
-    ///@brief Create an object that will sit on the dynamic memory area. You need to manually
-    ///call `DeleteDynamic` to free the memory of this object. The dynamic memory area
-    ///will be automatically defragmented so it's not a good idea to create super big
-    ///objects with this function.
-    // template <typename T, typename... Args>
-    // static 
+    /// @brief Create an object that will sit on the dynamic memory area. You need to manually
+    /// call `DeleteDynamic` to free the memory of this object. The dynamic memory area
+    /// will be automatically defragmented so it's not a good idea to create super big
+    /// objects with this function.
+    /// @tparam T Type of the object you want to create
+    /// @return
+    template <typename T, typename... Args>
+    static ObjectHandle<T> newDynamic(Args&&...);
+
+    /// @brief Delete an object that was created with `newDynamic`. The memory will
+    /// be freed and the constructor will be automatically called on the object
+    ///
+    /// @tparam T
+    /// @param objToDelete Object you want to delete
+    template <typename T>
+    static void DeleteDynamic(const ObjectHandle<T>& objToDelete);
+
+private:
+    /// @brief Start up the memory manager. This creates the single frame
+    /// allocator, the double buffered allocator, and the dynamic arena. Their
+    /// specific sizes can be specified in the config.
+    MemoryManager();
+
+    /// @brief Free all memory, any further attempt to use objects managed by
+    /// the memory manager will crash the game.
+    ~MemoryManager() = default;
+
+    /// @brief Update the memory manager. This needs to be called in simulation
+    /// update, and takes care of clearing and swapping single frame + double
+    /// buffered allocators and defragment the dynamic memory area
+    void Update();
+
+    // Set the marker to clear when finishing a level
+    // TODO(wowvain) ??
+    void FinishEngineStartupListener();
+    void ClearLevelMemory();
+
+    static MemoryManager* getInstance();
+    /// Internal test
+    static void defragmentTest();
+
+    static MemoryManager* instance;
+
+    /// ALLOCATORS
+    u_size lvlMemStartMarker{};
+    MemoryArena dynamicArena;
+    StackAllocator levelAllocator;
+    StackAllocator singleFrameAllocator;
     
 };
+
+    // template <typename T, typename... Args>
+    // T* MemoryManager::newOnSingleFrame(Args&&... argList) {
+    //     
+    // }
+
     
 }

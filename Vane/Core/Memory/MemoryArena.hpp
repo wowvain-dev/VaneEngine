@@ -94,7 +94,7 @@ private:
             throw std::exception(
                 "MemoryArena::deleteDynamic -> Double deleting handle!");
         }
-    }
+	}
 
 
 };
