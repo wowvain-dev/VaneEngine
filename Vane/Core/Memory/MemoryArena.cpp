@@ -1,5 +1,6 @@
 ﻿
 #include <vector>
+#include <stdexcept>
 
 #include "../Asserts.hpp"
 #include "../Logger.hpp"
@@ -43,9 +44,9 @@ namespace Vane::Memory {
         u_ptr alignedAddress = rawAddress + adjustment;
 
         if (alignedAddress + size > rightAddress) {
-            throw std::exception{
+            throw std::runtime_error(
                 "MemoryArena::alloc -> Not enough memory in the arena"
-            };
+            );
         }
 
         outSize = size + adjustment;

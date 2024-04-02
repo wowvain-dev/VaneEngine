@@ -1,9 +1,10 @@
 {
   "dependencies": [
+    "libx11",
+    "xcb",
     "glad",
     "glfw3",
     "glm",
-    "sdl2",
     "imgui",
     "vulkan",
     "vulkan-loader",
