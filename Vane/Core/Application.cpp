@@ -14,7 +14,7 @@ Application::Application(const ApplicationConfig& config)
 
     Logger::initializeLogging();
 
-    VDEBUG("this is no longer a test 4");
+    VDEBUG("this is no longer a test 5");
 
     m_Running = true;
     m_Suspended = false;

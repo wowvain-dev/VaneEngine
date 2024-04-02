@@ -14,7 +14,8 @@ bool Platform::startup(
     // Connecting to X
     display = XOpenDisplay(NULL);
     // Turn off key repeats
-    XAutoRepeatOff(display);
+    // XAutoRepeatOff(display);
+    XAutoRepeatOn(display);
 
     connection = XGetXCBConnection(display);
 

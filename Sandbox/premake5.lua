@@ -29,14 +29,17 @@ project "Sandbox"
     }
 
     links {
-        "vane"
+        "vane",
     }
 
     filter "system:Windows"
-        -- -- Copy the DLL to the binary directory of the Sandbox
-        -- prebuildcommands {
-        --     '{COPY} %{wks.location}build\\' .. outputdir .. '\\Vane\\Vane.dll %{wks.location}build\\' .. outputdir .. '\\%{prj.name}' 
-        -- }
+
+    filter "system:Linux"
+        links {
+            "X11",
+            "xcb",
+            "X11-xcb"
+        }
 
     filter "configurations:dbg" 
         defines { "DEBUG", "_DEBUG" }

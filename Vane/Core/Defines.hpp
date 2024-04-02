@@ -41,9 +41,9 @@ enum LOG_LEVEL {
 using u_size    = std::size_t;
 
 // Custom annotations
-inline auto operator""_KB(u_size const x) { return 1024 * x; }
-inline auto operator""_MB(u_size const x) { return 1024 * 1024 * x; }
-inline auto operator""_GB(u_size const x) { return 1024 * 1024 * 1024 * x; }
+inline auto operator""_KB(const unsigned long long x) { return 1024 * x; }
+inline auto operator""_MB(const unsigned long long x) { return 1024 * 1024 * x; }
+inline auto operator""_GB(const unsigned long long x) { return 1024 * 1024 * 1024 * x; }
 
 // UNSIGNED PTR SIZE TYPE
 using u_ptr      = uintptr_t;

@@ -30,7 +30,6 @@ project "Vane"
     }
 
     links {
-        "SDL2"
     }
 
     filter "system:Linux"
@@ -39,7 +38,6 @@ project "Vane"
             "xcb",
             "X11-xcb",
             "vulkan",
-            "SDL2main"
         }
 
     filter "system:Windows"
