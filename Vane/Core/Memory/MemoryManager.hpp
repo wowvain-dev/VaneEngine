@@ -1,5 +1,7 @@
 ﻿#pragma once
 
+#include "DoubleBufferedAllocator.hpp"
+#include "FreeListAllocator.hpp"
 #include "../Defines.hpp"
 #include "../Asserts.hpp"
 #include "../Logger.hpp"
@@ -10,8 +12,7 @@
 #include "StackAllocator.hpp"
 
 namespace Vane::Memory {
-
-class  MemoryManager {
+class MemoryManager {
 public:
     /// @brief Contains the configuration of sizes for the allocators.
     struct MemoryConfig {
@@ -65,7 +66,7 @@ public:
 
     static void* allocOnFreeList(u_size size, u8 alignment = MemUtil::ALIGNMENT);
     static void* reallocOnFreeList(void* memPtr, u_size newSize, u8 alignment = MemUtil::ALIGNMENT);
-    static void  freeOnFreeList(void* memPtr);
+    static void freeOnFreeList(void* memPtr);
 
     template <typename T, typename... Args>
     static T* newOnFreeList(Args&&... argList);
@@ -125,13 +126,12 @@ private:
     MemoryArena dynamicArena;
     StackAllocator levelAllocator;
     StackAllocator singleFrameAllocator;
-    
+    DoubleBufferedAllocator doubleBufferedAllocator;
+    FreeListAllocator freeListAllocator;
 };
 
-    // template <typename T, typename... Args>
-    // T* MemoryManager::newOnSingleFrame(Args&&... argList) {
-    //     
-    // }
-
-    
+// template <typename T, typename... Args>
+// T* MemoryManager::newOnSingleFrame(Args&&... argList) {
+//     
+// }
 }
