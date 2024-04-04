@@ -19,34 +19,31 @@
 
 #pragma once
 
-#include "Core/Application.hpp"
-#include "Core/Logger.hpp"
-#include "Core/Asserts.hpp"
+#include <Vane/Core/Application.hpp>
+#include <Vane/Core/Logger.hpp>
+#include <Vane/Core/Asserts.hpp>
 
-extern Vane::Application *Vane::CreateApplication(int argc, char **argv);
+extern Vane::Application* Vane::CreateApplication(int argc, char** argv);
 bool g_ApplicationRunning = true;
 
-namespace Vane
-{
-    int Main(int argc, char **argv)
-    {
-        // Initializing systems;
-        Application *app = CreateApplication(argc, argv);
+namespace Vane {
+int Main(int argc, char** argv) {
+    // Initializing systems;
+    Application* app = CreateApplication(argc, argv);
 
-        VASSERT_MSG(app, "Client application is null!");
+    VASSERT_MSG(app, "Client application is null!");
 
-        app->run();
+    app->run();
 
-        app->shutdown();
+    app->shutdown();
 
-        delete app;
-        // Shutting systems down;
-        VERROR("SHAT SYSTEMS DOWN");
-        return 0;
-    }
+    delete app;
+    // Shutting systems down;
+    VERROR("SHAT SYSTEMS DOWN");
+    return 0;
+}
 }
 
-int main(int argc, char **argv)
-{
+int main(int argc, char** argv) {
     return Vane::Main(argc, argv);
 }

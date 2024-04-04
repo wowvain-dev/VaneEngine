@@ -2,7 +2,7 @@
 
 #ifdef VPLATFORM_WINDOWS
 
-#include "../Core/Logger.hpp"
+#include <Vane/Core/Logger.hpp>
 
 using namespace Vane;
 
@@ -13,7 +13,7 @@ LRESULT CALLBACK win32_process_message(HWND hwnd, u32 msg, WPARAM w_param,
                                        LPARAM l_param);
 
 bool Platform::startup(const char* application_name, i32 x, i32 y,
-                             i32 width, i32 height) {
+                       i32 width, i32 height) {
     h_instance = GetModuleHandleA(nullptr);
 
     HICON icon = LoadIcon(h_instance, IDI_APPLICATION);

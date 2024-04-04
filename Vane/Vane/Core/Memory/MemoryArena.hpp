@@ -2,14 +2,13 @@
 
 #include <map>
 
-#include "../Asserts.hpp"
-#include "../Defines.hpp"
+#include <Vane/Core/Defines.hpp>
+#include <Vane/Core/Asserts.hpp>
 
 namespace Vane::Memory {
-
 template <typename T>
 class ObjectHandle;
-    
+
 class MemoryArena {
 private:
     MemoryArena() = delete;
@@ -25,7 +24,7 @@ private:
     /// idea to create super big objects with this function.
     /// @tparam T type of the object you want to create
     /// @return
-    template <typename T, typename ...args>
+    template <typename T, typename... args>
     ObjectHandle<T> newDynamic(args...);
 
     /// @brief Delete an object that was created with `newDynamic`. The memory will be freed
@@ -72,30 +71,28 @@ private:
     friend class MemoryManager;
 };
 
-    template <typename T, typename... args>
-    ObjectHandle<T> MemoryArena::newDynamic(args... arglist) {
-        /// TODO(wowvain-dev): revise later
-        u_size size;
-        void* mem = alloc(sizeof(T), size);
-        ObjectHandle<T> handle = ObjectHandle<T>{mem, nextUniqueID++, size, arglist...};
-        addressIndexMap.emplace(handle.getObjAddress(), handle.index);
+template <typename T, typename... args>
+ObjectHandle<T> MemoryArena::newDynamic(args... arglist) {
+    /// TODO(wowvain-dev): revise later
+    u_size size;
+    void* mem = alloc(sizeof(T), size);
+    ObjectHandle<T> handle = ObjectHandle<T>{mem, nextUniqueID++, size, arglist...};
+    addressIndexMap.emplace(handle.getObjAddress(), handle.index);
 
-        return handle;
+    return handle;
+}
+
+template <typename T>
+void MemoryArena::deleteDynamic(const ObjectHandle<T>& objToDelete) {
+    auto addressIndexPair = addressIndexMap.find(objToDelete.getObjAddress());
+
+    if (addressIndexPair != addressIndexMap.end()) {
+        addressIndexMap.erase(addressIndexPair);
+        objToDelete.eraseObject();
     }
-
-    template <typename T>
-    void MemoryArena::deleteDynamic(const ObjectHandle<T>& objToDelete) {
-        auto addressIndexPair = addressIndexMap.find(objToDelete.getObjAddress());
-
-        if (addressIndexPair != addressIndexMap.end()) {
-            addressIndexMap.erase(addressIndexPair);
-            objToDelete.eraseObject();
-        } else {
-            throw std::exception(
-                "MemoryArena::deleteDynamic -> Double deleting handle!");
-        }
-	}
-
-
+    else {
+        throw std::exception(
+            "MemoryArena::deleteDynamic -> Double deleting handle!");
+    }
+}
 };
-

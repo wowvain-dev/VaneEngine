@@ -2,13 +2,13 @@
 
 #include <stdexcept>
 
-#include "../Asserts.hpp"
+#include <Vane/Core/Asserts.hpp>
 
 using namespace Vane::Memory;
 
 void MemUtil::CheckAlignment(u8 alignment) {
     const bool isValid = alignment >= 8 && alignment <= 128 &&
-                            (alignment & (alignment - 1)) == 0; // Power of 2
+            (alignment & (alignment - 1)) == 0; // Power of 2
 
     if (!isValid) {
         throw std::invalid_argument{
@@ -34,10 +34,10 @@ void* MemUtil::alloc(const u_size size, const u8 alignment) {
     alignedMemory[-1] = adjustment;
 
     VASSERT_MSG(reinterpret_cast<u_ptr>(alignedMemory) % alignment == 0,
-        "Bad alignment"
+                "Bad alignment"
     )
 
-    return static_cast<void*>(alignedMemory);    
+    return static_cast<void*>(alignedMemory);
 }
 
 void MemUtil::free(void* memoryPtr) {

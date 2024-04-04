@@ -19,14 +19,13 @@
 
 #pragma once
 
-#include "../Core/Defines.hpp"
-
 #include <cstdlib>
 #include <cstring>
 #include <cstdio>
 #include <iostream>
 #include <string>
 
+#include <Vane/Core/Defines.hpp>
 
 #ifdef VPLATFORM_LINUX
 
@@ -51,7 +50,7 @@
 #endif
 
 namespace Vane {
-class  Platform {
+class Platform {
 #ifdef VPLATFORM_WINDOWS
     HINSTANCE h_instance;
     HWND hwnd;

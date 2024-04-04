@@ -1,17 +1,18 @@
 ﻿#pragma once
 
-#include "../Defines.hpp"
-#include "../Asserts.hpp"
-#include "../Logger.hpp"
+#include <Vane/Core/Defines.hpp>
+#include <Vane/Core/Asserts.hpp>
+#include <Vane/Core/Logger.hpp>
 
-#include "MemUtil.hpp"
-#include "MemoryArena.hpp"
-#include "ObjectHandle.hpp"
-#include "StackAllocator.hpp"
+#include <Vane/Core/Memory/DoubleBufferedAllocator.hpp>
+#include <Vane/Core/Memory/FreeListAllocator.hpp>
+#include <Vane/Core/Memory/MemUtil.hpp>
+#include <Vane/Core/Memory/MemoryArena.hpp>
+#include <Vane/Core/Memory/ObjectHandle.hpp>
+#include <Vane/Core/Memory/StackAllocator.hpp>
 
 namespace Vane::Memory {
-
-class  MemoryManager {
+class MemoryManager {
 public:
     /// @brief Contains the configuration of sizes for the allocators.
     struct MemoryConfig {
@@ -65,7 +66,7 @@ public:
 
     static void* allocOnFreeList(u_size size, u8 alignment = MemUtil::ALIGNMENT);
     static void* reallocOnFreeList(void* memPtr, u_size newSize, u8 alignment = MemUtil::ALIGNMENT);
-    static void  freeOnFreeList(void* memPtr);
+    static void freeOnFreeList(void* memPtr);
 
     template <typename T, typename... Args>
     static T* newOnFreeList(Args&&... argList);
@@ -118,20 +119,19 @@ private:
     /// Internal test
     static void defragmentTest();
 
-    static MemoryManager* instance;
+    static MemoryManager* s_Instance;
 
     /// ALLOCATORS
     u_size lvlMemStartMarker{};
     MemoryArena dynamicArena;
     StackAllocator levelAllocator;
     StackAllocator singleFrameAllocator;
-    
+    DoubleBufferedAllocator doubleBufferedAllocator;
+    FreeListAllocator freeListAllocator;
 };
 
-    // template <typename T, typename... Args>
-    // T* MemoryManager::newOnSingleFrame(Args&&... argList) {
-    //     
-    // }
-
-    
+// template <typename T, typename... Args>
+// T* MemoryManager::newOnSingleFrame(Args&&... argList) {
+//     
+// }
 }
