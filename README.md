@@ -15,7 +15,7 @@ Mostly educational but planning to be serious about it. I would like it to be my
 ### Work in progress.
 
 ## Components
-- **Vane**: The main engine, should compile to a DLL and be used as a library.
+- **Vane**: The main engine, ~~should compile to a DLL~~(now statically linked) and be used as a library.
 - **VaneEditor**: The editor of the engine, will link with Vane. Uses ~~Qt~~ ImGui.
 - **Sandbox**: A testbed for the engine.
 
@@ -53,3 +53,10 @@ Extra dependencies: [***WORK IN PROGRESS***]
 
 For now you can just run `premake5 gmake` and see what build fails, find the lib missing which caused the failure, install it, and repeat until it fully builds.
 
+### Roadmap
+
+- [ ] planning to simplify the building proccess, possibly having `vcpkg` as submodule
+- [ ] memory subsystem
+- [ ] custom collection types / STL wrapper
+- [ ] custom strings
+- ...
