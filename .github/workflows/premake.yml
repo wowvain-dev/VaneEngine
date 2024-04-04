@@ -21,7 +21,5 @@ jobs:
           # Premake path
           path: .premake/
       - name: Compile project
-        run: 
-          - premake5 gmake2
-          - make
+        run: premake5 gmake2 && make
           
