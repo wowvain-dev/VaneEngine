@@ -26,7 +26,7 @@
 #include <cstdlib>
 #include <memory>
 
-namespace Vane{
+namespace Vane {
 enum LOG_LEVEL {
     V_FATAL = 0,
     V_ERROR = 1,
@@ -38,7 +38,7 @@ enum LOG_LEVEL {
 };
 
 // BUFFER SIZE TYPE
-using u_size    = std::size_t;
+using u_size = std::size_t;
 
 // Custom annotations
 inline auto operator""_KB(const unsigned long long x) { return 1024 * x; }
@@ -46,43 +46,43 @@ inline auto operator""_MB(const unsigned long long x) { return 1024 * 1024 * x; 
 inline auto operator""_GB(const unsigned long long x) { return 1024 * 1024 * 1024 * x; }
 
 // UNSIGNED PTR SIZE TYPE
-using u_ptr      = uintptr_t;
+using u_ptr = uintptr_t;
 
 // PTR DIFF TYPE
 using u_ptr_diff = std::ptrdiff_t;
 
 // UNSIGNED INT TYPES
-using u8        = uint_fast8_t;
-using u16       = uint_fast16_t;
-using u32       = uint_fast32_t;
-using u64       = uint_fast64_t;
+using u8 = uint_fast8_t;
+using u16 = uint_fast16_t;
+using u32 = uint_fast32_t;
+using u64 = uint_fast64_t;
 
-constexpr u8    u8_MAX     = 0xff;
-constexpr u16   u16_MAX   = 0xffff;
-constexpr u32   u32_MAX   = 0xffffffff;
-constexpr u64   u64_MAX   = 0xffffffffffffffff;
+constexpr u8 u8_MAX = 0xff;
+constexpr u16 u16_MAX = 0xffff;
+constexpr u32 u32_MAX = 0xffffffff;
+constexpr u64 u64_MAX = 0xffffffffffffffff;
 
 // LEAST UNSIGNED INT TYPES
-using u_l8      = uint_least8_t;
-using u_l16     = uint_least16_t;
-using u_l32     = uint_least32_t;
-using u_l64     = uint_least64_t;
+using u_l8 = uint_least8_t;
+using u_l16 = uint_least16_t;
+using u_l32 = uint_least32_t;
+using u_l64 = uint_least64_t;
 
 // SIGNED INT TYPES
-using i8        = int_fast8_t;
-using i16       = int_fast16_t;
-using i32       = int_fast32_t;
-using i64       = int_fast64_t;
+using i8 = int_fast8_t;
+using i16 = int_fast16_t;
+using i32 = int_fast32_t;
+using i64 = int_fast64_t;
 
 // LEAST INT TYPES
-using i_l8      = int_least8_t;
-using i_l16     = int_least16_t;
-using i_l32     = int_least32_t;
-using i_l64     = int_least64_t;
+using i_l8 = int_least8_t;
+using i_l16 = int_least16_t;
+using i_l32 = int_least32_t;
+using i_l64 = int_least64_t;
 
 // FLOATING POINT TYPES
-using f32       = float;
-using f64       = double;
+using f32 = float;
+using f64 = double;
 
 #if defined(__clang__) || defined(__gcc__)
 #define STATIC_ASSERT _Static_assert

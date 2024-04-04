@@ -1,15 +1,15 @@
 ﻿#pragma once
 
-#include "DoubleBufferedAllocator.hpp"
-#include "FreeListAllocator.hpp"
-#include "../Defines.hpp"
-#include "../Asserts.hpp"
-#include "../Logger.hpp"
+#include <Core/Defines.hpp>
+#include <Core/Asserts.hpp>
+#include <Core/Logger.hpp>
 
-#include "MemUtil.hpp"
-#include "MemoryArena.hpp"
-#include "ObjectHandle.hpp"
-#include "StackAllocator.hpp"
+#include <Core/Memory/DoubleBufferedAllocator.hpp>
+#include <Core/Memory/FreeListAllocator.hpp>
+#include <Core/Memory/MemUtil.hpp>
+#include <Core/Memory/MemoryArena.hpp>
+#include <Core/Memory/ObjectHandle.hpp>
+#include <Core/Memory/StackAllocator.hpp>
 
 namespace Vane::Memory {
 class MemoryManager {
@@ -119,7 +119,7 @@ private:
     /// Internal test
     static void defragmentTest();
 
-    static MemoryManager* instance;
+    static MemoryManager* s_Instance;
 
     /// ALLOCATORS
     u_size lvlMemStartMarker{};

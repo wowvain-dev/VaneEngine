@@ -3,10 +3,11 @@
 #include <unordered_map>
 #include <algorithm>
 #include <vector>
-#include "../Asserts.hpp"
-#include "../Defines.hpp"
-#include "MemUtil.hpp"
-#include "../../Utils/sid.hpp"
+
+#include <Core/Asserts.hpp>
+#include <Core/Defines.hpp>
+#include <Core/Memory/MemUtil.hpp>
+#include <Utils/sid.hpp>
 
 namespace Vane::Memory {
 class FreeListAllocator {

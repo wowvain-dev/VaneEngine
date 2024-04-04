@@ -1,6 +1,6 @@
 #include "FreeListAllocator.hpp"
-#include "MemUtil.hpp"
-#include "../Logger.hpp"
+
+#include <Core/Logger.hpp>
 
 namespace Vane::Memory {
 FreeListAllocator::FreeListAllocator(const u_size size) {
@@ -180,4 +180,5 @@ void* FreeListAllocator::realloc(void* memPtr, u_size newSize, u8 alignment) {
 }
 
 // TODO(wowvain-dev): impl from FreeListAllocator::Expand() onward
+void FreeListAllocator::Expand() {}
 };

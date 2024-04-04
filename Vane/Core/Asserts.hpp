@@ -19,8 +19,9 @@
 
 #pragma once
 
-#include "Defines.hpp"
 #include <string>
+
+#include <Core/Defines.hpp>
 
 #define VASSERTIONS_ENABLED
 
@@ -34,9 +35,9 @@
 #endif
 
 namespace Vane {
-     void reportAssertionFailure(const char *expression, const char *message, const char *file, i32 line);
+void reportAssertionFailure(const char* expression, const char* message, const char* file, i32 line);
 
-     void reportAssertionFailure(std::string expression, std::string *message, std::string *file, i32 line);
+void reportAssertionFailure(std::string expression, std::string* message, std::string* file, i32 line);
 }
 
 #define VASSERT(expr) {if (expr) {} else { Vane::reportAssertionFailure(#expr, "", __FILE__, __LINE__); debugBreak();}}
@@ -48,7 +49,7 @@ namespace Vane {
 #define VASSERT_DEBUG(expr)
 #endif
 
-#else 
+#else
 
 #define VASSERT(expr)
 #define VASSERT_MSG(expr, message)

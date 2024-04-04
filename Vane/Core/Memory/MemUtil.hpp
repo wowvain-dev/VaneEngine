@@ -1,16 +1,16 @@
 ﻿#pragma once
 
-#include "../Asserts.hpp"
-#include "../Defines.hpp"
+#include <Core/Asserts.hpp>
+#include <Core/Defines.hpp>
 
 #include <string>
 
 namespace Vane::Memory {
-    /// @brief Memory allocator class with utilities that are intended
-    /// only for internal use.
+/// @brief Memory allocator class with utilities that are intended
+/// only for internal use.
 class MemUtil {
 public:
-    static const u8 ALIGNMENT = 16;
+    static constexpr u8 ALIGNMENT = 16;
     static void CheckAlignment(u8 alignment);
 
     /// @brief Allocate properly aligned memory. The adjusted size
@@ -33,7 +33,7 @@ public:
         auto pos = name.find("::");
 
         if (pos != std::string::npos) {
-            name = name.substr(pos+2);
+            name = name.substr(pos + 2);
         }
 
         pos = name.find(" * __ptr64");
@@ -46,4 +46,3 @@ public:
     }
 };
 }
-

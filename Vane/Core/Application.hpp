@@ -19,19 +19,19 @@
 
 #pragma once
 
-#include "../Platform/Platform.hpp"
-#include "Asserts.hpp"
-#include "Logger.hpp"
-#include "Defines.hpp"
 #include <memory>
 #include <string>
+
+#include <Core/Logger.hpp>
+#include <Core/Defines.hpp>
+#include <Platform/Platform.hpp>
 
 using std::string;
 
 class Game;
 
 namespace Vane {
-struct  ApplicationConfig {
+struct ApplicationConfig {
     i16 startPosX;
     i16 startPosY;
     i16 windowWidth;
@@ -44,8 +44,7 @@ struct  ApplicationConfig {
 };
 
 namespace Vane {
-class  Application {
-    
+class Application {
 public:
     Application(const ApplicationConfig& config);
     virtual ~Application();
@@ -75,9 +74,7 @@ private:
     int test;
     bool m_Running;
     bool m_Suspended;
-
 };
 
 Application* CreateApplication(int argc, char** argv);
-
 };

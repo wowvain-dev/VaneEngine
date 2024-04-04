@@ -1,9 +1,8 @@
 ﻿#include "StackAllocator.hpp"
 
 #include <stdexcept>
-#include "MemUtil.hpp"
-#include "../Logger.hpp"
-#include "../Asserts.hpp"
+
+#include <Core/Memory/MemUtil.hpp>
 
 namespace Vane::Memory {
 StackAllocator::StackAllocator(const u_size stackSize)

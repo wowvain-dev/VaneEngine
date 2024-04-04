@@ -19,12 +19,14 @@
 
 #pragma once
 
-#include "Defines.hpp"
+
 #include <tuple>
-#include "../Platform/Platform.hpp"
 #include <cstdio>
 #include <string>
 #include <format>
+
+#include <Core/Defines.hpp>
+#include <Platform/Platform.hpp>
 
 #define LOG_WARN_ENABLED 1
 #define LOG_INFO_ENABLED 1
@@ -59,9 +61,9 @@ public:
         };
         const bool is_error = level < LOG_LEVEL::V_WARN;
 
-        std::string label = std::format("\033[{}m{} - ", 
-               std::get<1>(level_strings[level]),
-               std::get<0>(level_strings[level])
+        std::string label = std::format("\033[{}m{} - ",
+                                        std::get<1>(level_strings[level]),
+                                        std::get<0>(level_strings[level])
         );
 
         std::string out_message;

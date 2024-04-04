@@ -22,6 +22,7 @@ project "Vane"
 
     includedirs { 
         "../vendor/" .. triplet .. '/include/',
+		"./"
     }
 
     libdirs {

@@ -10,4 +10,3 @@ void HandleEntry::set(u32 _uniqueID, void* _ptr, bool _isEmpty, u_size _size) {
     isEmpty = _isEmpty;
     size = _size;
 }
-
