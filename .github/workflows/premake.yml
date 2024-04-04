@@ -18,8 +18,6 @@ jobs:
         with:
           # Premake version
           version: 5.0.0-beta2
-          # Premake path
-          path: .premake/
       - name: Compile project
-        run: premake5 gmake2 && make
+        run: ../../premake5 gmake2 && ../../make
           
