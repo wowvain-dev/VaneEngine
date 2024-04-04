@@ -1,0 +1,24 @@
+name: C/C++ Premake5
+on: 
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+jobs: 
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download premake
+        uses: BEASTSM96/premake-action@v1.3.1
+      - name: Setup premake
+        # You may pin to the exact commit or the version.
+        # uses: abel0b/setup-premake@b80dc6f70e8ab159fb854bdadbeb1a53cfc28723
+        uses: abel0b/setup-premake@v2.4
+        with:
+          # Premake version
+          version: 5.0.0-beta1
+          # Premake path
+          path: .premake/
+        
+          
