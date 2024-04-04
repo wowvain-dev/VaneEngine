@@ -6,9 +6,20 @@ on:
     branches: [ "master" ]
 jobs: 
   build:
+    env: 
+      VCPKG_DEFAULT_TRIPLET: "x64-linux"
+      
     runs-on: ubuntu-latest
 
     steps:
+      - working-directory: ./
+      - name: Setup vcpkg
+        uses: lukka/run-vcpkg@v7.6
+        with: 
+          vcpkgGitCommitId: c5da4ba
+          runVcpkgInstall: true
+          vcpkgJsonGlob: '**/vcpkg.json'
+          
       - name: Download premake
         uses: BEASTSM96/premake-action@v1.3.1
       - name: Setup premake
