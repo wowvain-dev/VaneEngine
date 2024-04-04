@@ -17,8 +17,11 @@ jobs:
         uses: abel0b/setup-premake@v2.4
         with:
           # Premake version
-          version: 5.0.0-beta1
+          version: 5.0.0-beta2
           # Premake path
           path: .premake/
-        
+      - name: Compile project:
+        run: 
+          - premake5 gmake2
+          - make
           
