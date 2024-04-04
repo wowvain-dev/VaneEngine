@@ -1,7 +1,7 @@
 ﻿#pragma once
 
-#include <Core/Asserts.hpp>
-#include <Core/Defines.hpp>
+#include <Vane/Core/Asserts.hpp>
+#include <Vane/Core/Defines.hpp>
 
 #include <string>
 

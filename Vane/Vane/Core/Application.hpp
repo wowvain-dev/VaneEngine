@@ -19,31 +19,62 @@
 
 #pragma once
 
-#include <Core/Application.hpp>
-#include <Core/Logger.hpp>
-#include <Core/Asserts.hpp>
+#include <memory>
+#include <string>
 
-extern Vane::Application* Vane::CreateApplication(int argc, char** argv);
-bool g_ApplicationRunning = true;
+#include <Vane/Core/Logger.hpp>
+#include <Vane/Core/Defines.hpp>
+#include <Vane/Platform/Platform.hpp>
+
+using std::string;
+
+class Game;
 
 namespace Vane {
-int Main(int argc, char** argv) {
-    // Initializing systems;
-    Application* app = CreateApplication(argc, argv);
+struct ApplicationConfig {
+    i16 startPosX;
+    i16 startPosY;
+    i16 windowWidth;
+    i16 windowHeight;
+    string name = "Vane";
+    bool VSync = true;
+    bool startMaximized = false;
+    bool resizable = true;
+};
+};
 
-    VASSERT_MSG(app, "Client application is null!");
+namespace Vane {
+class Application {
+public:
+    Application(const ApplicationConfig& config);
+    virtual ~Application();
 
-    app->run();
+    void run();
+    void shutdown();
 
-    app->shutdown();
+    virtual void onInit() {}
+    virtual void onShutdown() {}
+    virtual void onUpdate(f32 delta) {}
 
-    delete app;
-    // Shutting systems down;
-    VERROR("SHAT SYSTEMS DOWN");
-    return 0;
-}
-}
+    inline Platform& platform() { return *m_Platform; }
+    static inline Application& get() { return *s_Instance; }
 
-int main(int argc, char** argv) {
-    return Vane::Main(argc, argv);
-}
+    Game* gameInstance;
+    i16 width;
+    i16 height;
+    f64 lastTime;
+
+public:
+    bool create(Game* gameInstance);
+
+private:
+    static Application* s_Instance;
+    ApplicationConfig m_Config;
+    std::unique_ptr<Platform> m_Platform;
+    int test;
+    bool m_Running;
+    bool m_Suspended;
+};
+
+Application* CreateApplication(int argc, char** argv);
+};

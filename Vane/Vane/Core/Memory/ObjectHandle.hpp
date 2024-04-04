@@ -2,9 +2,9 @@
 
 #include <stdexcept>
 
-#include <Core/Memory/MemoryArena.hpp>
-#include <Core/Defines.hpp>
-#include <Core/Asserts.hpp>
+#include <Vane/Core/Memory/MemoryArena.hpp>
+#include <Vane/Core/Defines.hpp>
+#include <Vane/Core/Asserts.hpp>
 
 namespace Vane::Memory {
 /// TODO(wowvain-dev): implement reference counting;

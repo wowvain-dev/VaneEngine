@@ -2,8 +2,8 @@
 
 #include <map>
 
-#include <Core/Defines.hpp>
-#include <Core/Asserts.hpp>
+#include <Vane/Core/Defines.hpp>
+#include <Vane/Core/Asserts.hpp>
 
 namespace Vane::Memory {
 template <typename T>

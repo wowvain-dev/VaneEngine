@@ -4,10 +4,10 @@
 #include <algorithm>
 #include <vector>
 
-#include <Core/Asserts.hpp>
-#include <Core/Defines.hpp>
-#include <Core/Memory/MemUtil.hpp>
-#include <Utils/sid.hpp>
+#include <Vane/Core/Asserts.hpp>
+#include <Vane/Core/Defines.hpp>
+#include <Vane/Core/Memory/MemUtil.hpp>
+#include <Vane/Utils/sid.hpp>
 
 namespace Vane::Memory {
 class FreeListAllocator {

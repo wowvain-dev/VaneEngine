@@ -1,15 +1,15 @@
 ﻿#pragma once
 
-#include <Core/Defines.hpp>
-#include <Core/Asserts.hpp>
-#include <Core/Logger.hpp>
+#include <Vane/Core/Defines.hpp>
+#include <Vane/Core/Asserts.hpp>
+#include <Vane/Core/Logger.hpp>
 
-#include <Core/Memory/DoubleBufferedAllocator.hpp>
-#include <Core/Memory/FreeListAllocator.hpp>
-#include <Core/Memory/MemUtil.hpp>
-#include <Core/Memory/MemoryArena.hpp>
-#include <Core/Memory/ObjectHandle.hpp>
-#include <Core/Memory/StackAllocator.hpp>
+#include <Vane/Core/Memory/DoubleBufferedAllocator.hpp>
+#include <Vane/Core/Memory/FreeListAllocator.hpp>
+#include <Vane/Core/Memory/MemUtil.hpp>
+#include <Vane/Core/Memory/MemoryArena.hpp>
+#include <Vane/Core/Memory/ObjectHandle.hpp>
+#include <Vane/Core/Memory/StackAllocator.hpp>
 
 namespace Vane::Memory {
 class MemoryManager {

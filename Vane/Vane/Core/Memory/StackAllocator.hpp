@@ -1,7 +1,7 @@
 ﻿#pragma once
 
-#include <Core/Memory/MemUtil.hpp>
-#include <Core/Defines.hpp>
+#include <Vane/Core/Memory/MemUtil.hpp>
+#include <Vane/Core/Defines.hpp>
 
 namespace Vane::Memory {
 class StackAllocator {

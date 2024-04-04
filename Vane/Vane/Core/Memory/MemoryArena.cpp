@@ -3,11 +3,11 @@
 #include <vector>
 #include <stdexcept>
 
-#include <Core/Asserts.hpp>
-#include <Core/Logger.hpp>
+#include <Vane/Core/Asserts.hpp>
+#include <Vane/Core/Logger.hpp>
 
-#include <Core/Memory/MemUtil.hpp>
-#include <Core/Memory/ObjectHandle.hpp>
+#include <Vane/Core/Memory/MemUtil.hpp>
+#include <Vane/Core/Memory/ObjectHandle.hpp>
 
 namespace Vane::Memory {
 HandleEntry MemoryArena::entryArr[maxHandleCount];

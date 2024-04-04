@@ -2,7 +2,7 @@
 
 #include <stdexcept>
 
-#include <Core/Memory/MemUtil.hpp>
+#include <Vane/Core/Memory/MemUtil.hpp>
 
 namespace Vane::Memory {
 StackAllocator::StackAllocator(const u_size stackSize)

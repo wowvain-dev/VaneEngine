@@ -2,7 +2,7 @@
 
 #ifdef VPLATFORM_WINDOWS
 
-#include <Core/Logger.hpp>
+#include <Vane/Core/Logger.hpp>
 
 using namespace Vane;
 

@@ -2,7 +2,7 @@
 
 #include <stdexcept>
 
-#include <Core/Asserts.hpp>
+#include <Vane/Core/Asserts.hpp>
 
 using namespace Vane::Memory;
 

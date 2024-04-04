@@ -1,7 +1,7 @@
 #pragma once
 
-#include <Core/Memory/StackAllocator.hpp>
-#include <Core/Defines.hpp>
+#include <Vane/Core/Memory/StackAllocator.hpp>
+#include <Vane/Core/Defines.hpp>
 
 namespace Vane::Memory {
 /// @brief A double buffered allocator is a wrapper on top of the stack

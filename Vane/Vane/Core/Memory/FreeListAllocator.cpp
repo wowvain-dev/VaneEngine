@@ -1,6 +1,6 @@
 #include "FreeListAllocator.hpp"
 
-#include <Core/Logger.hpp>
+#include <Vane/Core/Logger.hpp>
 
 namespace Vane::Memory {
 FreeListAllocator::FreeListAllocator(const u_size size) {

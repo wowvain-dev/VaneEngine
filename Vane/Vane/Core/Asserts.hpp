@@ -21,7 +21,7 @@
 
 #include <string>
 
-#include <Core/Defines.hpp>
+#include <Vane/Core/Defines.hpp>
 
 #define VASSERTIONS_ENABLED
 

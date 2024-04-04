@@ -3,7 +3,7 @@
 #include <mutex>
 #include <string>
 
-#include <Core/Memory/MemoryManager.hpp>
+#include <Vane/Core/Memory/MemoryManager.hpp>
 
 namespace Vane {
 class Config {
