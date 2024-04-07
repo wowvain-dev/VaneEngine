@@ -27,7 +27,7 @@ private:
     /// and less than 256
     ///
     /// @return Raw memory pointer, use with caution!
-    void* alloc(u_size size, u8 alignment = MemUtil::ALIGNMENT);
+    void *alloc(u_size size, u8 alignment = MemUtil::ALIGNMENT);
 
     /// @brief Swap the active stack allocator
     void swapBuffer();
@@ -44,10 +44,10 @@ private:
     ///
     /// @return Pointer to new object
     template <typename T, typename... args>
-    T* New(args...);
+    T *New(args...);
 
     template <typename T>
-    T* NewArr(u_size length, u8 alignment);
+    T *NewArr(u_size length, u8 alignment);
 
     StackAllocator stacks[2];
     u8 curStackIndex;
@@ -56,12 +56,10 @@ private:
 };
 
 template <typename T, typename... args>
-T* DoubleBufferedAllocator::New(args... argList) {
-    return stacks[curStackIndex].New<T>(argList...);
-}
+T *DoubleBufferedAllocator::New(args... argList) { return stacks[curStackIndex].New<T>(argList...); }
 
 template <typename T>
-T* DoubleBufferedAllocator::NewArr(const u_size length, const u8 alignment) {
+T *DoubleBufferedAllocator::NewArr(const u_size length, const u8 alignment) {
     return stacks[curStackIndex].NewArr<T>(length, alignment);
 }
 };

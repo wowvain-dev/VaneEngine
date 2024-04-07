@@ -12,7 +12,4 @@
 #include <Vane/Core/Application.hpp>
 #include <iostream>
 
-int main(int argc, char *argv[])
-{
-    std::cout << "Test";
-}
+int main(int argc, char *argv[]) { std::cout << "Test"; }

@@ -74,22 +74,22 @@ private:
 public:
     ~Platform();
     bool startup(
-        const char* applicationName,
-        i32 x,
-        i32 y,
-        i32 width,
-        i32 height
-    );
+            const char *applicationName,
+            i32 x,
+            i32 y,
+            i32 width,
+            i32 height
+            );
     void shutdown();
     bool pumpMessages();
 
-    static void* allocate(size_t size, bool aligned);
-    static void free(void*, bool);
-    static void* zeroMemory(void* block, size_t size);
-    static void* copyMemory(void* dest, const void* source, size_t size);
-    static void* setMemory(void* dest, i32 value, size_t size);
-    static void consoleWrite(const char* message, u8 color);
-    static void consoleWriteError(const char* message, u8 color);
+    static void *allocate(size_t size, bool aligned);
+    static void free(void *, bool);
+    static void *zeroMemory(void *block, size_t size);
+    static void *copyMemory(void *dest, const void *source, size_t size);
+    static void *setMemory(void *dest, i32 value, size_t size);
+    static void consoleWrite(const char *message, u8 color);
+    static void consoleWriteError(const char *message, u8 color);
     static f64 getAbsoluteTime();
     static void sleep(u64);
 };

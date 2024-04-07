@@ -24,6 +24,7 @@
 #include <cstddef>
 #include <cstdint>
 #include <cstdlib>
+#include <functional>
 #include <memory>
 
 namespace Vane {
@@ -90,6 +91,12 @@ using f64 = double;
 #define STATIC_ASSERT static_assert
 #endif
 
+// FUNCTION TYPES
+template <typename... T>
+using Action = std::function<void(T...)>;
+
+template <typename result, typename... T>
+using Func = std::function<result(T...)>;
 
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__)
 

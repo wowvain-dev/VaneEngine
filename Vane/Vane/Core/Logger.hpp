@@ -50,21 +50,21 @@ public:
     static void shutdownLogging();
 
     template <typename... Args>
-    static void log_output(LOG_LEVEL level, std::format_string<Args...> message, Args&&... args) {
-        std::tuple<const char*, const char*> level_strings[6] = {
-            std::make_tuple("[FATAL]: ", "0;41"),
-            std::make_tuple("[ERROR]: ", "1;31"),
-            std::make_tuple("[WARN]: ", "1;33"),
-            std::make_tuple("[INFO]: ", "1;32"),
-            std::make_tuple("[DEBUG]: ", "1;34"),
-            std::make_tuple("[TRACE]: ", "1:30")
+    static void log_output(LOG_LEVEL level, std::format_string<Args...> message, Args &&... args) {
+        std::tuple<const char *, const char *> level_strings[6] = {
+                std::make_tuple("[FATAL]: ", "0;41"),
+                std::make_tuple("[ERROR]: ", "1;31"),
+                std::make_tuple("[WARN]: ", "1;33"),
+                std::make_tuple("[INFO]: ", "1;32"),
+                std::make_tuple("[DEBUG]: ", "1;34"),
+                std::make_tuple("[TRACE]: ", "1:30")
         };
         const bool is_error = level < LOG_LEVEL::V_WARN;
 
         std::string label = std::format("\033[{}m{} - ",
                                         std::get<1>(level_strings[level]),
                                         std::get<0>(level_strings[level])
-        );
+                );
 
         std::string out_message;
         std::string s;
@@ -78,12 +78,8 @@ public:
             return;
         }
 
-        if (is_error) {
-            Platform::consoleWriteError(s.c_str(), level);
-        }
-        else {
-            Platform::consoleWrite(s.c_str(), level);
-        }
+        if (is_error) { Platform::consoleWriteError(s.c_str(), level); }
+        else { Platform::consoleWrite(s.c_str(), level); }
 
 
         // printf("\033[%sm%s - ",
