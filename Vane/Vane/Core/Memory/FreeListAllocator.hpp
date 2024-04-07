@@ -16,44 +16,46 @@ public:
     explicit FreeListAllocator(u_size size);
     ~FreeListAllocator();
 
-    void* alloc(u_size size, u8 alignment);
-    void free(void* memPtr);
-    void* realloc(void* memPtr, u_size newSize, u8 alignment);
+    void *alloc(u_size size, u8 alignment);
+    void free(void *memPtr);
+    void *realloc(void *memPtr, u_size newSize, u8 alignment);
 
     template <typename T, typename... Args>
-    T* New(Args... args);
+    T *New(Args... args);
     template <typename T>
-    void Delete(T* t);
+    void Delete(T *t);
     template <typename T>
-    T* NewArr(u_size length, u8 alignment);
+    T *NewArr(u_size length, u8 alignment);
     template <typename T>
-    void DeleteArr(u_size length, T* ptrToDelete);
+    void DeleteArr(u_size length, T *ptrToDelete);
 
 private:
     struct Node {
         u_size size;
-        Node* next;
-        explicit Node(const u_size size) : size(size), next(nullptr) {}
+        Node *next;
+
+        explicit Node(const u_size size) :
+            size(size), next(nullptr) {}
     };
 
     struct AllocHeader {
         u_size size;
         u64 adjustment;
 
-        AllocHeader(const u_size size, const u64 adjustment)
-            : size(size), adjustment(adjustment) {}
+        AllocHeader(const u_size size, const u64 adjustment) :
+            size(size), adjustment(adjustment) {}
     };
 
     void Expand();
-    void RemoveNode(Node* last, Node* nodeToRemove);
-    void InsertNode(Node* newNode);
+    void RemoveNode(Node *last, Node *nodeToRemove);
+    void InsertNode(Node *newNode);
 
-    static void InsertNodeAt(Node* pos, Node* newNode);
-    static void TryMergeWithNext(Node* node);
+    static void InsertNodeAt(Node *pos, Node *newNode);
+    static void TryMergeWithNext(Node *node);
 
-    Node* head = nullptr;
-    void* memHead = nullptr;
-    std::vector<void*> additionalMemory;
+    Node *head = nullptr;
+    void *memHead = nullptr;
+    std::vector<void *> additionalMemory;
 
     static constexpr u_size nodeSize = sizeof(Node);
     static constexpr u_size headerSize = sizeof(AllocHeader);
@@ -80,16 +82,16 @@ private:
 };
 
 template <typename T, typename... Args>
-T* FreeListAllocator::New(Args... args) {
+T *FreeListAllocator::New(Args... args) {
 #if DEBUG
     numOfNews++;
     monitorPureAlloc = false;
-    T* ret = new(alloc(sizeof(T), MemUtil::ALIGNMENT)) T(args...);
+    T *ret = new(alloc(sizeof(T), MemUtil::ALIGNMENT)) T(args...);
     monitorPureAlloc = true;
     std::string name = MemUtil::getNameForType<T>();
 
     if (std::is_base_of<class Component, T>::value) {
-        u64 vPointer = *reinterpret_cast<u64*>(ret);
+        u64 vPointer = *reinterpret_cast<u64 *>(ret);
         vTableToNameMap.insert({vPointer, name});
     }
 
@@ -102,9 +104,7 @@ T* FreeListAllocator::New(Args... args) {
         allocations.second++;
         it->second = allocations;
     }
-    else {
-        monitor.insert({sid, {name, 1}});
-    }
+    else { monitor.insert({sid, {name, 1}}); }
 
     return ret;
 
@@ -114,18 +114,16 @@ T* FreeListAllocator::New(Args... args) {
 }
 
 template <typename T>
-void FreeListAllocator::Delete(T* t) {
+void FreeListAllocator::Delete(T *t) {
 #if DEBUG
     numOfDeletes++;
     std::string name;
 
     if (std::is_base_of<class Component, T>::value) {
-        u64 vPointer = *reinterpret_cast<u64*>(t);
+        u64 vPointer = *reinterpret_cast<u64 *>(t);
         name = vTableToNameMap.find(vPointer)->second;
     }
-    else {
-        name = MemUtil::getNameForType<T>();
-    }
+    else { name = MemUtil::getNameForType<T>(); }
 
     StringId sid = SID(name.c_str());
     auto it = monitor.find(sid);
@@ -133,17 +131,13 @@ void FreeListAllocator::Delete(T* t) {
     Allocations allocations = it->second;
     allocations.second--;
 
-    if (allocations.second == 0) {
-        monitor.erase(it);
-    }
-    else {
-        it->second = allocations;
-    }
+    if (allocations.second == 0) { monitor.erase(it); }
+    else { it->second = allocations; }
 
     t->~T();
 
     monitorPureAlloc = false;
-    this->free(static_cast<void*>(t));
+    this->free(static_cast<void *>(t));
     monitorPureAlloc = true;
 #else
     t->~T();
@@ -152,17 +146,17 @@ void FreeListAllocator::Delete(T* t) {
 }
 
 template <typename T>
-T* FreeListAllocator::NewArr(u_size length, u8 alignment) {
+T *FreeListAllocator::NewArr(u_size length, u8 alignment) {
     VASSERT(length != 0);
 #if DEBUG
     monitorPureAlloc = false;
-    void* alloc = this->alloc(sizeof(T) * length, alignment);
+    void *alloc = this->alloc(sizeof(T) * length, alignment);
     monitorPureAlloc = true;
 
     numOfArrNews++;
     std::string name = MemUtil::getNameForType<T>();
     if (std::is_base_of<class Component, T>::value) {
-        u64 vPointer = *reinterpret_cast<u64*>(alloc);
+        u64 vPointer = *reinterpret_cast<u64 *>(alloc);
         vTableToNameMap.insert({vPointer, name});
     }
 
@@ -178,32 +172,28 @@ T* FreeListAllocator::NewArr(u_size length, u8 alignment) {
         allocations.second++;
         it->second = allocations;
     }
-    else {
-        monitor.insert({sid, {name, 1}});
-    }
+    else { monitor.insert({sid, {name, 1}}); }
 #else
     void *alloc = this->alloc(sizeof(T) * length, alignment);
 #endif
 
-    char* allocAddress = static_cast<char*>(alloc);
+    char *allocAddress = static_cast<char *>(alloc);
     for (u_size i = 0; i < length; ++i) new(allocAddress + i * sizeof(T)) T;
 
-    return static_cast<T*>(alloc);
+    return static_cast<T *>(alloc);
 }
 
 template <typename T>
-void FreeListAllocator::DeleteArr(u_size length, T* ptrToDelete) {
+void FreeListAllocator::DeleteArr(u_size length, T *ptrToDelete) {
 #if DEBUG
     numOfArrDeletes++;
     std::string name;
 
     if (std::is_base_of<class Component, T>::value) {
-        u64 vPointer = *reinterpret_cast<u64*>(ptrToDelete);
+        u64 vPointer = *reinterpret_cast<u64 *>(ptrToDelete);
         name = vTableToNameMap.find(vPointer)->second;
     }
-    else {
-        name = MemUtil::getNameForType<T>();
-    }
+    else { name = MemUtil::getNameForType<T>(); }
 
     name += "Array[";
     name += std::to_string(length);
@@ -216,17 +206,13 @@ void FreeListAllocator::DeleteArr(u_size length, T* ptrToDelete) {
         Allocations allocations = it->second;
         allocations.second--;
         VASSERT(allocations.second >= 0);
-        if (allocations.second == 0) {
-            monitor.erase(it);
-        }
-        else {
-            it->second = allocations;
-        }
+        if (allocations.second == 0) { monitor.erase(it); }
+        else { it->second = allocations; }
     }
 
     for (u_size i = 0; i < length; ++i) ptrToDelete[i].~T();
     monitorPureAlloc = false;
-    this->free(static_cast<void*>(ptrToDelete));
+    this->free(static_cast<void *>(ptrToDelete));
     monitorPureAlloc = true;
 #else
     for (u_size i = 0; i < length; ++i) ptrToDelete[i].~T();

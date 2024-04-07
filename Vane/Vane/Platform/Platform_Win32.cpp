@@ -12,7 +12,7 @@ LARGE_INTEGER Platform::start_time = {0};
 LRESULT CALLBACK win32_process_message(HWND hwnd, u32 msg, WPARAM w_param,
                                        LPARAM l_param);
 
-bool Platform::startup(const char* application_name, i32 x, i32 y,
+bool Platform::startup(const char *application_name, i32 x, i32 y,
                        i32 width, i32 height) {
     h_instance = GetModuleHandleA(nullptr);
 
@@ -62,9 +62,9 @@ bool Platform::startup(const char* application_name, i32 x, i32 y,
     window_height += border_rect.bottom - border_rect.top;
 
     HWND handle = CreateWindowExA(
-        window_ex_style, "vane_window_class", application_name,
-        window_style, window_x, window_y, window_width, window_height,
-        0, 0, h_instance, 0);
+            window_ex_style, "vane_window_class", application_name,
+            window_style, window_x, window_y, window_width, window_height,
+            0, 0, h_instance, 0);
 
     if (handle == 0) {
         MessageBoxA(nullptr, "Window Creation Failed!", "Error!",
@@ -73,9 +73,7 @@ bool Platform::startup(const char* application_name, i32 x, i32 y,
         VFATAL("Window creation failed!");
         return false;
     }
-    else {
-        hwnd = handle;
-    }
+    else { hwnd = handle; }
 
     // Show the window
     bool should_activate = 1; // TODO: if the window should not accept input, set it to false
@@ -116,27 +114,17 @@ bool Platform::pumpMessages() {
     return true;
 }
 
-void* Platform::allocate(size_t size, bool aligned) {
-    return ::operator new(size);
-}
+void *Platform::allocate(size_t size, bool aligned) { return ::operator new(size); }
 
-void Platform::free(void* block, bool aligned) {
-    ::operator delete(block);
-}
+void Platform::free(void *block, bool aligned) { ::operator delete(block); }
 
-void* Platform::zeroMemory(void* block, size_t size) {
-    return memset(block, 0, size);
-}
+void *Platform::zeroMemory(void *block, size_t size) { return memset(block, 0, size); }
 
-void* Platform::copyMemory(void* dest, const void* source, size_t size) {
-    return memcpy(dest, source, size);
-}
+void *Platform::copyMemory(void *dest, const void *source, size_t size) { return memcpy(dest, source, size); }
 
-void* Platform::setMemory(void* dest, i32 value, size_t size) {
-    return memset(dest, value, size);
-}
+void *Platform::setMemory(void *dest, i32 value, size_t size) { return memset(dest, value, size); }
 
-void Platform::consoleWrite(const char* message, u8 color) {
+void Platform::consoleWrite(const char *message, u8 color) {
     HANDLE console_handle = GetStdHandle(STD_OUTPUT_HANDLE);
     // FATAL, ERROR, WARN, INFO, DEBUG, TRACE
     static u8 levels[6] = {64, 4, 6, 2, 1, 8};
@@ -149,7 +137,7 @@ void Platform::consoleWrite(const char* message, u8 color) {
                   number_written, nullptr);
 }
 
-void Platform::consoleWriteError(const char* message, u8 color) {
+void Platform::consoleWriteError(const char *message, u8 color) {
     HANDLE console_handle = GetStdHandle(STD_OUTPUT_HANDLE);
     // FATAL, ERROR, WARN, INFO, DEBUG, TRACE
     static u8 levels[6] = {64, 4, 6, 2, 1, 8};
@@ -219,10 +207,7 @@ LRESULT win32_process_message(HWND hwnd, u32 msg, WPARAM w_param, LPARAM l_param
     case WM_RBUTTONDOWN:
     case WM_LBUTTONUP:
     case WM_MBUTTONUP:
-    case WM_RBUTTONUP:
-    {
-        bool pressed = msg == WM_LBUTTONDOWN || msg == WM_MBUTTONDOWN || msg == WM_RBUTTONDOWN;
-    }
+    case WM_RBUTTONUP: { bool pressed = msg == WM_LBUTTONDOWN || msg == WM_MBUTTONDOWN || msg == WM_RBUTTONDOWN; }
     break;
     }
     return DefWindowProcA(hwnd, msg, w_param, l_param);

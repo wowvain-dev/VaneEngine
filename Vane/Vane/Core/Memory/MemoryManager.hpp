@@ -30,53 +30,53 @@ public:
     /// @brief Grab some properly aligned free memory, will be freed at the end of frame.
     /// @param size Size in bytes
     /// @param alignment Alignment requirement of property, power of 2, less than 128.
-    static void* allocOnSingleFrame(u_size size, u8 alignment = MemUtil::ALIGNMENT);
+    static void *allocOnSingleFrame(u_size size, u8 alignment = MemUtil::ALIGNMENT);
 
 
     /// @brief Create a new object whose memory will be cleared at the end of the frame. You need to
     /// manually call destructor on that object.
     template <typename T, typename... Args>
-    static T* newOnSingleFrame(Args&&...);
+    static T *newOnSingleFrame(Args &&...);
 
     template <typename T>
-    static T* newArrOnSingleFrame(u_size length, u8 alignment = MemUtil::ALIGNMENT);
+    static T *newArrOnSingleFrame(u_size length, u8 alignment = MemUtil::ALIGNMENT);
 
     /// @brief Grab some properly aligned free memory to use. The memory will be freed at the end of next frame.
     /// @param size Size in byte
     /// @param alignment Alignment requirement of property, must be power of 2 and less than 256.
-    static void* allocOnDoubleBuffered(u_size size, u8 alignment = MemUtil::ALIGNMENT);
+    static void *allocOnDoubleBuffered(u_size size, u8 alignment = MemUtil::ALIGNMENT);
 
     /// @brief Create a new object whose memory is going to be cleared at the end of next frame. You need to
     /// manually call destructor on that object.
     /// @tparam T type of object to create \return
     template <typename T, typename... Args>
-    static T* newOnDoubleBuffered(Args&&...);
+    static T *newOnDoubleBuffered(Args &&...);
 
     template <typename T>
-    static T* newArrOnDoubleBuffered(u_size length, u8 alignment = MemUtil::ALIGNMENT);
+    static T *newArrOnDoubleBuffered(u_size length, u8 alignment = MemUtil::ALIGNMENT);
 
     /// ?
-    static void* allocOnStack(u_size size, u8 alignment = MemUtil::ALIGNMENT);
+    static void *allocOnStack(u_size size, u8 alignment = MemUtil::ALIGNMENT);
 
     template <typename T, typename... Args>
-    static T* newOnStack(Args&&...);
+    static T *newOnStack(Args &&...);
 
     template <typename T>
-    static T* newArrOnStack(u_size length, u8 alignment = MemUtil::ALIGNMENT);
+    static T *newArrOnStack(u_size length, u8 alignment = MemUtil::ALIGNMENT);
 
-    static void* allocOnFreeList(u_size size, u8 alignment = MemUtil::ALIGNMENT);
-    static void* reallocOnFreeList(void* memPtr, u_size newSize, u8 alignment = MemUtil::ALIGNMENT);
-    static void freeOnFreeList(void* memPtr);
+    static void *allocOnFreeList(u_size size, u8 alignment = MemUtil::ALIGNMENT);
+    static void *reallocOnFreeList(void *memPtr, u_size newSize, u8 alignment = MemUtil::ALIGNMENT);
+    static void freeOnFreeList(void *memPtr);
 
     template <typename T, typename... Args>
-    static T* newOnFreeList(Args&&... argList);
+    static T *newOnFreeList(Args &&... argList);
     template <typename T>
-    static void deleteOnFreeList(T* ptrToDelete);
+    static void deleteOnFreeList(T *ptrToDelete);
 
     template <typename T>
-    static T* newArrOnFreeList(u_size length, u8 alignment = MemUtil::ALIGNMENT);
+    static T *newArrOnFreeList(u_size length, u8 alignment = MemUtil::ALIGNMENT);
     template <typename T>
-    static void deleteArrOnFreeList(u_size length, T* ptrToDelete);
+    static void deleteArrOnFreeList(u_size length, T *ptrToDelete);
 
     /// @brief Create an object that will sit on the dynamic memory area. You need to manually
     /// call `DeleteDynamic` to free the memory of this object. The dynamic memory area
@@ -85,7 +85,7 @@ public:
     /// @tparam T Type of the object you want to create
     /// @return
     template <typename T, typename... Args>
-    static ObjectHandle<T> newDynamic(Args&&...);
+    static ObjectHandle<T> newDynamic(Args &&...);
 
     /// @brief Delete an object that was created with `newDynamic`. The memory will
     /// be freed and the constructor will be automatically called on the object
@@ -93,7 +93,7 @@ public:
     /// @tparam T
     /// @param objToDelete Object you want to delete
     template <typename T>
-    static void DeleteDynamic(const ObjectHandle<T>& objToDelete);
+    static void DeleteDynamic(const ObjectHandle<T> &objToDelete);
 
 private:
     /// @brief Start up the memory manager. This creates the single frame
@@ -115,11 +115,11 @@ private:
     void FinishEngineStartupListener();
     void ClearLevelMemory();
 
-    static MemoryManager* getInstance();
+    static MemoryManager *getInstance();
     /// Internal test
     static void defragmentTest();
 
-    static MemoryManager* s_Instance;
+    static MemoryManager *s_Instance;
 
     /// ALLOCATORS
     u_size lvlMemStartMarker{};

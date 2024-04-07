@@ -25,7 +25,7 @@ private:
     /// @param ptr
     /// @param isEmpty
     /// @param size
-    void set(u32 uniqueID, void* ptr, bool isEmpty, u_size size);
+    void set(u32 uniqueID, void *ptr, bool isEmpty, u_size size);
 
     /// @brief Always compare this with the uniqueID of `ObjectHandle` used to manipulate
     /// this entry
@@ -36,7 +36,7 @@ private:
 
     /// @brief Pointer to the actual object's address. Marked as mutable because its moved
     /// in the defragmentation process.
-    mutable void* ptr{};
+    mutable void *ptr{};
 
 
     bool isEmpty{true};
@@ -61,22 +61,22 @@ public:
     /// @param uniqueID uniqueID for this handle
     /// @param size Size of the object in bytes
     template <typename... args>
-    ObjectHandle(void* mem, u32 uniqueID, u_size size, args...);
+    ObjectHandle(void *mem, u32 uniqueID, u_size size, args...);
 
     /// @brief Returns a pointer to the actual object
     /// @return A pointer to the actual object
-    T* operator->() const;
+    T *operator->() const;
 
     /// @brief Returned the dereferanced object
     /// @return A reference to the object
-    T& operator*();
+    T &operator*();
 
     explicit operator bool() const;
 
 private:
     /// @brief Helper function for finding the pointer to the actual object
     /// @return
-    T* getObjectPtr() const;
+    T *getObjectPtr() const;
 
     /// @brief Erase the object. This frees the memory, frees the coresponding handle entry,
     /// and calls destructor on the object.
@@ -93,31 +93,25 @@ private:
 };
 
 template <typename T>
-T* ObjectHandle<T>::operator->() const {
-    return getObjectPtr();
-}
+T *ObjectHandle<T>::operator->() const { return getObjectPtr(); }
 
 template <typename T>
-T& ObjectHandle<T>::operator*() {
-    return *getObjectPtr();
-}
+T &ObjectHandle<T>::operator*() { return *getObjectPtr(); }
 
 template <typename T>
 ObjectHandle<T>::operator bool() const {
-    if (index > MemoryArena::maxHandleCount) {
-        return false;
-    }
+    if (index > MemoryArena::maxHandleCount) { return false; }
 
-    HandleEntry& entry = MemoryArena::entryArr[index];
+    HandleEntry &entry = MemoryArena::entryArr[index];
 
     return !entry.isEmpty && uniqueID == entry.uniqueID;
 }
 
 template <typename T>
 template <typename... args>
-ObjectHandle<T>::ObjectHandle(void* _mem, u32 _uniqueID, u_size _size, args... argList)
-    : uniqueID(_uniqueID) {
-    HandleEntry* entry = nullptr;
+ObjectHandle<T>::ObjectHandle(void *_mem, u32 _uniqueID, u_size _size, args... argList) :
+    uniqueID(_uniqueID) {
+    HandleEntry *entry = nullptr;
 
     for (u32 i = 0; i < MemoryArena::maxHandleCount; ++i) {
         if (MemoryArena::entryArr[i].isEmpty) {
@@ -129,58 +123,56 @@ ObjectHandle<T>::ObjectHandle(void* _mem, u32 _uniqueID, u_size _size, args... a
 
     if (entry == nullptr) {
         throw std::out_of_range{
-            "ObjectHandle::ObjectHandle -> No empty slot in handle table."
+                "ObjectHandle::ObjectHandle -> No empty slot in handle table."
         };
     }
 
-    T* t = new(_mem) T(argList...);
-    entry->set(uniqueID, static_cast<void*>(t), false, _size);
+    T *t = new(_mem) T(argList...);
+    entry->set(uniqueID, static_cast<void *>(t), false, _size);
 }
 
 template <typename T>
-T* ObjectHandle<T>::getObjectPtr() const {
-    HandleEntry& entry = MemoryArena::entryArr[index];
+T *ObjectHandle<T>::getObjectPtr() const {
+    HandleEntry &entry = MemoryArena::entryArr[index];
 
     if (entry.isEmpty) {
         throw std::exception{
-            "ObjectHandle::getObjectPtr -> Object already deleted"
+                "ObjectHandle::getObjectPtr -> Object already deleted"
         };
     }
 
     if (uniqueID != entry.uniqueID) {
         throw std::exception{
-            "ObjectHandle::getObjectPtr -> Object you are trying to access was "
-            "replaced by a new object"
+                "ObjectHandle::getObjectPtr -> Object you are trying to access was "
+                "replaced by a new object"
         };
     }
 
-    return static_cast<T*>(entry.ptr);
+    return static_cast<T *>(entry.ptr);
 }
 
 template <typename T>
 void ObjectHandle<T>::eraseObject() const {
-    HandleEntry& entry = MemoryArena::entryArr[index];
+    HandleEntry &entry = MemoryArena::entryArr[index];
 
     if (entry.isEmpty) {
         throw std::exception{
-            "ObjectHandle::eraseObject -> ObjectHandle::deleteObject -> Double "
-            "deleting handle!"
+                "ObjectHandle::eraseObject -> ObjectHandle::deleteObject -> Double "
+                "deleting handle!"
         };
     }
 
     if (uniqueID != entry.uniqueID) {
         throw std::exception{
-            "ObjectHandle::eraseObject -> ObjectHandle::deleteObject -> You are "
-            "trying to delete an object you don't own!"
+                "ObjectHandle::eraseObject -> ObjectHandle::deleteObject -> You are "
+                "trying to delete an object you don't own!"
         };
     }
 
-    static_cast<T*>(entry.ptr)->~T();
+    static_cast<T *>(entry.ptr)->~T();
     entry.isEmpty = true;
 }
 
 template <typename T>
-u_ptr ObjectHandle<T>::getObjAddress() const {
-    return reinterpret_cast<u_ptr>(getObjectPtr());
-}
+u_ptr ObjectHandle<T>::getObjAddress() const { return reinterpret_cast<u_ptr>(getObjectPtr()); }
 }

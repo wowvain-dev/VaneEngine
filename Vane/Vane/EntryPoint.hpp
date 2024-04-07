@@ -23,13 +23,13 @@
 #include <Vane/Core/Logger.hpp>
 #include <Vane/Core/Asserts.hpp>
 
-extern Vane::Application* Vane::CreateApplication(int argc, char** argv);
+extern Vane::Application *Vane::CreateApplication(int argc, char **argv);
 bool g_ApplicationRunning = true;
 
 namespace Vane {
-int Main(int argc, char** argv) {
+int Main(int argc, char **argv) {
     // Initializing systems;
-    Application* app = CreateApplication(argc, argv);
+    Application *app = CreateApplication(argc, argv);
 
     VASSERT_MSG(app, "Client application is null!");
 
@@ -44,6 +44,4 @@ int Main(int argc, char** argv) {
 }
 }
 
-int main(int argc, char** argv) {
-    return Vane::Main(argc, argv);
-}
+int main(int argc, char **argv) { return Vane::Main(argc, argv); }

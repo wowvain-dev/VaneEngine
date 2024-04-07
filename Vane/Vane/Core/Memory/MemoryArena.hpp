@@ -33,14 +33,14 @@ private:
     /// @tparam T
     /// @param objToDelete Object you want to delete
     template <typename T>
-    void deleteDynamic(const ObjectHandle<T>& objToDelete);
+    void deleteDynamic(const ObjectHandle<T> &objToDelete);
 
     /// @brief Helper function for allocate memory with MemoryArena
     /// @param size Size in byte
     /// @param outSize Returns the actual used size of memory (extra is possible
     /// because of alignment requirement)
     /// @return Pointer to memory
-    void* alloc(const u_size size, u_size& outSize);
+    void *alloc(const u_size size, u_size &outSize);
 
     /// @brief Defragment the memory arena. This should be called by the memory manager
     void defragment();
@@ -64,7 +64,7 @@ private:
     u32 curIndex = 0;
     u_ptr leftAddress{};
     u_ptr rightAddress{};
-    void* memHead{};
+    void *memHead{};
 
     template <typename T>
     friend class ObjectHandle;
@@ -75,7 +75,7 @@ template <typename T, typename... args>
 ObjectHandle<T> MemoryArena::newDynamic(args... arglist) {
     /// TODO(wowvain-dev): revise later
     u_size size;
-    void* mem = alloc(sizeof(T), size);
+    void *mem = alloc(sizeof(T), size);
     ObjectHandle<T> handle = ObjectHandle<T>{mem, nextUniqueID++, size, arglist...};
     addressIndexMap.emplace(handle.getObjAddress(), handle.index);
 
@@ -83,7 +83,7 @@ ObjectHandle<T> MemoryArena::newDynamic(args... arglist) {
 }
 
 template <typename T>
-void MemoryArena::deleteDynamic(const ObjectHandle<T>& objToDelete) {
+void MemoryArena::deleteDynamic(const ObjectHandle<T> &objToDelete) {
     auto addressIndexPair = addressIndexMap.find(objToDelete.getObjAddress());
 
     if (addressIndexPair != addressIndexMap.end()) {
@@ -92,7 +92,7 @@ void MemoryArena::deleteDynamic(const ObjectHandle<T>& objToDelete) {
     }
     else {
         throw std::exception(
-            "MemoryArena::deleteDynamic -> Double deleting handle!");
+                "MemoryArena::deleteDynamic -> Double deleting handle!");
     }
 }
 };

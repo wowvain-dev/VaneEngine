@@ -18,12 +18,10 @@ MemoryArena::MemoryArena(const u_size size) {
     rightAddress = leftAddress + size;
 }
 
-MemoryArena::~MemoryArena() {
-    std::free(memHead);
-}
+MemoryArena::~MemoryArena() { std::free(memHead); }
 
 // TODO(wowvain-dev): This is only allocating from top
-void* MemoryArena::alloc(const u_size size, u_size& outSize) {
+void *MemoryArena::alloc(const u_size size, u_size &outSize) {
     u_ptr lastAddress;
     u_size lastSize;
 
@@ -46,13 +44,13 @@ void* MemoryArena::alloc(const u_size size, u_size& outSize) {
 
     if (alignedAddress + size > rightAddress) {
         throw std::runtime_error(
-            "MemoryArena::alloc -> Not enough memory in the arena"
-        );
+                "MemoryArena::alloc -> Not enough memory in the arena"
+                );
     }
 
     outSize = size + adjustment;
 
-    return reinterpret_cast<void*>(alignedAddress);
+    return reinterpret_cast<void *>(alignedAddress);
 }
 
 void MemoryArena::defragment() {
@@ -61,9 +59,7 @@ void MemoryArena::defragment() {
 
     for (int i = 0; i < 6; i++) {
         ++curIndex;
-        if (curIndex >= addressIndexMap.size()) {
-            curIndex = 0;
-        }
+        if (curIndex >= addressIndexMap.size()) { curIndex = 0; }
 
         moveLeft(curIndex);
     }
@@ -88,29 +84,25 @@ void MemoryArena::moveLeft(u32 index) {
 
     arr.reserve(addressIndexMap.size());
 
-    for (const auto& pair : addressIndexMap) {
-        arr.push_back(pair.second);
-    }
+    for (const auto &pair : addressIndexMap) { arr.push_back(pair.second); }
 
-    const auto& entry = entryArr[arr[index]];
+    const auto &entry = entryArr[arr[index]];
 
     u_ptr lastAvailableAddress;
 
-    if (index == 0) {
-        lastAvailableAddress = leftAddress;
-    }
+    if (index == 0) { lastAvailableAddress = leftAddress; }
     else {
-        const auto& lastEntry = entryArr[arr[index - 1]];
+        const auto &lastEntry = entryArr[arr[index - 1]];
         lastAvailableAddress = lastEntry.getAddress() + lastEntry.size;
     }
 
     lastAvailableAddress = nextMultiplyOfBase(lastAvailableAddress, MemUtil::ALIGNMENT);
 
     if (lastAvailableAddress < entry.getAddress()) {
-        void* newAdd = reinterpret_cast<void*>(lastAvailableAddress);
+        void *newAdd = reinterpret_cast<void *>(lastAvailableAddress);
 
         addressIndexMap.erase(
-            addressIndexMap.find(reinterpret_cast<u_ptr>(entry.ptr)));
+                addressIndexMap.find(reinterpret_cast<u_ptr>(entry.ptr)));
         addressIndexMap.emplace(reinterpret_cast<u_ptr>(newAdd), arr[index]);
 
         std::memmove(newAdd, entry.ptr, entry.size);
@@ -124,13 +116,13 @@ void MemoryArena::print() const {
     VDEBUG("[MEMORY], [address, index, size]")
     int count(0);
 
-    for (const auto& pair : addressIndexMap) {
+    for (const auto &pair : addressIndexMap) {
         VDEBUG("[MEMORY], {} [{}, {}, {}]",
                count++,
                pair.first,
                pair.second,
                entryArr[pair.second].size
-        )
+                )
     }
 }
 

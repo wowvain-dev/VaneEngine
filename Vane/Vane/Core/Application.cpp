@@ -1,10 +1,10 @@
 #include "Application.hpp"
 
 namespace Vane {
-Application* Application::s_Instance = nullptr;
+Application *Application::s_Instance = nullptr;
 
-Application::Application(const ApplicationConfig& config)
-    : m_Config(config) {
+Application::Application(const ApplicationConfig &config) :
+    m_Config(config) {
     // VASSERT_MSG(s_Instance != nullptr, "Instance already created.");
     if (s_Instance != nullptr) {
         VFATAL("Application instance already created.");
@@ -20,12 +20,12 @@ Application::Application(const ApplicationConfig& config)
     m_Suspended = false;
     m_Platform = std::unique_ptr<Platform>(new Platform);
     m_Platform->startup(
-        config.name.c_str(),
-        config.startPosX,
-        config.startPosY,
-        config.windowWidth,
-        config.windowHeight
-    );
+            config.name.c_str(),
+            config.startPosX,
+            config.startPosY,
+            config.windowWidth,
+            config.windowHeight
+            );
 }
 
 Application::~Application() {
@@ -45,7 +45,5 @@ void Application::run() {
     onShutdown();
 }
 
-void Application::shutdown() {
-    m_Running = false;
-}
+void Application::shutdown() { m_Running = false; }
 };

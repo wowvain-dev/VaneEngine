@@ -14,32 +14,30 @@
 #include <Vane/Core/Asserts.hpp>
 
 namespace Vane {
-void reportAssertionFailure(const char* expression, const char* message, const char* file, i32 line) {
+void reportAssertionFailure(const char *expression, const char *message, const char *file, i32 line) {
     Logger::log_output(LOG_LEVEL::V_FATAL, "Assertion Failure: {}, message: '{}', in file: {}, line: {}\n",
                        expression,
                        message,
                        file,
                        line
-    );
+            );
 }
 
 void reportAssertionFailure(
-    std::string expression,
-    std::string message,
-    std::string file,
-    i32 line
-) {
+        std::string expression,
+        std::string message,
+        std::string file,
+        i32 line
+        ) {
     Logger::log_output(LOG_LEVEL::V_FATAL, "Assertion Failure: {}, message: '{}', in file: {}, line: {}\n",
                        expression,
                        message,
                        file,
                        line
-    );
+            );
 }
 
-bool Logger::initializeLogging() {
-    return true;
-}
+bool Logger::initializeLogging() { return true; }
 
 void Logger::shutdownLogging() {}
 } // Vane

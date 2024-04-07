@@ -46,7 +46,7 @@ struct ApplicationConfig {
 namespace Vane {
 class Application {
 public:
-    Application(const ApplicationConfig& config);
+    Application(const ApplicationConfig &config);
     virtual ~Application();
 
     void run();
@@ -56,19 +56,19 @@ public:
     virtual void onShutdown() {}
     virtual void onUpdate(f32 delta) {}
 
-    inline Platform& platform() { return *m_Platform; }
-    static inline Application& get() { return *s_Instance; }
+    inline Platform &platform() { return *m_Platform; }
+    static inline Application &get() { return *s_Instance; }
 
-    Game* gameInstance;
+    Game *gameInstance;
     i16 width;
     i16 height;
     f64 lastTime;
 
 public:
-    bool create(Game* gameInstance);
+    bool create(Game *gameInstance);
 
 private:
-    static Application* s_Instance;
+    static Application *s_Instance;
     ApplicationConfig m_Config;
     std::unique_ptr<Platform> m_Platform;
     int test;
@@ -76,5 +76,5 @@ private:
     bool m_Suspended;
 };
 
-Application* CreateApplication(int argc, char** argv);
+Application *CreateApplication(int argc, char **argv);
 };

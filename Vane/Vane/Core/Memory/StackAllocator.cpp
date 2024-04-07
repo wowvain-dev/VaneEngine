@@ -5,17 +5,15 @@
 #include <Vane/Core/Memory/MemUtil.hpp>
 
 namespace Vane::Memory {
-StackAllocator::StackAllocator(const u_size stackSize)
-    : top(0), totalSize(stackSize) {
+StackAllocator::StackAllocator(const u_size stackSize) :
+    top(0), totalSize(stackSize) {
     bottom = std::malloc(stackSize);
     bottomAddress = reinterpret_cast<u_ptr>(bottom);
 }
 
-StackAllocator::~StackAllocator() {
-    std::free(bottom);
-}
+StackAllocator::~StackAllocator() { std::free(bottom); }
 
-void* StackAllocator::alloc(const u_size size, const u8 alignment) {
+void *StackAllocator::alloc(const u_size size, const u8 alignment) {
     MemUtil::CheckAlignment(alignment);
 
     u_ptr rawAddress = bottomAddress + top;
@@ -26,12 +24,10 @@ void* StackAllocator::alloc(const u_size size, const u8 alignment) {
     u_ptr alignedAddress = rawAddress + adjustment;
     Marker newTop = top + size + adjustment;
 
-    if (newTop > totalSize) {
-        throw std::overflow_error{"StackAllocator::alloc -> Not enough memory!"};
-    }
+    if (newTop > totalSize) { throw std::overflow_error{"StackAllocator::alloc -> Not enough memory!"}; }
 
     top = newTop;
 
-    return reinterpret_cast<void*>(alignedAddress);
+    return reinterpret_cast<void *>(alignedAddress);
 }
 }

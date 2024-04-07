@@ -2,5 +2,5 @@
 
 
 namespace Vane::Memory {
-MemoryManager* MemoryManager::s_Instance;
+MemoryManager *MemoryManager::s_Instance;
 }

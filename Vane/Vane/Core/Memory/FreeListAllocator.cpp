@@ -12,49 +12,43 @@ FreeListAllocator::FreeListAllocator(const u_size size) {
 }
 
 FreeListAllocator::~FreeListAllocator() {
-    if (memHead == nullptr) {
-        return;
-    }
+    if (memHead == nullptr) { return; }
 
 #if DEBUG
     if (sizeUsed > 0) {
         VWARN(
-            "You did {} news and {} deletes; {} newArrs and {} "
-            "deleteArrs {} allocs and {} frees.",
-            numOfNews, numOfDeletes, numOfArrNews,
-            numOfArrDeletes, numOfAllocs, numOfFrees
-        );
+                "You did {} news and {} deletes; {} newArrs and {} "
+                "deleteArrs {} allocs and {} frees.",
+                numOfNews, numOfDeletes, numOfArrNews,
+                numOfArrDeletes, numOfAllocs, numOfFrees
+                );
 
         VWARN("Memory leak of {} detected on freelist.", sizeUsed);
 
         VWARN("\u2193\u2193\u2193\u2193\u2193\u2193\u2193\u2193\u2193\u2193 "
-            "Dumping Memory Leaks Below "
-            "\u2193\u2193\u2193\u2193\u2193\u2193\u2193\u2193\u2193\u2193");
+                "Dumping Memory Leaks Below "
+                "\u2193\u2193\u2193\u2193\u2193\u2193\u2193\u2193\u2193\u2193");
 
         VWARN("Name \t\t\t Count");
 
-        for (auto& pair : monitor) {
+        for (auto &pair : monitor) {
             Allocations allocations = pair.second;
             VWARN("{} \t {}", allocations.first.c_str(), allocations.second);
         }
 
         VWARN("\u2191\u2191\u2191\u2191\u2191\u2191\u2191\u2191\u2191\u2191 "
-            "See Memory Leak Dump Above "
-            "\u2191\u2191\u2191\u2191\u2191\u2191\u2191\u2191\u2191\u2191");
+                "See Memory Leak Dump Above "
+                "\u2191\u2191\u2191\u2191\u2191\u2191\u2191\u2191\u2191\u2191");
     }
-    else {
-        VINFO("No memory leak! Gj mate");
-    }
+    else { VINFO("No memory leak! Gj mate"); }
 #endif
 
     std::free(memHead);
 
-    for (void* memory : additionalMemory) {
-        std::free(memory);
-    }
+    for (void *memory : additionalMemory) { std::free(memory); }
 }
 
-void* FreeListAllocator::alloc(const u_size size, const u8 alignment) {
+void *FreeListAllocator::alloc(const u_size size, const u8 alignment) {
     if (head == nullptr) {
         Expand();
         return alloc(size, alignment);
@@ -64,9 +58,9 @@ void* FreeListAllocator::alloc(const u_size size, const u8 alignment) {
 
     u_size need = headerSize + alignment + size;
 
-    Node* last = nullptr;
-    Node* cur = head;
-    Node* node = nullptr;
+    Node *last = nullptr;
+    Node *cur = head;
+    Node *node = nullptr;
 
     while (cur != nullptr) {
         if (cur->size >= need) {
@@ -94,19 +88,17 @@ void* FreeListAllocator::alloc(const u_size size, const u8 alignment) {
     u_size allocSize;
 
     if (node->size >= occupiedSize + nodeSize) {
-        Node* newNode = new(reinterpret_cast<void*>(alignedAddress + size))
+        Node *newNode = new(reinterpret_cast<void *>(alignedAddress + size))
                 Node(node->size - occupiedSize);
 
         InsertNodeAt(node, newNode);
         allocSize = occupiedSize;
     }
-    else {
-        allocSize = node->size;
-    }
+    else { allocSize = node->size; }
 
     RemoveNode(last, node);
 
-    new(reinterpret_cast<void*>(headerAddress))
+    new(reinterpret_cast<void *>(headerAddress))
             AllocHeader(allocSize, adjustment);
 
 #if DEBUG
@@ -122,20 +114,18 @@ void* FreeListAllocator::alloc(const u_size size, const u8 alignment) {
             allocations.second++;
             it->second = allocations;
         }
-        else {
-            monitor.insert({sid, {name, 1}});
-        }
+        else { monitor.insert({sid, {name, 1}}); }
     }
 #endif
 
-    void* ret = reinterpret_cast<void*>(alignedAddress);
+    void *ret = reinterpret_cast<void *>(alignedAddress);
     memset(ret, 0, size);
     return ret;
 }
 
-void FreeListAllocator::free(void* memPtr) {
+void FreeListAllocator::free(void *memPtr) {
     u_ptr allocHeaderAdd = reinterpret_cast<u_ptr>(memPtr) - headerSize;
-    auto* allocHeader = reinterpret_cast<AllocHeader*>(allocHeaderAdd);
+    auto *allocHeader = reinterpret_cast<AllocHeader *>(allocHeaderAdd);
 
 #if DEBUG
     sizeUsed -= allocHeader->size;
@@ -148,18 +138,14 @@ void FreeListAllocator::free(void* memPtr) {
         VASSERT(it != monitor.end());
         Allocations allocations = it->second;
         allocations.second--;
-        if (allocations.second == 0) {
-            monitor.erase(it);
-        }
-        else {
-            it->second = allocations;
-        }
+        if (allocations.second == 0) { monitor.erase(it); }
+        else { it->second = allocations; }
     }
 #endif
 
     u_ptr nodeAddress = allocHeaderAdd - allocHeader->adjustment;
-    auto* newNode =
-            new(reinterpret_cast<void*>(nodeAddress)) Node(allocHeader->size);
+    auto *newNode =
+            new(reinterpret_cast<void *>(nodeAddress)) Node(allocHeader->size);
 
     memset(newNode + 1, 0x0, newNode->size - nodeSize);
 
@@ -168,11 +154,11 @@ void FreeListAllocator::free(void* memPtr) {
 
 #undef min
 
-void* FreeListAllocator::realloc(void* memPtr, u_size newSize, u8 alignment) {
+void *FreeListAllocator::realloc(void *memPtr, u_size newSize, u8 alignment) {
     u_ptr allocHeaderAdd = reinterpret_cast<u_ptr>(memPtr) - headerSize;
-    auto* allocHeader = reinterpret_cast<AllocHeader*>(allocHeaderAdd);
+    auto *allocHeader = reinterpret_cast<AllocHeader *>(allocHeaderAdd);
 
-    void* dest = this->alloc(newSize, alignment);
+    void *dest = this->alloc(newSize, alignment);
 
     memcpy(dest, memPtr, std::min(allocHeader->size, newSize));
     this->free(memPtr);
