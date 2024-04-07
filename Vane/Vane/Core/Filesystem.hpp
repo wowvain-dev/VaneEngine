@@ -72,6 +72,8 @@ public:
      */
     char* Read(const std::string& fileName);
 
+private:
+    Filesystem();
 
     /// TODO(wowvain-dev): Finish implementing the FileSystem
 };

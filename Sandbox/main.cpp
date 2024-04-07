@@ -21,11 +21,11 @@ public:
 
 Vane::Application *Vane::CreateApplication(int argc, char **argv) {
     const ApplicationConfig config = {
-            .name = "Vane Sandbox",
-            .windowHeight = 500,
-            .windowWidth = 500,
             .startPosX = 100,
             .startPosY = 100,
+            .windowWidth = 500,
+            .windowHeight = 500,
+            .name = "Vane Sandbox",
     };
 
     const auto app = new Game(config);

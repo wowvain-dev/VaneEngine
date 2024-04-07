@@ -9,6 +9,7 @@ Filesystem *Filesystem::GetInstance() {
     if (s_Instance == nullptr) {
         s_Instance = new Filesystem();
     }
+    return s_Instance;
 }
 
 
