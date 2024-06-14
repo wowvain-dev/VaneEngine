@@ -70,7 +70,9 @@ public:
 private:
     static Application *s_Instance;
     ApplicationConfig m_Config;
+    
     std::unique_ptr<Platform> m_Platform;
+
     int test;
     bool m_Running;
     bool m_Suspended;

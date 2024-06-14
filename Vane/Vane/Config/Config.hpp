@@ -4,7 +4,6 @@
 #include <array>
 #include <string>
 
-#include <Vane/Core/Memory/MemoryManager.hpp>
 
 #include "CVar.hpp"
 
@@ -22,7 +21,6 @@ public:
 
     static Config *GetInstance();
 
-    Memory::MemoryManager::MemoryConfig m_memoryConfig;
 
     CVarString m_resourcePath{"resource_path", "Resources"};
 

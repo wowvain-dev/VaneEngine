@@ -34,12 +34,12 @@ int Main(int argc, char **argv) {
     VASSERT_MSG(app, "Client application is null!");
 
     app->run();
-
     app->shutdown();
 
     delete app;
     // Shutting systems down;
-    VERROR("SHAT SYSTEMS DOWN");
+    VERROR("SHAT SYSTEMS DOWN")
+
     return 0;
 }
 }
