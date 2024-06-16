@@ -7,6 +7,7 @@
 #include <Vane/Core/Defines.hpp>
 #include <Vane/Core/Mem/Allocator.hpp>
 #include <Vane/Core/Mem/StackAllocator.hpp>
+#include <Vane/Core/Mem/LinearAllocator.hpp>
 
 namespace Vane {
 class MemoryManager {
@@ -32,7 +33,7 @@ public:
 
 private:
 
-  StackAllocator m_perFrameAllocator{256_MB};
-
+  LinearAllocator m_perFrameAllocator{256_MB};
+  StackAllocator m_StackAllocator{256_MB};
 };
 }
