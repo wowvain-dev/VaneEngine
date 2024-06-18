@@ -21,6 +21,7 @@ namespace Vane {
     DoublyLinkedList(DoublyLinkedList &doublyLinkedList);
   };
 
-  #include "DoublyLinkedListImpl.hpp"
 
 }
+
+#include "DoublyLinkedListImpl.hpp"

@@ -18,5 +18,7 @@ public:
   Node* pop();
 };
 
-#include "StackLinkedListImpl.hpp"
 }
+
+
+#include "StackLinkedListImpl.hpp"

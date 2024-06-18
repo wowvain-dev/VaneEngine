@@ -40,8 +40,8 @@ void reportAssertionFailure(const char *expression, const char *message, const c
 void reportAssertionFailure(std::string expression, std::string *message, std::string *file, i32 line);
 }
 
-#define VASSERT(expr) {if (expr) {} else { Vane::reportAssertionFailure(#expr, "", __FILE__, __LINE__); debugBreak();}}
-#define VASSERT_MSG(expr, message) { if (expr) {} else { Vane::reportAssertionFailure(#expr, message, __FILE__, __LINE__); debugBreak();}}
+#define VASSERT(expr) {if (expr) {} else { reportAssertionFailure(#expr, "", __FILE__, __LINE__); debugBreak();}}
+#define VASSERT_MSG(expr, message) { if (expr) {} else { reportAssertionFailure(#expr, message, __FILE__, __LINE__); debugBreak();}}
 
 #ifdef DEBUG
 #define VASSERT_DEBUG(expr) { if (expr) {} else { Vane::reportAssertionFailure(#expr, "", __FILE__, __LINE__); debugBreak();} }

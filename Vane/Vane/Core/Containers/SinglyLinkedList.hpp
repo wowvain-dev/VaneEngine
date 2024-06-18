@@ -14,10 +14,11 @@ public:
 public: 
   SinglyLinkedList();
 
-  void Insert(Node* previousNode, Node* newNode);
-  void Remove(Node* previousNode, Node* deleteNode);
+  void insert(Node* previousNode, Node* newNode);
+  void remove(Node* previousNode, Node* deleteNode);
 };
 
-#include "SinglyLinkedListImpl.hpp"
 
 }
+
+#include "SinglyLinkedListImpl.hpp"

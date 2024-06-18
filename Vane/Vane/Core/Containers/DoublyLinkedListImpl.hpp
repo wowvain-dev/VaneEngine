@@ -51,3 +51,4 @@ void DoublyLinkedList<T>::remove(Node* deleteNode) {
     }
   }
 }
+}
