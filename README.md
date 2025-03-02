@@ -1,3 +1,5 @@
+# SUPERSEDED BY KAALDUR ENGINE. IT IS CURRENTLY A PRIVATE REPOSITORY, MORE INFO IN THE FUTURE AT www.kaaldur.com
+
 # Vane Engine (IN DEVELOPMENT)
 
 A 2D/3D game engine written in C++ with Vulkan/D3D11/D3D12/OpenGL support and a ~~Qt~~ImGui-based editor.
